@@ -17,9 +17,10 @@ router.get('/posts/:index', (req, res)=>{
 //Add new post
 router.post('/posts', (req, res)=>{    
     const post = req.body;
+    console.log(post)
     const newPostID = posts.length;
     posts.push({ id: newPostID, ...post});
-    res.status(201)
+    // res.status(201)
     res.send(post); 
 });
 
