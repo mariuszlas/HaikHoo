@@ -1,15 +1,10 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
-const router = require('./controller');
+const router = require('./controllers/routes.js');
+const app = express();
 
-app.use(express.json());
 app.use(cors());
-
-app.get('/', (req, res) => {
-    res.send('Hello World');
-})
-
+app.use(express.json());
 app.use('/', router);
 
 module.exports = app;
