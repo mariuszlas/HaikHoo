@@ -8,6 +8,7 @@ const Post = require('../models/post.js');
 router.get('/posts', (req, res) => {
     try {
         let posts = Post.allPosts;
+        console.log(posts);
         res.status(200).send(posts);
     } catch (err) {
         console.log(err);
@@ -27,6 +28,19 @@ router.post('/posts', (req, res) => {
     }
 });
 
+// route for updating comments and reaction counts
+router.put('/posts/:id/:path', (req, res) => {
+    let id = req.params.id;
+    let path = req.params.path
+
+    try {
+        Post.update(id, path, req);
+        res.status(200).send('Post was successfully updated.');
+    } catch (err) {
+        console.log(err);
+        res.status(404).send('Could not update the post.')
+    }
+})
 
 
 module.exports = router;
