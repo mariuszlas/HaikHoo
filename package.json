@@ -17,10 +17,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@giphy/js-components": "^5.1.4",
+    "@giphy/js-fetch-api": "^4.1.0",
     "@types/jest": "^26.0.24",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "jest-fetch-mock": "^3.0.3"
+    "jest-fetch-mock": "^3.0.3",
+    "throttle-debounce": "^3.0.1"
   },
   "devDependencies": {
     "jest": "^27.0.6",
