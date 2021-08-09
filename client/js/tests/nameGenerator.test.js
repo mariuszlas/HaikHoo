@@ -1,6 +1,6 @@
 
 const { test, beforeEach, expect } = require('@jest/globals')
-const nameGenerator = require('./nameGenerator')
+const nameGenerator = require('../../username_generator/nameGenerator')
 
 
 describe('nameGenerator', () => {
