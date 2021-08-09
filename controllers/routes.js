@@ -8,7 +8,6 @@ const Post = require('../models/post.js');
 router.get('/posts', (req, res) => {
     try {
         let posts = Post.allPosts;
-        console.log(posts);
         res.status(200).send(posts);
     } catch (err) {
         console.log(err);
@@ -19,7 +18,7 @@ router.get('/posts', (req, res) => {
 //Add new post
 router.post('/posts', (req, res) => {
     try {
-        Post.createPost(req.body)
+        Post.createPost(req.body);
         res.status(201).send('Post was successfully added to database');
     } catch (err) {
         console.log(err);
