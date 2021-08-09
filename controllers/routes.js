@@ -1,26 +1,32 @@
 const express = require('express');
+const fs = require('fs');
 const router = express.Router();
-const posts = require('./data');
+const database = './data/posts.json';
+const Post = require('../models/post.js');
 
 //Get all posts
-router.get('/posts',(req,res)=>{
-    res.send(posts);
+router.get('/posts', (req, res) => {
+    try {
+        let posts = Post.allPosts;
+        res.status(200).send(posts);
+    } catch (err) {
+        console.log(err);
+        res.status(404).send('Could not read database file.')
+    }
 });
 
-//Get post based on ID
-router.get('/posts/:index', (req, res)=>{
-    const postIndex = req.params.index;
-    const post = posts[postIndex];
-    res.send(post);
+
+//Add new pos
+router.post('/posts', (req, res) => {
+    try {
+        Post.createPost(req.body)
+        res.status(201).send('Post was successfully added to database');
+    } catch (err) {
+        console.log(err);
+        res.status(404).send('An error occured during adding post to database')
+    }
 });
 
-//Add new post
-router.post('/posts', (req, res)=>{    
-    const post = req.body;
-    const newPostID = posts.length;
-    posts.push({ id: newPostID, ...post});
-    res.status(201)
-    res.send(post); 
-});
+
 
 module.exports = router;
