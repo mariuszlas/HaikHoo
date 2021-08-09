@@ -16,8 +16,7 @@ router.get('/posts', (req, res) => {
     }
 });
 
-
-//Add new pos
+//Add new post
 router.post('/posts', (req, res) => {
     try {
         Post.createPost(req.body)
@@ -28,7 +27,7 @@ router.post('/posts', (req, res) => {
     }
 });
 
-// route for updating comments and reaction counts
+// update comments and reaction counts
 router.put('/posts/:id/:path', (req, res) => {
     let id = req.params.id;
     let path = req.params.path
@@ -41,6 +40,5 @@ router.put('/posts/:id/:path', (req, res) => {
         res.status(404).send('Could not update the post.')
     }
 })
-
 
 module.exports = router;
