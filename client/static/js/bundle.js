@@ -46,6 +46,7 @@ async function fetchGif(userInput) {
 }
 
 module.exports = { fetchGif, postPoem, checkPoem }
+
 },{"./model":2}],2:[function(require,module,exports){
 const {adjectives, animals} = require('./nameData')
 
@@ -64,11 +65,15 @@ let randomName = () => {
 }
 
 class Data {
-    constructor(title, poem, giphyURL){
+    constructor(title, poem){
         this.author = randomName();
         this.title = title;
         this.text = poem;
+<<<<<<< HEAD:client/js/bundle.js
         this.gifURL = giphyURL;
+=======
+        this.gifUrl = "giphyURL";
+>>>>>>> combine-branches:client/static/js/bundle.js
         this.date = formatDate();
     }
 }
@@ -81,9 +86,15 @@ function makeElement(element, type, id, value='') {
     return newElement;
 }
 
+<<<<<<< HEAD:client/js/bundle.js
 function postPoem(title, poem, giphyURL) {
     let data = new Data(title, poem, giphyURL)
     fetch('http://localhost:3000/posts', {
+=======
+function postPoem(title, poem) {
+    let data = new Data(title, poem)
+    fetch('https://hakema-server.herokuapp.com/posts', {
+>>>>>>> combine-branches:client/static/js/bundle.js
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
@@ -95,6 +106,7 @@ function postPoem(title, poem, giphyURL) {
 
 
 module.exports = { Data, makeElement, formatDate, postPoem }
+
 },{"./nameData":3}],3:[function(require,module,exports){
 let animals =
     [
@@ -1677,12 +1689,16 @@ module.exports = { adjectives, animals }
 const controller = require('./controller')
 const { makeElement } = require('./model')
 
-document.querySelector('#makePost').addEventListener('click', showForm)
+function initBindings() {
+    document.querySelector('#makePost').addEventListener('click', showForm);
+
+}
 
 function showForm(e) {
     e.preventDefault();
     console.log(e);
     let form = document.createElement('form')
+<<<<<<< HEAD:client/js/bundle.js
     let titleField = makeElement('input', 'text', 'poemTitle')
     let poemField = makeElement('input', 'text', 'userPoem')
     let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
@@ -1693,11 +1709,38 @@ function showForm(e) {
     form.append(titleField, poemField, makePost, selectedGif, searchGif)
     form.addEventListener('submit', controller.checkPoem)
     document.querySelector('#addGif').addEventListener('click', showGifForm);
+=======
+    form.setAttribute("id", "new-post-form");
+    let titleField = makeElement('input', 'text', 'poemTitle', '')
+    titleField.setAttribute('name', 'poemTitle')
+    let labelTitle = makeElement('label');
+    labelTitle.setAttribute("name", "poemTitle");
+    labelTitle.innerText = "Title  ";
+    let poemField = makeElement('input', 'text', 'userPoem', '');
+    poemField.setAttribute("name", "userPoem")
+    let labelPoem = makeElement('label');
+    labelPoem.setAttribute("name", "poemTitle");
+    labelPoem.innerText = "Your Poem:  ";
+    let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
+    let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
+    let counterArea = document.createElement("span");
+    counterArea.setAttribute("id", "counter");
+    document.querySelector('body').appendChild(form)
+    form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, searchGif);
+    formBtnsListeners();
+}
+
+function formBtnsListeners() {
+    document.querySelector('#submitPoem').addEventListener('click', controller.checkPoem)
+    document.querySelector('#addGif').addEventListener('click', showGifForm);
+    let textArea = document.querySelector('#userPoem');
+    textArea.addEventListener("keyup", e => counter(e));
+
+>>>>>>> combine-branches:client/static/js/bundle.js
 }
 
 function showGifForm(e) {
     e.preventDefault();
-    console.log('e')
     let gifForm = document.createElement('form')
     gifForm.setAttribute('id', 'gifForm')
     let searchWord = makeElement('input', 'text', 'gifWord');
@@ -1727,6 +1770,7 @@ async function displayGif(e) {
 
 }
 
+<<<<<<< HEAD:client/js/bundle.js
 function selectGif(e) {
     console.log(e)
     let gifPath = e.target.src
@@ -1737,5 +1781,16 @@ function selectGif(e) {
     document.querySelector('#selectedGif').append(previewGif)
     e.path[2].remove()
 }
+=======
+function counter(e) {
+    e.preventDefault();
+    const max = 500;
+    let textLen = e.target.value.length;
+    let span = document.querySelector('#counter');
+    span.innerText = `${textLen}/500`;
+}
+
+initBindings();
+>>>>>>> combine-branches:client/static/js/bundle.js
 
 },{"./controller":1,"./model":2}]},{},[4]);
