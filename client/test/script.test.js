@@ -13,6 +13,7 @@ describe('posting', () => {
 
     test('is there a poem to send', () => {
         let poem = document.querySelector('#userPoem').value
+        
         expect(poem).toBeTruthy()
     })
 
