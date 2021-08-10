@@ -3,11 +3,14 @@ const {Data, postPoem} = require('./model')
 
 function checkPoem(e) {
     e.preventDefault();
-    let title = document.querySelector('#poemTitle').value;
-    let poem = document.querySelector('#userPoem').value;
+    console.log(e);
+    let title = e.target.poemTitle.value;
+    let poem = e.target.userPoem.value;
+    let gif = document.querySelector('#selectedGif img')
+    gif ? giphyURL = gif.getAttribute('src') : giphyURL = ''
     try {
         postValidity(title, poem)
-        postPoem(title, poem)
+        postPoem(title, poem, giphyURL)
     } catch (err) {
         let errorMessage = document.createElement('p')
         errorMessage.textContent = err
@@ -16,6 +19,7 @@ function checkPoem(e) {
         return;
     }
 }
+
 
 function postValidity(title, poem) {
     if (title.length == 0) {
@@ -28,7 +32,7 @@ function postValidity(title, poem) {
 
 async function fetchGif(userInput) {
     const APIKEY = '1GZ3I3ZbWKLBCfC7UFrN1yWVhQkONQ32'
-    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${userInput}`
+    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${userInput}&rating=pg-13&limit=5`
     let response = await fetch(url)
         .then(resp => resp.json())
         .then(content => {
@@ -65,12 +69,16 @@ class Data {
         this.author = randomName();
         this.title = title;
         this.text = poem;
+<<<<<<< HEAD:client/js/bundle.js
+        this.gifURL = giphyURL;
+=======
         this.gifUrl = "giphyURL";
+>>>>>>> combine-branches:client/static/js/bundle.js
         this.date = formatDate();
     }
 }
 
-function makeElement(element, type, id, value) {
+function makeElement(element, type, id, value='') {
     newElement = document.createElement(element)
     newElement.setAttribute('type', type);
     newElement.setAttribute('id', id);
@@ -78,9 +86,15 @@ function makeElement(element, type, id, value) {
     return newElement;
 }
 
+<<<<<<< HEAD:client/js/bundle.js
+function postPoem(title, poem, giphyURL) {
+    let data = new Data(title, poem, giphyURL)
+    fetch('http://localhost:3000/posts', {
+=======
 function postPoem(title, poem) {
     let data = new Data(title, poem)
     fetch('https://hakema-server.herokuapp.com/posts', {
+>>>>>>> combine-branches:client/static/js/bundle.js
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
@@ -1682,7 +1696,20 @@ function initBindings() {
 
 function showForm(e) {
     e.preventDefault();
+    console.log(e);
     let form = document.createElement('form')
+<<<<<<< HEAD:client/js/bundle.js
+    let titleField = makeElement('input', 'text', 'poemTitle')
+    let poemField = makeElement('input', 'text', 'userPoem')
+    let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
+    let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
+    let selectedGif = document.createElement('span')
+    selectedGif.setAttribute('id', 'selectedGif')
+    document.querySelector('body').appendChild(form)
+    form.append(titleField, poemField, makePost, selectedGif, searchGif)
+    form.addEventListener('submit', controller.checkPoem)
+    document.querySelector('#addGif').addEventListener('click', showGifForm);
+=======
     form.setAttribute("id", "new-post-form");
     let titleField = makeElement('input', 'text', 'poemTitle', '')
     titleField.setAttribute('name', 'poemTitle')
@@ -1709,14 +1736,16 @@ function formBtnsListeners() {
     let textArea = document.querySelector('#userPoem');
     textArea.addEventListener("keyup", e => counter(e));
 
+>>>>>>> combine-branches:client/static/js/bundle.js
 }
 
 function showGifForm(e) {
     e.preventDefault();
     let gifForm = document.createElement('form')
     gifForm.setAttribute('id', 'gifForm')
-    let searchWord = makeElement('input', 'text', 'gifWord', 'Search for a gif');
-    let searchGif = makeElement('input', 'submit', 'gifSearch')
+    let searchWord = makeElement('input', 'text', 'gifWord');
+    searchWord.setAttribute('placeholder', 'search for a gif')
+    let searchGif = makeElement('input', 'submit', 'gifSearch', 'search')
     let gifContainer = document.createElement('section')
     gifContainer.setAttribute('id', 'gifContainer')
     gifForm.append(searchWord, searchGif, gifContainer);
@@ -1729,12 +1758,30 @@ async function displayGif(e) {
     document.querySelector("#gifContainer").textContent = "";
     let userInput = document.querySelector('#gifWord').value;
     let gifData = await controller.fetchGif(userInput)
-    let gifPath = gifData.data[0].images.fixed_height.url
-    let gif = document.createElement('img')
-    gif.setAttribute('src', gifPath)
-    document.querySelector('#gifContainer').append(gif)
+    for (let i = 0; i < gifData.data.length; i++) {
+
+        let gifPath = gifData.data[i].images.fixed_height.url
+        let gif = document.createElement('img')
+        gif.setAttribute('src', gifPath)
+        document.querySelector('#gifContainer').append(gif)
+        gif.addEventListener('click', selectGif)
+
+    }
+
 }
 
+<<<<<<< HEAD:client/js/bundle.js
+function selectGif(e) {
+    console.log(e)
+    let gifPath = e.target.src
+    console.log(gifPath)
+    document.querySelector("#selectedGif").textContent = "";
+    let previewGif = document.createElement('img')
+    previewGif.setAttribute('src', gifPath)
+    document.querySelector('#selectedGif').append(previewGif)
+    e.path[2].remove()
+}
+=======
 function counter(e) {
     e.preventDefault();
     const max = 500;
@@ -1744,5 +1791,6 @@ function counter(e) {
 }
 
 initBindings();
+>>>>>>> combine-branches:client/static/js/bundle.js
 
 },{"./controller":1,"./model":2}]},{},[4]);
