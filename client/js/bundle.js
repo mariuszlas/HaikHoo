@@ -42,6 +42,7 @@ async function fetchGif(userInput) {
 }
 
 module.exports = { fetchGif, postPoem, checkPoem }
+
 },{"./model":2}],2:[function(require,module,exports){
 const {adjectives, animals} = require('./nameData')
 
@@ -60,11 +61,11 @@ let randomName = () => {
 }
 
 class Data {
-    constructor(title, poem, giphyURL){
+    constructor(title, poem){
         this.author = randomName();
         this.title = title;
-        this.body = poem;
-        this.giphy = giphyURL;
+        this.text = poem;
+        this.gifUrl = "giphyURL";
         this.date = formatDate();
     }
 }
@@ -79,7 +80,7 @@ function makeElement(element, type, id, value) {
 
 function postPoem(title, poem) {
     let data = new Data(title, poem)
-    fetch('http://localhost:3000/posts', {
+    fetch('https://hakema-server.herokuapp.com/posts', {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
@@ -90,7 +91,11 @@ function postPoem(title, poem) {
 }
 
 
+
+
+
 module.exports = { Data, makeElement, formatDate, postPoem }
+
 },{"./nameData":3}],3:[function(require,module,exports){
 let animals =
     [
@@ -1673,24 +1678,45 @@ module.exports = { adjectives, animals }
 const controller = require('./controller')
 const { makeElement } = require('./model')
 
-document.querySelector('#makePost').addEventListener('click', showForm)
+function initBindings() {
+    document.querySelector('#makePost').addEventListener('click', showForm);
+
+}
+
 
 function showForm(e) {
     e.preventDefault();
     let form = document.createElement('form')
+    form.setAttribute("id", "new-post-form");
     let titleField = makeElement('input', 'text', 'poemTitle', '')
-    let poemField = makeElement('input', 'text', 'userPoem', '')
+    titleField.setAttribute('name', 'poemTitle')
+    let labelTitle = makeElement('label');
+    labelTitle.setAttribute("name", "poemTitle");
+    labelTitle.innerText = "Title  ";
+    let poemField = makeElement('input', 'text', 'userPoem', '');
+    poemField.setAttribute("name", "userPoem")
+    let labelPoem = makeElement('label');
+    labelPoem.setAttribute("name", "poemTitle");
+    labelPoem.innerText = "Your Poem:  ";
     let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
     let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
+    let counterArea = document.createElement("span");
+    counterArea.setAttribute("id", "counter");
     document.querySelector('body').appendChild(form)
-    form.append(titleField, poemField, makePost, searchGif)
-    document.querySelector('#submitPoem').addEventListener('click', controller.checkPoem)
-    document.querySelector('#addGif').addEventListener('click', addGifForm);
+    form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, searchGif);
+    formBtnsListeners();
 }
 
-function addGifForm(e) {
+function formBtnsListeners() {
+    document.querySelector('#submitPoem').addEventListener('click', controller.checkPoem)
+    document.querySelector('#addGif').addEventListener('click', showGifForm);
+    let textArea = document.querySelector('#userPoem');
+    textArea.addEventListener("keyup", e => counter(e));
+
+}
+
+function showGifForm(e) {
     e.preventDefault();
-    console.log('e')
     let gifForm = document.createElement('form')
     gifForm.setAttribute('id', 'gifForm')
     let searchWord = makeElement('input', 'text', 'gifWord', 'Search for a gif');
@@ -1713,5 +1739,14 @@ async function displayGif(e) {
     document.querySelector('#gifContainer').append(gif)
 }
 
+function counter(e) {
+    e.preventDefault();
+    const max = 500;
+    let textLen = e.target.value.length;
+    let span = document.querySelector('#counter');
+    span.innerText = `${textLen}/500`;
+}
+
+initBindings();
 
 },{"./controller":1,"./model":2}]},{},[4]);

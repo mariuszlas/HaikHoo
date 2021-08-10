@@ -15,11 +15,11 @@ let randomName = () => {
 }
 
 class Data {
-    constructor(title, poem, giphyURL){
+    constructor(title, poem){
         this.author = randomName();
         this.title = title;
-        this.body = poem;
-        this.giphy = giphyURL;
+        this.text = poem;
+        this.gifUrl = "giphyURL";
         this.date = formatDate();
     }
 }
@@ -34,7 +34,7 @@ function makeElement(element, type, id, value) {
 
 function postPoem(title, poem) {
     let data = new Data(title, poem)
-    fetch('http://localhost:3000/posts', {
+    fetch('https://hakema-server.herokuapp.com/posts', {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
@@ -43,6 +43,9 @@ function postPoem(title, poem) {
         .then(data => console.log(data))
         .catch(err => console.log(err))
 }
+
+
+
 
 
 module.exports = { Data, makeElement, formatDate, postPoem }
