@@ -39,7 +39,7 @@ function appendPost(data){
             comments.textContent = post.comments[x];
             commentSection.appendChild(comments);
         }
-        postDiv.setAttribute("class", "post");
+        postDiv.setAttribute("class");
         postDiv.setAttribute("id", post.id)
         container.appendChild(postDiv);
     }
