@@ -91,9 +91,6 @@ function postPoem(title, poem) {
 }
 
 
-
-
-
 module.exports = { Data, makeElement, formatDate, postPoem }
 
 },{"./nameData":3}],3:[function(require,module,exports){

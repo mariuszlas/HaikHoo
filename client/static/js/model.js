@@ -45,7 +45,4 @@ function postPoem(title, poem) {
 }
 
 
-
-
-
 module.exports = { Data, makeElement, formatDate, postPoem }
