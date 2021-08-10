@@ -19,12 +19,12 @@ class Data {
         this.author = randomName();
         this.title = title;
         this.text = poem;
-        this.gifUrl = "giphyURL";
+        this.gifURL = giphyURL;
         this.date = formatDate();
     }
 }
 
-function makeElement(element, type, id, value) {
+function makeElement(element, type, id, value='') {
     newElement = document.createElement(element)
     newElement.setAttribute('type', type);
     newElement.setAttribute('id', id);
@@ -32,8 +32,8 @@ function makeElement(element, type, id, value) {
     return newElement;
 }
 
-function postPoem(title, poem) {
-    let data = new Data(title, poem)
+function postPoem(title, poem, giphyURL) {
+    let data = new Data(title, poem, giphyURL)
     fetch('https://hakema-server.herokuapp.com/posts', {
         method: "POST",
         body: JSON.stringify(data),
