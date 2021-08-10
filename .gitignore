@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 node_modules
 package-lock.json
 coverage
+=======
+*/node_modules
+*/package-lock.json
+node_modules
+>>>>>>> 88442e0faca862557f90c249b99582ebbf7201a9

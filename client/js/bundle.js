@@ -1,3 +1,97 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const {Data, postPoem} = require('./model')
+
+function checkPoem(e) {
+    e.preventDefault();
+    let title = document.querySelector('#poemTitle').value;
+    let poem = document.querySelector('#userPoem').value;
+    try {
+        postValidity(title, poem)
+        postPoem(title, poem)
+    } catch (err) {
+        let errorMessage = document.createElement('p')
+        errorMessage.textContent = err
+        document.querySelector('form').appendChild(errorMessage)
+        console.log('whoops', err)
+        return;
+    }
+}
+
+function postValidity(title, poem) {
+    if (title.length == 0) {
+        throw new Error('please enter a title')
+    }
+    if (poem.length == 0) {
+        throw new Error(`you haven't written your poem yet!`)
+    }
+}
+
+async function fetchGif(userInput) {
+    const APIKEY = '1GZ3I3ZbWKLBCfC7UFrN1yWVhQkONQ32'
+    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${userInput}`
+    let response = await fetch(url)
+        .then(resp => resp.json())
+        .then(content => {
+            console.log(content.data[0].images.fixed_height.url)
+            return content;
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    return response
+}
+
+module.exports = { fetchGif, postPoem, checkPoem }
+},{"./model":2}],2:[function(require,module,exports){
+const {adjectives, animals} = require('./nameData')
+
+let formatDate = () => {
+    let today = new Date()
+    let yyyy = today.getFullYear()
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+    return `${dd}${mm}${yyyy}`;
+}
+
+let randomName = () => {
+    let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    let randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+    return `${randomAdjective} ${randomAnimal}`
+}
+
+class Data {
+    constructor(title, poem, giphyURL){
+        this.author = randomName();
+        this.title = title;
+        this.body = poem;
+        this.giphy = giphyURL;
+        this.date = formatDate();
+    }
+}
+
+function makeElement(element, type, id, value) {
+    newElement = document.createElement(element)
+    newElement.setAttribute('type', type);
+    newElement.setAttribute('id', id);
+    newElement.setAttribute('value', value);
+    return newElement;
+}
+
+function postPoem(title, poem) {
+    let data = new Data(title, poem)
+    fetch('http://localhost:3000/posts', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-type": "application/json" }
+    })
+        .then(resp => resp.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
+}
+
+
+module.exports = { Data, makeElement, formatDate, postPoem }
+},{"./nameData":3}],3:[function(require,module,exports){
 let animals =
     [
         "Aardvark",
@@ -1575,3 +1669,49 @@ let adjectives =
     ]
 
 module.exports = { adjectives, animals }
+},{}],4:[function(require,module,exports){
+const controller = require('./controller')
+const { makeElement } = require('./model')
+
+document.querySelector('#makePost').addEventListener('click', showForm)
+
+function showForm(e) {
+    e.preventDefault();
+    let form = document.createElement('form')
+    let titleField = makeElement('input', 'text', 'poemTitle', '')
+    let poemField = makeElement('input', 'text', 'userPoem', '')
+    let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
+    let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
+    document.querySelector('body').appendChild(form)
+    form.append(titleField, poemField, makePost, searchGif)
+    document.querySelector('#submitPoem').addEventListener('click', controller.checkPoem)
+    document.querySelector('#addGif').addEventListener('click', addGifForm);
+}
+
+function addGifForm(e) {
+    e.preventDefault();
+    console.log('e')
+    let gifForm = document.createElement('form')
+    gifForm.setAttribute('id', 'gifForm')
+    let searchWord = makeElement('input', 'text', 'gifWord', 'Search for a gif');
+    let searchGif = makeElement('input', 'submit', 'gifSearch')
+    let gifContainer = document.createElement('section')
+    gifContainer.setAttribute('id', 'gifContainer')
+    gifForm.append(searchWord, searchGif, gifContainer);
+    document.querySelector('form').append(gifForm)
+    document.querySelector('#gifSearch').addEventListener('click', displayGif)
+}
+
+async function displayGif(e) {
+    e.preventDefault()
+    document.querySelector("#gifContainer").textContent = "";
+    let userInput = document.querySelector('#gifWord').value;
+    let gifData = await controller.fetchGif(userInput)
+    let gifPath = gifData.data[0].images.fixed_height.url
+    let gif = document.createElement('img')
+    gif.setAttribute('src', gifPath)
+    document.querySelector('#gifContainer').append(gif)
+}
+
+
+},{"./controller":1,"./model":2}]},{},[4]);
