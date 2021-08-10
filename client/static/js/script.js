@@ -120,7 +120,18 @@ function appendPost(data){
         divBody.append(title, author, date, textCont)
         let divReact = document.createElement('div');
 
+        let likeBtn = document.createElement('button');
+        let cryBtn = document.createElement('button');
+        let smileBtn = document.createElement('button');
+
         let divComment = document.createElement('div');
+        divReact.append(likeBtn, cryBtn, smileBtn);
+        likeBtn.addEventListener('click', e => sendLike(e));
+        likeBtn.textContent = String.fromCodePoint(0x1F44D);
+        cryBtn.addEventListener('click', e => sendCry(e));
+        cryBtn.textContent = String.fromCodePoint(0x1F62D);
+        smileBtn.addEventListener('click', e => sendSmile(e));
+        smileBtn.textContent = String.fromCodePoint(0x1F603);
 
         let commentForm = document.createElement("form");
         commentForm.setAttribute('name', post.id)
@@ -161,16 +172,16 @@ async function makeComment(e){
     const comment = e.target[1].value;
     let id = e.target.name;
     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    console.log(id);
-    console.log(comment);
-    // let postId = commentInput.closest("article").id
+    // console.log(id);
+    // console.log(comment);
+    // // let postId = commentInput.closest("article").id
     // console.log(postId);
     const options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'},
         body: JSON.stringify({"comment": comment})
     }
-    console.log(`${url}/posts/${id}/comment`);
+    // console.log(`${url}/posts/${id}/comment`);
 
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
@@ -179,10 +190,17 @@ async function makeComment(e){
     }
 };
 
-
-
-
-
+async function sendLike(e) {
+    e.preventDefault();
+    let button = e.target;
+    let id = button.closest('article');
+    console.log(id.id)
+    let options = {
+        method: "PUT",
+        headers: { 'Content-Type':'application/json'}
+    }
+    await fetch(`${url}/posts/${id.id}/likes`, options)
+}
 
 displayPost();
 
