@@ -1785,12 +1785,14 @@ function appendPost(data){
         article.setAttribute('id', post.id)
 
         let divBody = document.createElement("div");
-        divBody.setAttribute("class", "post");
+        divBody.setAttribute("class", "post card");
 
-        let title = document.createElement('p');
+        let title = document.createElement('h5');
         title.textContent = post.title;
+        title.setAttribute("class", "card-header")
         let textCont = document.createElement('p');
         textCont.innerText = post.text;
+        textCont.setAttribute("class", "card-body")
         let author = document.createElement('p');
         author.innerText = post.author;
         let date = document.createElement('p');

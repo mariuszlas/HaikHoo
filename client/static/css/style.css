@@ -1,4 +1,8 @@
-/* main {
+body{
     display: grid;
-    grid-template-columns: auto 500px auto;
-} */
+    grid-template-columns:  auto 500px auto;
+}
+
+main{
+     grid-column-start: 2; 
+}
