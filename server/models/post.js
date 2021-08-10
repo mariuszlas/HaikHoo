@@ -1,10 +1,11 @@
 const fs = require('fs');
 const database = './data/posts.json';
+const { randomName } = require('./username_generator/nameGenerator.js');
 
 class Post {
     constructor(data) {
         this.id = data.id;
-        this.author = data.author;
+        this.author = randomName();
         this.title = data.title;
         this.date = data.date;
         this.text = data.text;

@@ -1,0 +1,33 @@
+{
+  "name": "lap1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll",
+    "bundle": "browserify ./static/js/script.js > ./static/js/bundle.js"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "automock": false,
+    "setupFiles": [
+      "./setupJest.js"
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@giphy/js-components": "^5.1.4",
+    "@giphy/js-fetch-api": "^4.1.0",
+    "@types/jest": "^26.0.24",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jest-fetch-mock": "^3.0.3",
+    "throttle-debounce": "^3.0.1"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "jest": "^27.0.6",
+    "nodemon": "^2.0.12"
+  }
+}
