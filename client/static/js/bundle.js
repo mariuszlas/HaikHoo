@@ -1788,7 +1788,7 @@ function appendPost(data){
         divBody.setAttribute("class", "post");
 
         let title = document.createElement('p');
-        title.innertext = post.title;
+        title.textContent = post.title;
         let textCont = document.createElement('p');
         textCont.innerText = post.text;
         let author = document.createElement('p');
