@@ -19,11 +19,7 @@ class Data {
         this.author = randomName();
         this.title = title;
         this.text = poem;
-<<<<<<< HEAD:client/js/model.js
         this.gifURL = giphyURL;
-=======
-        this.gifUrl = "giphyURL";
->>>>>>> combine-branches:client/static/js/model.js
         this.date = formatDate();
     }
 }
@@ -36,15 +32,9 @@ function makeElement(element, type, id, value='') {
     return newElement;
 }
 
-<<<<<<< HEAD:client/js/model.js
 function postPoem(title, poem, giphyURL) {
     let data = new Data(title, poem, giphyURL)
-    fetch('http://localhost:3000/posts', {
-=======
-function postPoem(title, poem) {
-    let data = new Data(title, poem)
     fetch('https://hakema-server.herokuapp.com/posts', {
->>>>>>> combine-branches:client/static/js/model.js
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
