@@ -1,6 +1,6 @@
 const request = require('supertest');
 const server = require('../server.js');
-
+const fs = require('fs');
 
 let test_obj = [
         {
@@ -38,11 +38,17 @@ let putOpt = { method: "PUT",
                 headers: {'Content-Type': 'application/json'}
             }
 
+let test_od = fs.readFileSync("./data/posts.json");
+let test_o = JSON.parse(test_od);
+
 describe('API server', () => {
     let api;
+    let testObj;
 
     beforeAll(() => {
-        api = server.listen(4000, () => console.log('Test server listening on port 4000'))
+        api = server.listen(4000, () => console.log('Test server listening on port 4000'));
+        let data = fs.readFileSync("./data/posts.json");
+        testObj = JSON.parse(data);
     });
 
     afterAll(done => {
@@ -50,34 +56,35 @@ describe('API server', () => {
         api.close(done);
     });
 
-    it('reponds to /posts with status 200', done => {
+    it('reponds to GET /posts with status 200', done => {
         request(api)
         .get('/posts')
         .expect(200, done)
     });
 
-    it('reponds to /posts with status 201', async () => {
+    it('reponds to GET /posts with correct array of objects', async () => {
         const updatedCats = await request(api).get('/posts');
-        expect(updatedCats.body).toStrictEqual(test_obj);
+        expect(updatedCats.body).toStrictEqual(testObj);
     });
 
-    // it('reponds to /posts with status 200', done => {
+
+    // it('reponds to PUT /posts/1/comment with status 200', done => {
     //     request(api)
-    //     .post('/posts')
-    //     .send(sendObj)
-    //     .expect(201, done)
+    //     .put('/posts/1/comment')
+    //     .send({ "comment": "New comment" })
+    //     .expect(200, done)
     // });
 
-    it('reponds to /posts/1/commetns with status 200', done => {
-        request(api)
-        .put('/posts/1/comment')
-        .expect(200, done)
-    });
-
-    it('reponds to /posts/2/likes with status 200', done => {
+    it('reponds to PUT /posts/2/likes with status 200', done => {
         request(api)
         .put('/posts/2/likes')
         .expect(200, done)
     });
 
+    it('reponds to POST /posts with status 201', done => {
+            request(api)
+            .post('/posts')
+            .send(sendObj)
+            .expect(201, done)
+        });
 });
