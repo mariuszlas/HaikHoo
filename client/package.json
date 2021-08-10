@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "bundle": "browserify ./js/script.js > ./js/bundle.js"
+    "bundle": "browserify ./static/js/script.js > ./static/js/bundle.js"
   },
   "jest": {
     "testEnvironment": "jsdom",

@@ -1683,7 +1683,6 @@ function initBindings() {
 
 }
 
-
 function showForm(e) {
     e.preventDefault();
     let form = document.createElement('form')
