@@ -88,4 +88,96 @@ function counter(e) {
     span.innerText = `${textLen}/500`;
 }
 
+
+let url =  "https://hakema-server.herokuapp.com";
+
+function displayPost(){
+    fetch(`${url}/posts`)
+    .then(res => res.json())
+    .then(data => appendPost(data))
+    .catch(err => console.log(err));
+}
+
+function appendPost(data){
+    let container = document.getElementById("posts");
+
+    for (let i = 0; i < data.length; i++){
+        let post = data[i]
+        let article = document.createElement('article');
+        article.setAttribute('id', post.id)
+
+        let divBody = document.createElement("div");
+        divBody.setAttribute("class", "post");
+
+        let title = document.createElement('p');
+        title.innertext = post.author;
+        let textCont = document.createElement('p');
+        textCont.innerText = post.text;
+        let author = document.createElement('p');
+        author.innerText = post.author;
+        divBody.append(title, author, textCont)
+        // divBody.textContent = `${post.author} ${post.title} ${post.text}`
+        let divReact = document.createElement('div');
+
+        let divComment = document.createElement('div');
+        let commentBtn = document.createElement("button");
+        commentBtn.textContent = "Comment";
+        commentBtn.setAttribute("class", "comment-btn");
+        let commentForm = document.createElement("input");
+        commentForm.setAttribute("type","text");
+        commentForm.setAttribute("class","comment-form");
+
+        // container.appendChild(div);
+        // container.appendChild(commentForm);
+        // container.appendChild(commentBtn);
+
+        commentBtn.addEventListener('click', e => makeComment(e));
+        let commentSection = document.createElement("div");
+        commentSection.setAttribute("class", "comment");
+
+        for (let x = 0; x < post.comments.length; x++ ){
+            let comments = document.createElement("div");
+            comments.textContent = post.comments[x];
+            commentSection.appendChild(comments);
+        }
+        divComment.append(commentForm, commentBtn);
+        article.append(divBody, divReact, divComment)
+        container.appendChild(article);
+        //
+        // container.appendChild(commentSection);
+        // container.setAttribute("class", "post-container");
+        // container.setAttribute("id", post.id);
+    }
+}
+
+// const commentBtn = document.querySelector(".comment-btn");
+
+// commentBtn.addEventListener('click', post);
+//
+// function makeComment(e){
+//     e.preventDefault();
+//     let commentInput = document.getElementsByClassName('comment-form').value;
+//     const data = commentInput
+//     const postId = commentInput.closest(".post-container").id
+//     fetch(`http://localhost:3000/posts/${postId}`,{
+//         method: "POST",
+//         headers:{
+//             'Content-Type':'application/json',
+//         },
+//         body: JSON.stringify(data),
+//     })
+//     .then(res => res.json())
+//     .then(data => {
+//         console.log('Success:', data);
+//     })
+//     .catch((error)=>{
+//         console.error('Error:', error);
+//     });
+// };
+
+
+
+displayPost();
+
+
 initBindings();
