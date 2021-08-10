@@ -91,12 +91,14 @@ function appendPost(data){
         divBody.setAttribute("class", "post");
 
         let title = document.createElement('p');
-        title.innertext = post.author;
+        title.innertext = post.title;
         let textCont = document.createElement('p');
         textCont.innerText = post.text;
         let author = document.createElement('p');
         author.innerText = post.author;
-        divBody.append(title, author, textCont)
+        let date = document.createElement('p');
+        date.innerText = `Date added: ${post.date}`;
+        divBody.append(title, author, date, textCont)
         // divBody.textContent = `${post.author} ${post.title} ${post.text}`
         let divReact = document.createElement('div');
 
