@@ -1,8 +1,12 @@
+let url =  "https://hakema-server.herokuapp.com";
+
 function displayPost(){
-    fetch(`https://hakema-server.herokuapp.com/posts`)
+    fetch(`${url}/posts`)
     .then(res => res.json())
     .then(data => appendPost(data))
+    .catch(err => console.log(err));
 }
+
 
 function appendPost(data){
     let container = document.getElementById("posts");
@@ -61,6 +65,5 @@ function makeComment(e){
         console.error('Error:', error);
     });
 };
-
 
 displayPost();
