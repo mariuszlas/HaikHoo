@@ -6,7 +6,7 @@ function makeComment(e){
     let commentInput = document.getElementsByClassName('comment-form').value;
     const data = commentInput
     const postId = commentInput.closest(".post-container").id
-    fetch(`http://localhost:3000/posts/${postId}`,{
+    fetch(`https://hakema-server.herokuapp.com${postId}`,{
         method: "POST",
         headers:{
             'Content-Type':'application/json',
