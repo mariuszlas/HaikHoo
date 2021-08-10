@@ -18,13 +18,13 @@ class Data {
     constructor(title, poem, giphyURL){
         this.author = randomName();
         this.title = title;
-        this.body = poem;
-        this.giphy = giphyURL;
+        this.text = poem;
+        this.gifURL = giphyURL;
         this.date = formatDate();
     }
 }
 
-function makeElement(element, type, id, value) {
+function makeElement(element, type, id, value='') {
     newElement = document.createElement(element)
     newElement.setAttribute('type', type);
     newElement.setAttribute('id', id);
@@ -32,8 +32,8 @@ function makeElement(element, type, id, value) {
     return newElement;
 }
 
-function postPoem(title, poem) {
-    let data = new Data(title, poem)
+function postPoem(title, poem, giphyURL) {
+    let data = new Data(title, poem, giphyURL)
     fetch('http://localhost:3000/posts', {
         method: "POST",
         body: JSON.stringify(data),
