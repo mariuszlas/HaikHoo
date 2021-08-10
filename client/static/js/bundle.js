@@ -1796,64 +1796,71 @@ function appendPost(data){
         let date = document.createElement('p');
         date.innerText = `Date added: ${post.date}`;
         divBody.append(title, author, date, textCont)
-        // divBody.textContent = `${post.author} ${post.title} ${post.text}`
         let divReact = document.createElement('div');
 
         let divComment = document.createElement('div');
-        let commentBtn = document.createElement("button");
-        commentBtn.textContent = "Comment";
+
+        let commentForm = document.createElement("form");
+        commentForm.setAttribute('name', post.id)
+        let inputForm = document.createElement("input");
+        inputForm.setAttribute("type","text");
+        inputForm.setAttribute("class","input-form");
+        inputForm.setAttribute("name","comment");
+
+        let commentBtn = document.createElement("input");
+        // commentBtn.textContent = "Comment";
+        commentBtn.setAttribute("type", "submit");
         commentBtn.setAttribute("class", "comment-btn");
-        let commentForm = document.createElement("input");
-        commentForm.setAttribute("type","text");
-        commentForm.setAttribute("class","comment-form");
 
-        // container.appendChild(div);
-        // container.appendChild(commentForm);
-        // container.appendChild(commentBtn);
+        commentForm.appendChild( commentBtn);
+        commentForm.appendChild(inputForm);
 
-        commentBtn.addEventListener('click', e => makeComment(e));
+        commentForm.addEventListener('submit', e => makeComment(e));
         let commentSection = document.createElement("div");
         commentSection.setAttribute("class", "comment");
 
         for (let x = 0; x < post.comments.length; x++ ){
-            let comments = document.createElement("div");
+            let comments = document.createElement("p");
             comments.textContent = post.comments[x];
             commentSection.appendChild(comments);
         }
-        divComment.append(commentForm, commentBtn);
+        divComment.append(commentSection, commentForm);
         article.append(divBody, divReact, divComment)
         container.appendChild(article);
-        //
-        // container.appendChild(commentSection);
-        // container.setAttribute("class", "post-container");
-        // container.setAttribute("id", post.id);
     }
 }
 
 // const commentBtn = document.querySelector(".comment-btn");
-
-// commentBtn.addEventListener('click', post);
 //
-// function makeComment(e){
-//     e.preventDefault();
-//     let commentInput = document.getElementsByClassName('comment-form').value;
-//     const data = commentInput
-//     const postId = commentInput.closest(".post-container").id
-//     fetch(`http://localhost:3000/posts/${postId}`,{
-//         method: "POST",
-//         headers:{
-//             'Content-Type':'application/json',
-//         },
-//         body: JSON.stringify(data),
-//     })
-//     .then(res => res.json())
-//     .then(data => {
-//         console.log('Success:', data);
-//     })
-//     .catch((error)=>{
-//         console.error('Error:', error);
-//     });
-// };
+// commentBtn.addEventListener('click', post);
+
+async function makeComment(e){
+    e.preventDefault();
+    const comment = e.target[1].value;
+    let id = e.target.name;
+    let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
+    console.log(id);
+    console.log(comment);
+    // let postId = commentInput.closest("article").id
+    // console.log(postId);
+    const options = {
+        method: "PUT",
+        headers: { 'Content-Type':'application/json'},
+        body: JSON.stringify({"comment": comment})
+    }
+    console.log(`${url}/posts/${id}/comment`);
+
+    try {
+        let response = await fetch(`${url}/posts/${id}/comment`, options);
+        console.log(response);
+        // .then(res => res.json())
+        // .then(data => {
+        //     console.log('Success:', data);
+        // })
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 
 
