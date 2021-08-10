@@ -45,4 +45,4 @@ function postPoem(title, poem, giphyURL) {
 }
 
 
-module.exports = { Data, makeElement, formatDate, postPoem }
+module.exports = { Data, makeElement, formatDate, postPoem, randomName }

@@ -1,10 +1,10 @@
 
 const { test, beforeEach, expect } = require('@jest/globals')
-const nameGenerator = require('../../username_generator/nameGenerator')
+const model = require('../static/js/model')
 
 
 describe('nameGenerator', () => {
-    beforeEach(() => randomName = nameGenerator.randomName )
+    beforeEach(() => randomName = model.randomName )
 
     test('are two words being returned', () => {
        let wordsArr = randomName().split(" ")
@@ -15,7 +15,7 @@ describe('nameGenerator', () => {
     test("are the names different 'every' time", () => {
         let namesArr = []
         let matches = 0;
-        for(let i = 0; i<1000; i++){
+        for(let i = 0; i<100; i++){
            namesArr.push(randomName())
         }
         for(let i = 0; i<namesArr.length; i++){

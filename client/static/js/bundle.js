@@ -3,7 +3,6 @@ const {Data, postPoem} = require('./model')
 
 function checkPoem(e) {
     e.preventDefault();
-    console.log(e);
     let title = e.target.poemTitle.value;
     let poem = e.target.userPoem.value;
     let gif = document.querySelector('#selectedGif img')
@@ -95,7 +94,7 @@ function postPoem(title, poem, giphyURL) {
 }
 
 
-module.exports = { Data, makeElement, formatDate, postPoem }
+module.exports = { Data, makeElement, formatDate, postPoem, randomName }
 
 },{"./nameData":3}],3:[function(require,module,exports){
 let animals =
@@ -1681,7 +1680,6 @@ const { makeElement } = require('./model')
 
 function initBindings() {
     document.querySelector('#makePost').addEventListener('click', showForm);
-
 }
 
 function showForm(e) {
@@ -1690,12 +1688,12 @@ function showForm(e) {
     form.setAttribute("id", "new-post-form");
     let titleField = makeElement('input', 'text', 'poemTitle')
     titleField.setAttribute('name', 'poemTitle')
-    let labelTitle = makeElement('label');
+    let labelTitle = document.createElement('label');
     labelTitle.setAttribute("name", "poemTitle");
     labelTitle.innerText = "Title  ";
     let poemField = makeElement('input', 'text', 'userPoem');
     poemField.setAttribute("name", "userPoem")
-    let labelPoem = makeElement('label');
+    let labelPoem = document.createElement('label');
     labelPoem.setAttribute("name", "poemTitle");
     labelPoem.innerText = "Your Poem:  ";
     let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
@@ -1704,7 +1702,7 @@ function showForm(e) {
     let selectedGif = document.createElement('span');
     selectedGif.setAttribute('id', 'selectedGif');
     counterArea.setAttribute("id", "counter");
-    document.querySelector('body').appendChild(form)
+    document.querySelector('header').after(form)
     form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
     formBtnsListeners();
 }

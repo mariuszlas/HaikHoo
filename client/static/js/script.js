@@ -3,7 +3,6 @@ const { makeElement } = require('./model')
 
 function initBindings() {
     document.querySelector('#makePost').addEventListener('click', showForm);
-
 }
 
 function showForm(e) {
@@ -12,12 +11,12 @@ function showForm(e) {
     form.setAttribute("id", "new-post-form");
     let titleField = makeElement('input', 'text', 'poemTitle')
     titleField.setAttribute('name', 'poemTitle')
-    let labelTitle = makeElement('label');
+    let labelTitle = document.createElement('label');
     labelTitle.setAttribute("name", "poemTitle");
     labelTitle.innerText = "Title  ";
     let poemField = makeElement('input', 'text', 'userPoem');
     poemField.setAttribute("name", "userPoem")
-    let labelPoem = makeElement('label');
+    let labelPoem = document.createElement('label');
     labelPoem.setAttribute("name", "poemTitle");
     labelPoem.innerText = "Your Poem:  ";
     let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
@@ -26,7 +25,7 @@ function showForm(e) {
     let selectedGif = document.createElement('span');
     selectedGif.setAttribute('id', 'selectedGif');
     counterArea.setAttribute("id", "counter");
-    document.querySelector('body').appendChild(form)
+    document.querySelector('header').after(form)
     form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
     formBtnsListeners();
 }

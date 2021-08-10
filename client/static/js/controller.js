@@ -2,7 +2,6 @@ const {Data, postPoem} = require('./model')
 
 function checkPoem(e) {
     e.preventDefault();
-    console.log(e);
     let title = e.target.poemTitle.value;
     let poem = e.target.userPoem.value;
     let gif = document.querySelector('#selectedGif img')
