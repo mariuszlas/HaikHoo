@@ -13,10 +13,10 @@ function showForm(e) {
     document.querySelector('body').appendChild(form)
     form.append(titleField, poemField, makePost, searchGif)
     document.querySelector('#submitPoem').addEventListener('click', controller.checkPoem)
-    document.querySelector('#addGif').addEventListener('click', addGifForm);
+    document.querySelector('#addGif').addEventListener('click', showGifForm);
 }
 
-function addGifForm(e) {
+function showGifForm(e) {
     e.preventDefault();
     console.log('e')
     let gifForm = document.createElement('form')
