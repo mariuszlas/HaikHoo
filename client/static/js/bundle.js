@@ -207,7 +207,7 @@ function appendPost(data){
         divReact.append(spanEmoji, showComBtn)
         let divComment = createComSection(post);
         article.append(divBody, divReact, divComment)
-        document.querySelector('#showMorePosts').before(article);
+    document.querySelector('#showMorePosts').before(article);
     }
 }
 
