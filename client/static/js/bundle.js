@@ -87,10 +87,11 @@ function checkPoem(e) {
 }
 
 function updateDisplay(){
+    console.log('hi')
     document.querySelectorAll('article').forEach(article => {
         article.remove()
     })
-    displayPost(1, 0);
+    setTimeout(displayPost(1, 0), 5000);
 }
 
 function clearForm(){
@@ -219,7 +220,6 @@ function appendPost(data, page, index){
     for (let i = index; i < page*5; i++){
         
         let post = data[i]
-        console.log(typeof post)
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
 
