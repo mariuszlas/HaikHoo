@@ -18,7 +18,7 @@ describe('post poem', () => {
     test('is fetch post being called', () => {
         let stubEvent = { target: { poemTitle: 'title', userPoem: 'poem' } }
         stubEvent.preventDefault = jest.fn()
-        fetchMock.mockResponse(JSON.stringify({ "public_repos": 100 }))
+        fetchMock.mockResponse(JSON.stringify(stubEvent))
         checkPoem(stubEvent)
         expect(fetch).toHaveBeenCalled()
     })
