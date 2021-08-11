@@ -279,7 +279,7 @@ async function sendLike(e) {
 
 function showComSection(e) {
     e.preventDefault();
-    letComSection = document.querySelector('#comments-div')
+    
 }
 
 // function makeElement(element, className, textCont=null) {
