@@ -64,7 +64,8 @@ function selectGif(e) {
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     document.querySelector('#selectedGif').append(previewGif)
-    document.querySelector('#gifForm').remove()
+    document.querySelector('#gifForm').remove();
+
 }
 
 function checkPoem(e) {
@@ -108,7 +109,8 @@ function clearForm() {
     document.querySelector('#new-post-form').style.display = "none"
 }
 
-module.exports = { showForm, collapseForm };
+
+module.exports = { showForm, checkPoem, formBtnsListeners };
 
 },{"./helpers.js":2,"./mainHandlers":4,"./requestHandlers.js":6}],2:[function(require,module,exports){
 const {adjectives, animals} = require('./nameData')
@@ -224,7 +226,7 @@ function appendPost(data, page, index){
     data.reverse()
 
     for (let i = index; i < page*5; i++){
-
+        
         let post = data[i]
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
@@ -253,9 +255,6 @@ function showComSection(e) {
     } else {
         divCom.style.display = "none"
     }
-    // console.log(e.target.parentElement.nextElementSibling);
-    // let comtDiv = document.querySelector('.comments-div');
-    // comtDiv.style.display = "block"
 }
 
 function makeElement(element, className, textCont=null) {
@@ -272,9 +271,12 @@ function createBody(post) {
     let author = makeElement('p', 'p-author', post.author);
     let textCont = makeElement('p', 'p-text', post.text);
     let date = makeElement('p', 'p-date', `Date added: ${post.date}`);
-    let gif = document.createElement('img');
-    gif.setAttribute('src', post.gifUrl);
-    divBody.append(title, author, date, textCont, gif);
+    divBody.append(title, author, date, textCont);
+    if (post.gifUrl !== "") {
+        let gif = document.createElement('img');
+        gif.setAttribute('src', post.gifUrl);
+        divBody.appendChild(gif)
+    }
     return divBody;
 }
 
@@ -313,8 +315,9 @@ function createComSection(post) {
 
     let commentForm = makeElement("form", "add-comment-form");
     commentForm.setAttribute('name', post.id)
-    let inputForm = makeElement("input", "input-form");
-    inputForm.setAttribute("type","text");
+    let inputForm = makeElement("textarea", "input-form");
+    inputForm.setAttribute('rows', '2')
+    inputForm.setAttribute('cols', '25')
     inputForm.setAttribute("name","comment");
 
     let commentBtn = makeElement("input", 'comment-btn');
@@ -405,6 +408,7 @@ async function sendLike(e) {
     const reaction = button.getAttribute('class');
     console.log(id.id);
     console.log(button.getAttribute('class'));
+    liveReactionCounter(button);
     let options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'}
@@ -413,22 +417,24 @@ async function sendLike(e) {
 }
 
 
-async function makeComment(e){
+function liveReactionCounter(btnElement) {
+    // console.log(btnElement);
+    // let span = btnElement.nextElementSibling
+    // span.innerText = parseInt(span.innerText) + 1;
+    // console.log(span);
+}
+
+
+async function makeComment(e){https://haikhoo-server.herokuapp.com
     e.preventDefault();
-    const comment = e.target[1].value;
+    const comment = e.target[0].value;
     let id = e.target.name;
     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    // console.log(id);
-    // console.log(comment);
-    // // let postId = commentInput.closest("article").id
-    // console.log(postId);
     const options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'},
         body: JSON.stringify({"comment": comment})
     }
-    // console.log(`${url}/posts/${id}/comment`);
-
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
     } catch (err) {
@@ -2023,8 +2029,12 @@ const { collapseForm } = require('./formHandlers');
 const { Data } = require('./helpers.js');
 
 let url =  "https://haikhoo-server.herokuapp.com";
+let pageCounter = 0;
+let startIndex = 0;
+
 // let pageCounter = 0;
 // let startIndex = 0;
+
 
 
 
@@ -2045,6 +2055,7 @@ function postPoem(title, poem, giphyURL) {
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
+    fetch('https://haikhoo-server.herokuapp.com/posts', options)
     fetch(`${url}/posts`, options)
         .then(data => console.log(data))
         .catch(err => console.log(err))
@@ -2056,17 +2067,11 @@ async function makeComment(e) {
     const comment = e.target[1].value;
     let id = e.target.name;
     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    // console.log(id);
-    // console.log(comment);
-    // // let postId = commentInput.closest("article").id
-    // console.log(postId);
     const options = {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "comment": comment })
     }
-    // console.log(`${url}/posts/${id}/comment`);
-
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
     } catch (err) {
@@ -2110,5 +2115,3 @@ async function fetchGif(userInput) {
 module.exports = { postPoem, makeComment, fetchGif }
 
 },{"./formHandlers":1,"./helpers.js":2,"./mainHandlers":4}]},{},[3]);
-
-console.error("Error: Parsing file /home/mariusz/Documents/Programming/Web/Assignments/lap_1_project/client/static/js/formHandlers.js: Unexpected token (66:2)");
