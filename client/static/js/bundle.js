@@ -82,6 +82,7 @@ function selectGif(e) {
 
 function checkPoem(e) {
     e.preventDefault();
+    console.log(e);
     let title = e.target.poemTitle.value;
     let poem = e.target.userPoem.value;
     let gif = document.querySelector('#selectedGif img')
@@ -112,21 +113,26 @@ let formatDate = () => {
 }
 
 class Data {
-    constructor(title, poem){
+    constructor(title, poem, giphyURL){
         this.author = randomName();
         this.title = title;
         this.text = poem;
-        this.gifURL = giphyURL;
+        this.gifUrl = giphyURL;
         this.date = formatDate();
     }
 }
 
 function postValidity(title, poem) {
-    if (title.length == 0) {
+    console.log(poem)
+    let poemNoSpace = poem.replace(/\s/g, '')
+    if (!title) {
         throw new Error('please enter a title')
     }
-    if (poem.length == 0) {
+    if (!poemNoSpace) {
         throw new Error(`you haven't written your poem yet!`)
+    }
+    if (poem.length > 500){
+        throw new Error(`your poem is over the character limit`)
     }
 }
 
@@ -147,13 +153,11 @@ function counter(e) {
 }
 
 
-///////////// TO BE REMOVED //////////////////////////
 let randomName = () => {
     let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     let randomAnimal = animals[Math.floor(Math.random() * animals.length)];
     return `${randomAdjective} ${randomAnimal}`
 }
-//////////////////////////////////////////////////////
 
 
 module.exports = { Data, makeElement, formatDate, postValidity, counter }
@@ -254,16 +258,12 @@ async function sendLike(e) {
     await fetch(`${url}/posts/${id.id}/${reaction}`, options)
 }
 
-<<<<<<< HEAD
 // function makeElement(element, className, textCont=null) {
 //     newElement = document.createElement(element)
 //     newElement.setAttribute('class', className);
 //     textCont ? newElement.textContent = textCont: null;
 //     return newElement;
 // }
-=======
-module.exports = { Data, makeElement, formatDate, postPoem, randomName }
->>>>>>> 3e80acb1e6aa779725e3fb1ae42dadd4013c3c10
 
 // function appendPost(data){
 //     let container = document.querySelector("main");
@@ -1918,102 +1918,9 @@ let adjectives =
     ]
 
 module.exports = { adjectives, animals }
-<<<<<<< HEAD
 },{}],6:[function(require,module,exports){
 const { appendPost } = require('./mainHandlers.js');
 const { Data } = require('./helpers.js')
-=======
-},{}],4:[function(require,module,exports){
-const controller = require('./controller')
-const { makeElement } = require('./model')
-
-function initBindings() {
-    document.querySelector('#makePost').addEventListener('click', showForm);
-}
-
-function showForm(e) {
-    e.preventDefault();
-    let form = document.createElement('form')
-    form.setAttribute("id", "new-post-form");
-    let titleField = makeElement('input', 'text', 'poemTitle')
-    titleField.setAttribute('name', 'poemTitle')
-    let labelTitle = document.createElement('label');
-    labelTitle.setAttribute("name", "poemTitle");
-    labelTitle.innerText = "Title  ";
-    let poemField = makeElement('input', 'text', 'userPoem');
-    poemField.setAttribute("name", "userPoem")
-    let labelPoem = document.createElement('label');
-    labelPoem.setAttribute("name", "poemTitle");
-    labelPoem.innerText = "Your Poem:  ";
-    let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
-    let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
-    let counterArea = document.createElement("span");
-    let selectedGif = document.createElement('span');
-    selectedGif.setAttribute('id', 'selectedGif');
-    counterArea.setAttribute("id", "counter");
-    document.querySelector('header').after(form)
-    form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
-    formBtnsListeners();
-}
-
-function formBtnsListeners() {
-    document.querySelector('#new-post-form').addEventListener('submit', controller.checkPoem)
-    document.querySelector('#addGif').addEventListener('click', showGifForm);
-    let textArea = document.querySelector('#userPoem');
-    textArea.addEventListener("keyup", e => counter(e));
-
-}
-
-function showGifForm(e) {
-    e.preventDefault();
-    let gifForm = document.createElement('form')
-    gifForm.setAttribute('id', 'gifForm')
-    let searchWord = makeElement('input', 'text', 'gifWord');
-    searchWord.setAttribute('placeholder', 'search for a gif');
-    let searchGif = makeElement('input', 'submit', 'gifSearch','search');
-    let gifContainer = document.createElement('section');
-    gifContainer.setAttribute('id', 'gifContainer');
-    gifForm.append(searchWord, searchGif, gifContainer);
-    document.querySelector('form').append(gifForm);
-    document.querySelector('#gifSearch').addEventListener('click', displayGif)
-}
-
-async function displayGif(e) {
-    e.preventDefault()
-    document.querySelector("#gifContainer").textContent = "";
-    let userInput = document.querySelector('#gifWord').value;
-    let gifData = await controller.fetchGif(userInput)
-    for (let i = 0; i < gifData.data.length; i++) {
-
-        let gifPath = gifData.data[i].images.fixed_height.url
-        let gif = document.createElement('img')
-        gif.setAttribute('src', gifPath)
-        document.querySelector('#gifContainer').append(gif)
-        gif.addEventListener('click', selectGif)
-    }
-}
-
-function selectGif(e) {
-    console.log(e)
-    let gifPath = e.target.src
-    console.log(gifPath)
-    document.querySelector("#selectedGif").textContent = "";
-    let previewGif = document.createElement('img')
-    previewGif.setAttribute('src', gifPath)
-    document.querySelector('#selectedGif').append(previewGif)
-    e.path[2].remove()
-}
-
-
-function counter(e) {
-    e.preventDefault();
-    const max = 500;
-    let textLen = e.target.value.length;
-    let span = document.querySelector('#counter');
-    span.innerText = `${textLen}/500`;
-}
-
->>>>>>> 3e80acb1e6aa779725e3fb1ae42dadd4013c3c10
 
 let url =  "https://hakema-server.herokuapp.com";
 
@@ -2026,13 +1933,13 @@ function displayPost(){
 
 function postPoem(title, poem, giphyURL) {
     let data = new Data(title, poem, giphyURL)
+    console.log(data)
     let options = {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
     fetch('https://hakema-server.herokuapp.com/posts', options)
-        .then(resp => resp.json())
         .then(data => console.log(data))
         .catch(err => console.log(err))
 }

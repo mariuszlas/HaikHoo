@@ -9,11 +9,11 @@ let formatDate = () => {
 }
 
 class Data {
-    constructor(title, poem){
+    constructor(title, poem, giphyURL){
         this.author = randomName();
         this.title = title;
         this.text = poem;
-        this.gifURL = giphyURL;
+        this.gifUrl = giphyURL;
         this.date = formatDate();
     }
 }

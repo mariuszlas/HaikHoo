@@ -12,13 +12,13 @@ function displayPost(){
 
 function postPoem(title, poem, giphyURL) {
     let data = new Data(title, poem, giphyURL)
+    console.log(data)
     let options = {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
     fetch('https://hakema-server.herokuapp.com/posts', options)
-        .then(resp => resp.json())
         .then(data => console.log(data))
         .catch(err => console.log(err))
 }
