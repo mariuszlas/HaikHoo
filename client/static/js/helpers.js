@@ -62,4 +62,4 @@ let randomName = () => {
 }
 
 
-module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop, randomName }
+module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }
