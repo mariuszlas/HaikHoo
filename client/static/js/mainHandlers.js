@@ -26,7 +26,7 @@ function appendPost(data){
         divBody.append(title, author, date, textCont, gif);
 
         let divReact = document.createElement('div');
-        let divEmoji = document.createElement('div');
+        let spanEmoji = document.createElement('span');
 
         let likeBtn = document.createElement('button');
         let cryBtn = document.createElement('button');
@@ -40,18 +40,22 @@ function appendPost(data){
         smileBtn.addEventListener('click',  e => {sendLike(e)});
         smileBtn.textContent = String.fromCodePoint(0x1F603);
         let showComBtn = document.createElement('button');
+        showComBtn.textContent = 'Show/Add Comments';
         showComBtn.addEventListener('click', e => showComSection(e));
 
-        divEmoji.append(likeBtn, cryBtn, smileBtn);
+        spanEmoji.append(likeBtn, cryBtn, smileBtn);
 
 
         let divComment = document.createElement('div');
+        divComment.setAttribute('class', 'comments-div');
+
         let commentForm = document.createElement("form");
         commentForm.setAttribute('name', post.id)
         let inputForm = document.createElement("input");
         inputForm.setAttribute("type","text");
         inputForm.setAttribute("class","input-form");
         inputForm.setAttribute("name","comment");
+        divReact.append(spanEmoji, showComBtn)
 
         let commentBtn = document.createElement("input");
         commentBtn.textContent = "Comment";
@@ -93,7 +97,7 @@ async function sendLike(e) {
 
 function showComSection(e) {
     e.preventDefault();
-    
+    letComSection = document.querySelector('#comments-div')
 }
 
 // function makeElement(element, className, textCont=null) {
