@@ -1,17 +1,35 @@
-const handlers = require('./requestHandlers.js')
-const { makeComment } = require('./requestHandlers.js')
+//const { displayPost }= require('./requestHandlers.js')
+//const { makeComment } = require('./requestHandlers.js')
+
+let url =  "https://hakema-server.herokuapp.com";
+let pageCounter = 1;
+let startIndex = 0;
+
+
 
 function extendPage(e){
     e.preventDefault();
-   handlers.displayPost()
+    pageCounter++;
+    startIndex = startIndex +5;
+    displayPost()
+}
+
+
+function displayPost(){
+    fetch(`${url}/posts`)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        appendPost(data, pageCounter, startIndex)})
+    .catch(err => console.log(err));
 }
 
 
 
-function appendPost(data, pageCounter, startIndex){
+function appendPost(data, page, index){
     data.reverse()
 
-    for (let i = startIndex; i < pageCounter*5; i++){
+    for (let i = index; i < page*5; i++){
         let post = data[i]
 
         let article = document.createElement('article');
@@ -186,7 +204,6 @@ function createComSection(post) {
 //     }
 // }
 
-let url =  "https://hakema-server.herokuapp.com";
 async function sendLike(e) {
     e.preventDefault();
     let button = e.target;
@@ -202,28 +219,28 @@ async function sendLike(e) {
 }
 
 
-// async function makeComment(e){
-//     e.preventDefault();
-//     const comment = e.target[1].value;
-//     let id = e.target.name;
-//     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-//     // console.log(id);
-//     // console.log(comment);
-//     // // let postId = commentInput.closest("article").id
-//     // console.log(postId);
-//     const options = {
-//         method: "PUT",
-//         headers: { 'Content-Type':'application/json'},
-//         body: JSON.stringify({"comment": comment})
-//     }
-//     // console.log(`${url}/posts/${id}/comment`);
+async function makeComment(e){
+    e.preventDefault();
+    const comment = e.target[1].value;
+    let id = e.target.name;
+    let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
+    // console.log(id);
+    // console.log(comment);
+    // // let postId = commentInput.closest("article").id
+    // console.log(postId);
+    const options = {
+        method: "PUT",
+        headers: { 'Content-Type':'application/json'},
+        body: JSON.stringify({"comment": comment})
+    }
+    // console.log(`${url}/posts/${id}/comment`);
 
-//     try {
-//         await fetch(`${url}/posts/${id}/comment`, options);
-//     } catch (err) {
-//         console.log(err);
-//     }
-// };
+    try {
+        await fetch(`${url}/posts/${id}/comment`, options);
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 
-module.exports = { appendPost, extendPage }
+module.exports = { appendPost, extendPage, displayPost, extendPage }
