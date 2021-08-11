@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --watchAll",
     "bundle": "browserify ./static/js/index.js > ./static/js/bundle.js",
-    "dev": "concurrently \"watchify ./static/js/index.js -o ./static/js/bundle.js\" \"python3 -m http.server\""
+    "dev": "concurrently \"watchify ./static/js/index.js -o ./static/js/bundle.js\" \"python -m http.server\""
   },
   "jest": {
     "testEnvironment": "jsdom",

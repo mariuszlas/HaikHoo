@@ -117,21 +117,26 @@ let formatDate = () => {
 }
 
 class Data {
-    constructor(title, poem){
+    constructor(title, poem, giphyURL){
         this.author = randomName();
         this.title = title;
         this.text = poem;
-        this.gifURL = giphyURL;
+        this.gifUrl = giphyURL;
         this.date = formatDate();
     }
 }
 
 function postValidity(title, poem) {
-    if (title.length == 0) {
+    console.log(poem)
+    let poemNoSpace = poem.replace(/\s/g, '')
+    if (!title) {
         throw new Error('please enter a title')
     }
-    if (poem.length == 0) {
+    if (!poemNoSpace) {
         throw new Error(`you haven't written your poem yet!`)
+    }
+    if (poem.length > 500){
+        throw new Error(`your poem is over the character limit`)
     }
 }
 
@@ -156,13 +161,11 @@ function scrollToTop() {
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-///////////// TO BE REMOVED //////////////////////////
 let randomName = () => {
     let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     let randomAnimal = animals[Math.floor(Math.random() * animals.length)];
     return `${randomAdjective} ${randomAnimal}`
 }
-//////////////////////////////////////////////////////
 
 
 module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }
@@ -187,7 +190,7 @@ function appendPost(data){
     data.reverse()
     let container = document.querySelector("main");
 
-    for (let i = 0; i < data.length; i++){
+    for (let i = 0; i < 5; i++){
         let post = data[i]
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
@@ -258,7 +261,7 @@ function appendPost(data){
         }
         divComment.append(commentSection, commentForm);
         article.append(divBody, divReact, divComment)
-        container.appendChild(article);
+        document.querySelector('#showMorePosts').before(article);
     }
 }
 
@@ -1957,13 +1960,13 @@ function displayPost(){
 
 function postPoem(title, poem, giphyURL) {
     let data = new Data(title, poem, giphyURL)
+    console.log(data)
     let options = {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
     fetch('https://hakema-server.herokuapp.com/posts', options)
-        .then(resp => resp.json())
         .then(data => console.log(data))
         .catch(err => console.log(err))
 }
