@@ -4,7 +4,7 @@
 function appendPost(data){
     let container = document.querySelector("main");
 
-    for (let i = 0; i < data.length; i++){
+    for (let i = 0; i < 5; i++){
         let post = data[i]
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
