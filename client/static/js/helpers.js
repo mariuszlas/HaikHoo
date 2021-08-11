@@ -48,6 +48,10 @@ function counter(e) {
     span.innerText = `${textLen}/500`;
 }
 
+function scrollToTop() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
 
 let randomName = () => {
     let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
@@ -56,4 +60,4 @@ let randomName = () => {
 }
 
 
-module.exports = { Data, makeElement, formatDate, postValidity, counter }
+module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }
