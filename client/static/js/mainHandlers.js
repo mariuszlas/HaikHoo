@@ -1,14 +1,9 @@
-// const handlers = require('./requestHandlers.js')
-<<<<<<< HEAD
-
-const reqHandlers = require("./requestHandlers");
-=======
-// const { makeComment } = require('./requestHandlers.js')
->>>>>>> upstream/dev
+const handlers = require('./requestHandlers.js')
+const { makeComment } = require('./requestHandlers.js')
 
 function extendPage(e){
     e.preventDefault();
-   reqHandlers.displayPost()
+   handlers.displayPost()
 }
 
 
@@ -200,28 +195,28 @@ async function sendLike(e) {
 }
 
 
-async function makeComment(e){
-    e.preventDefault();
-    const comment = e.target[1].value;
-    let id = e.target.name;
-    let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    // console.log(id);
-    // console.log(comment);
-    // // let postId = commentInput.closest("article").id
-    // console.log(postId);
-    const options = {
-        method: "PUT",
-        headers: { 'Content-Type':'application/json'},
-        body: JSON.stringify({"comment": comment})
-    }
-    // console.log(`${url}/posts/${id}/comment`);
+// async function makeComment(e){
+//     e.preventDefault();
+//     const comment = e.target[1].value;
+//     let id = e.target.name;
+//     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
+//     // console.log(id);
+//     // console.log(comment);
+//     // // let postId = commentInput.closest("article").id
+//     // console.log(postId);
+//     const options = {
+//         method: "PUT",
+//         headers: { 'Content-Type':'application/json'},
+//         body: JSON.stringify({"comment": comment})
+//     }
+//     // console.log(`${url}/posts/${id}/comment`);
 
-    try {
-        await fetch(`${url}/posts/${id}/comment`, options);
-    } catch (err) {
-        console.log(err);
-    }
-};
+//     try {
+//         await fetch(`${url}/posts/${id}/comment`, options);
+//     } catch (err) {
+//         console.log(err);
+//     }
+// };
 
 
 module.exports = { appendPost, extendPage }
