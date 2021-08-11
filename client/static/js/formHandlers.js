@@ -63,7 +63,11 @@ function selectGif(e) {
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     document.querySelector('#selectedGif').append(previewGif)
+<<<<<<< HEAD
+    document.querySelector('#gifForm').remove();
+=======
     document.querySelector('#gifForm').remove()
+>>>>>>> 715a8b065ea8ec7466cd0ad14c47becbd43d2ade
 }
 
 function checkPoem(e) {

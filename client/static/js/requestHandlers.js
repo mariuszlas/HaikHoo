@@ -3,8 +3,13 @@ const { collapseForm } = require('./formHandlers');
 const { Data } = require('./helpers.js');
 
 let url =  "https://haikhoo-server.herokuapp.com";
+<<<<<<< HEAD
+let pageCounter = 0;
+let startIndex = 0;
+=======
 // let pageCounter = 0;
 // let startIndex = 0;
+>>>>>>> 715a8b065ea8ec7466cd0ad14c47becbd43d2ade
 
 
 
@@ -25,7 +30,11 @@ function postPoem(title, poem, giphyURL) {
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
+<<<<<<< HEAD
+    fetch('https://haikhoo-server.herokuapp.com/posts', options)
+=======
     fetch(`${url}/posts`, options)
+>>>>>>> 715a8b065ea8ec7466cd0ad14c47becbd43d2ade
         .then(data => console.log(data))
         .catch(err => console.log(err))
 }
@@ -36,17 +45,11 @@ async function makeComment(e) {
     const comment = e.target[1].value;
     let id = e.target.name;
     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    // console.log(id);
-    // console.log(comment);
-    // // let postId = commentInput.closest("article").id
-    // console.log(postId);
     const options = {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "comment": comment })
     }
-    // console.log(`${url}/posts/${id}/comment`);
-
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
     } catch (err) {

@@ -2104,3 +2104,6 @@ async function fetchGif(userInput) {
 module.exports = { postPoem, makeComment, fetchGif }
 
 },{"./formHandlers":1,"./helpers.js":2,"./mainHandlers":4}]},{},[3]);
+=======
+console.error("Error: Parsing file /home/mariusz/Documents/Programming/Web/Assignments/lap_1_project/client/static/js/formHandlers.js: Unexpected token (66:2)");
+
