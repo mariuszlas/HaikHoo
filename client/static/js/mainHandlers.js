@@ -1,11 +1,35 @@
-// const handlers = require('./requestHandlers.js')
-// const { makeComment } = require('./requestHandlers.js')
+//const { displayPost }= require('./requestHandlers.js')
+//const { makeComment } = require('./requestHandlers.js')
 
-function appendPost(data){
+let url =  "https://hakema-server.herokuapp.com";
+let pageCounter = 1;
+let startIndex = 0;
+
+
+
+function extendPage(e){
+    e.preventDefault();
+    pageCounter++;
+    startIndex = startIndex +5;
+    displayPost()
+}
+
+
+function displayPost(){
+    fetch(`${url}/posts`)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        appendPost(data, pageCounter, startIndex)})
+    .catch(err => console.log(err));
+}
+
+
+
+function appendPost(data, page, index){
     data.reverse()
-    let container = document.querySelector("main");
 
-    for (let i = 0; i < 5; i++){
+    for (let i = index; i < page*5; i++){
         let post = data[i]
 
         let article = document.createElement('article');
@@ -180,7 +204,6 @@ function createComSection(post) {
 //     }
 // }
 
-let url =  "https://hakema-server.herokuapp.com";
 async function sendLike(e) {
     e.preventDefault();
     let button = e.target;
@@ -219,4 +242,5 @@ async function makeComment(e){
     }
 };
 
-module.exports = { appendPost }
+
+module.exports = { appendPost, extendPage, displayPost, extendPage }
