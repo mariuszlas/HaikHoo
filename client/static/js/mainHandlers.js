@@ -1,7 +1,7 @@
-//const { displayPost }= require('./requestHandlers.js')
-//const { makeComment } = require('./requestHandlers.js')
+//const { displayPost } = require('./requestHandlers.js');
+//const { makeComment } = require('./requestHandlers.js');
 
-let url =  "https://hakema-server.herokuapp.com";
+let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 1;
 let startIndex = 0;
 
@@ -11,16 +11,16 @@ function extendPage(e){
     e.preventDefault();
     pageCounter++;
     startIndex = startIndex +5;
-    displayPost()
+    displayPost(pageCounter, startIndex);
 }
 
 
-function displayPost(){
+function displayPost(page, index){
     fetch(`${url}/posts`)
     .then(res => res.json())
     .then(data => {
         console.log(data)
-        appendPost(data, pageCounter, startIndex)})
+        appendPost(data, page, index)})
     .catch(err => console.log(err));
 }
 
@@ -30,8 +30,8 @@ function appendPost(data, page, index){
     data.reverse()
 
     for (let i = index; i < page*5; i++){
+        
         let post = data[i]
-
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
 
@@ -212,6 +212,7 @@ async function sendLike(e) {
     const reaction = button.getAttribute('class');
     console.log(id.id);
     console.log(button.getAttribute('class'));
+    liveReactionCounter(button);
     let options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'}
@@ -220,7 +221,15 @@ async function sendLike(e) {
 }
 
 
-async function makeComment(e){
+function liveReactionCounter(btnElement) {
+    // console.log(btnElement);
+    // let span = btnElement.nextElementSibling
+    // span.innerText = parseInt(span.innerText) + 1;
+    // console.log(span);
+}
+
+
+async function makeComment(e){https://haikhoo-server.herokuapp.com
     e.preventDefault();
     const comment = e.target[0].value;
     let id = e.target.name;
