@@ -4,40 +4,40 @@ const { displayPost } = require('./mainHandlers')
 
 function showForm(e) {
     e.preventDefault();
-       scrollToTop()
+    scrollToTop()
     document.querySelector('#new-post-form').style.display = "block";
     formBtnsListeners();
 }
 
-function collapseForm(){
+function collapseForm() {
     document.querySelector('#new-post-form').style.display = "none";
 }
 
 function formBtnsListeners() {
     document.querySelector('#new-post-form').addEventListener('submit', e => checkPoem(e))
-    document.querySelector('#addGif').addEventListener('click',  e => showGifForm(e));
+    document.querySelector('#addGif').addEventListener('click', e => showGifForm(e));
     let textArea = document.querySelector('#userPoem');
     textArea.addEventListener("keyup", e => counter(e));
 }
 
 function showGifForm(e) {
     e.preventDefault();
-    if(!document.querySelector('#gifForm')){
+    if (!document.querySelector('#gifForm')) {
         let gifForm = document.createElement('form')
         gifForm.setAttribute('id', 'gifForm')
         let searchWord = makeElement('input', 'text', 'gifWord');
         searchWord.setAttribute('placeholder', 'search for a gif');
-        let searchGif = makeElement('input', 'submit', 'gifSearch','search');
+        let searchGif = makeElement('input', 'submit', 'gifSearch', 'search');
         let gifContainer = document.createElement('section');
         gifContainer.setAttribute('id', 'gifContainer');
         gifForm.append(searchWord, searchGif, gifContainer);
         document.querySelector('form').append(gifForm);
         document.querySelector('#gifSearch').addEventListener('click', displayGif)
     }
-    else{
+    else {
         document.querySelector('#gifForm').remove()
     }
-    
+
 }
 
 async function displayGif(e) {
@@ -85,14 +85,21 @@ function checkPoem(e) {
     updateDisplay()
 }
 
-function updateDisplay(){
+function updateDisplay() {
     document.querySelectorAll('article').forEach(article => {
         article.remove()
     })
-    setTimeout(displayPost, 500);
+    let loader = document.createElement('div');
+    loader.setAttribute('class', 'loader');
+    document.querySelector('main').append(loader);
+    setTimeout(() => {
+        document.querySelector('.loader').remove()
+        displayPost()}, 500);
+
 }
 
-function clearForm(){
+
+function clearForm() {
     document.querySelector('#poemTitle').value = ''
     document.querySelector('#userPoem').value = ''
     document.querySelector('#selectedGif').textContent = ''
