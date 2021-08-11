@@ -212,11 +212,20 @@ async function sendLike(e) {
     const reaction = button.getAttribute('class');
     console.log(id.id);
     console.log(button.getAttribute('class'));
+    liveReactionCounter(button);
     let options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'}
     }
     await fetch(`${url}/posts/${id.id}/${reaction}`, options)
+}
+
+
+function liveReactionCounter(btnElement) {
+    // console.log(btnElement);
+    // let span = btnElement.nextElementSibling
+    // span.innerText = parseInt(span.innerText) + 1;
+    // console.log(span);
 }
 
 
