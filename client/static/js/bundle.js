@@ -179,9 +179,6 @@ function initBindings() {
 
 }
 
-
-
-
 displayPost();
 initBindings();
 
@@ -190,6 +187,7 @@ initBindings();
 
 
 function appendPost(data){
+    data.reverse()
     let container = document.querySelector("main");
 
     for (let i = 0; i < 5; i++){
@@ -208,15 +206,17 @@ function appendPost(data){
         author.innerText = post.author;
         let date = document.createElement('p');
         date.innerText = `Date added: ${post.date}`;
-        divBody.append(title, author, date, textCont)
+        let gif = document.createElement('img');
+        gif.setAttribute('src', post.gifUrl);
+        divBody.append(title, author, date, textCont, gif);
+
         let divReact = document.createElement('div');
+        let divEmoji = document.createElement('div');
 
         let likeBtn = document.createElement('button');
         let cryBtn = document.createElement('button');
         let smileBtn = document.createElement('button');
 
-        let divComment = document.createElement('div');
-        divReact.append(likeBtn, cryBtn, smileBtn);
         likeBtn.addEventListener('click', e => {sendLike(e)});
         likeBtn.setAttribute('class', 'likes')
         likeBtn.textContent = String.fromCodePoint(0x1F44D);
@@ -224,7 +224,13 @@ function appendPost(data){
         cryBtn.textContent = String.fromCodePoint(0x1F62D);
         smileBtn.addEventListener('click',  e => {sendLike(e)});
         smileBtn.textContent = String.fromCodePoint(0x1F603);
+        let showComBtn = document.createElement('button');
+        showComBtn.addEventListener('click', e => showComSection(e));
 
+        divEmoji.append(likeBtn, cryBtn, smileBtn);
+
+
+        let divComment = document.createElement('div');
         let commentForm = document.createElement("form");
         commentForm.setAttribute('name', post.id)
         let inputForm = document.createElement("input");
@@ -268,6 +274,11 @@ async function sendLike(e) {
         headers: { 'Content-Type':'application/json'}
     }
     await fetch(`${url}/posts/${id.id}/${reaction}`, options)
+}
+
+function showComSection(e) {
+    e.preventDefault();
+    
 }
 
 // function makeElement(element, className, textCont=null) {

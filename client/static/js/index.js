@@ -6,8 +6,5 @@ function initBindings() {
 
 }
 
-
-
-
 displayPost();
 initBindings();
