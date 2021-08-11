@@ -2,12 +2,19 @@ const { appendPost } = require('./mainHandlers.js');
 const { Data } = require('./helpers.js')
 
 let url =  "https://hakema-server.herokuapp.com";
+let pageCounter = 0;
+let startIndex = 0;
+
 
 function displayPost(){
+    pageCounter++;;
     fetch(`${url}/posts`)
     .then(res => res.json())
-    .then(data => appendPost(data))
+    .then(data => {
+        console.log(data)
+        appendPost(data, 1, 0)})
     .catch(err => console.log(err));
+    startIndex += 5
 }
 
 function postPoem(title, poem, giphyURL) {
@@ -29,17 +36,11 @@ async function makeComment(e){
     const comment = e.target[1].value;
     let id = e.target.name;
     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    // console.log(id);
-    // console.log(comment);
-    // // let postId = commentInput.closest("article").id
-    // console.log(postId);
     const options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'},
         body: JSON.stringify({"comment": comment})
     }
-    // console.log(`${url}/posts/${id}/comment`);
-
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
     } catch (err) {
