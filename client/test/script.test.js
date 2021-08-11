@@ -1,7 +1,7 @@
-const { checkPoem, postPoem, fetchGif, postValidity } = require("../static/js/controller")
+const { checkPoem, postPoem, fetchGif, postValidity } = require("../static/js/formHandlers")
 //const script = require('../static/js/script');
-const model = require('../static/js/model');
-global.fetch = require('jest-fetch-mock')
+const helpers = require('../static/js/helpers');
+global.fetch = require('jest-fetch-mock').enableMocks()
 
 describe('post poem', () => {
     beforeEach(() => {
@@ -12,7 +12,7 @@ describe('post poem', () => {
                 <input id="postPoem" type="submit">
                 </form>
             </body>`
-        fetch.resetMocks()
+        fetchMock.resetMocks()
     })
 
     test('is fetch post being called', () => {
@@ -36,7 +36,7 @@ describe('post poem', () => {
         invalidInput.forEach(testInput => {
 
             test('is error thrown if there is no poem', () => {
-                expect(() => postValidity('title', testInput))
+                expect(() => helpers.postValidity('title', testInput))
                     .toThrowError("you haven't written your poem yet!");
             })
         })
@@ -52,7 +52,7 @@ describe('post poem', () => {
             aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
             aaaaaa`
 
-            expect(() => postValidity('title', poem))
+            expect(() => helpers.postValidity('title', poem))
                 .toThrowError("your poem is over the character limit")
         })
     })
