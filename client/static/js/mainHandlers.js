@@ -72,7 +72,7 @@ function appendPost(data){
         }
         divComment.append(commentSection, commentForm);
         article.append(divBody, divReact, divComment)
-        container.appendChild(article);
+        document.querySelector('#showMorePosts').before(article);
     }
 }
 
