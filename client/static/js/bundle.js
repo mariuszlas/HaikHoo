@@ -184,7 +184,7 @@ initBindings();
 
 },{"./formHandlers.js":1,"./requestHandlers.js":6}],4:[function(require,module,exports){
 // const handlers = require('./requestHandlers.js')
-
+// const { makeComment } = require('./requestHandlers.js')
 
 function appendPost(data){
     data.reverse()
@@ -198,84 +198,31 @@ function appendPost(data){
 
         let divBody = createBody(post);
         divBody.setAttribute("class", "post");
-
-
-
         let divReact = document.createElement('div');
-        let spanEmoji = document.createElement('span');
 
-        let likeBtn = document.createElement('button');
-        let cryBtn = document.createElement('button');
-        let smileBtn = document.createElement('button');
-
-        likeBtn.addEventListener('click', e => {sendLike(e)});
-        likeBtn.setAttribute('class', 'likes')
-        likeBtn.textContent = String.fromCodePoint(0x1F44D);
-        cryBtn.addEventListener('click',   e => {sendLike(e)});
-        cryBtn.textContent = String.fromCodePoint(0x1F62D);
-        smileBtn.addEventListener('click',  e => {sendLike(e)});
-        smileBtn.textContent = String.fromCodePoint(0x1F603);
-        let showComBtn = document.createElement('button');
-        showComBtn.textContent = 'Show/Add Comments';
+        let spanEmoji = createReactions(post);
+        let showComBtn = makeElement('button', 'show-com-btn', 'Show Comments')
         showComBtn.addEventListener('click', e => showComSection(e));
 
-        spanEmoji.append(likeBtn, cryBtn, smileBtn);
-
-
-        let divComment = document.createElement('div');
-        divComment.setAttribute('class', 'comments-div');
-        divComment.style.display = 'none';
-
-        let commentForm = document.createElement("form");
-        commentForm.setAttribute('name', post.id)
-        let inputForm = document.createElement("input");
-        inputForm.setAttribute("type","text");
-        inputForm.setAttribute("class","input-form");
-        inputForm.setAttribute("name","comment");
         divReact.append(spanEmoji, showComBtn)
-
-        let commentBtn = document.createElement("input");
-        commentBtn.textContent = "Comment";
-        commentBtn.setAttribute("type", "submit");
-        commentBtn.setAttribute("class", "comment-btn");
-
-        commentForm.appendChild( commentBtn);
-        commentForm.appendChild(inputForm);
-
-        commentForm.addEventListener('submit', e => makeComment(e));
-        let commentSection = document.createElement("div");
-        commentSection.setAttribute("class", "comment");
-
-        for (let x = 0; x < post.comments.length; x++ ){
-            let comments = document.createElement("p");
-            comments.textContent = post.comments[x];
-            commentSection.appendChild(comments);
-        }
-        divComment.append(commentSection, commentForm);
+        let divComment = createComSection(post);
         article.append(divBody, divReact, divComment)
-        document.querySelector('#showMorePosts').before(article);
+    document.querySelector('#showMorePosts').before(article);
     }
 }
 
-let url =  "https://hakema-server.herokuapp.com";
-async function sendLike(e) {
-    e.preventDefault();
-    let button = e.target;
-    let id = button.closest('article');
-    const reaction = button.getAttribute('class');
-    console.log(id.id);
-    console.log(button.getAttribute('class'));
-    let options = {
-        method: "PUT",
-        headers: { 'Content-Type':'application/json'}
-    }
-    await fetch(`${url}/posts/${id.id}/${reaction}`, options)
-}
 
 function showComSection(e) {
     e.preventDefault();
-    let comtDiv = document.querySelector('.comments-div');
-    comtDiv.style.display = "block"
+    let divCom = e.target.parentElement.nextElementSibling;
+    if (divCom.style.display === "none") {
+        divCom.style.display = "block"
+    } else {
+        divCom.style.display = "none"
+    }
+    // console.log(e.target.parentElement.nextElementSibling);
+    // let comtDiv = document.querySelector('.comments-div');
+    // comtDiv.style.display = "block"
 }
 
 function makeElement(element, className, textCont=null) {
@@ -296,6 +243,54 @@ function createBody(post) {
     gif.setAttribute('src', post.gifUrl);
     divBody.append(title, author, date, textCont, gif);
     return divBody;
+}
+
+function createReactions(post) {
+
+    let divReact = makeElement('div', 'div-react');
+    let spanEmoji = makeElement('span', 'span-emoji');
+    let arr = [['likes', 0x1F44D], ['cries', 0x1F62D], ['smiles', 0x1F603]]
+
+    let btns = arr.map(item => {
+        let btn = makeElement('button', `${item[0]}`, `${String.fromCodePoint(item[1])}`);
+        btn.addEventListener('click',   e => {sendLike(e)});
+        let num = post['reactions'][item[0]];
+        num ? num: num = '';
+        let span = makeElement('span', `${item[0]}-count`, `${num}`)
+        return [btn, span];
+    })
+
+    btns.forEach((item) => {
+        spanEmoji.appendChild(item[0]);
+        spanEmoji.appendChild(item[1]);
+    });
+    return spanEmoji;
+}
+
+function createComSection(post) {
+
+    let divComment = makeElement('div', 'comments-div');
+    divComment.style.display = 'none';
+
+    let commentSection = makeElement("div", 'comment');
+    post.comments.forEach((comment) => {
+        let commentP = makeElement('p', 'p-comment', comment);
+        commentSection.appendChild(commentP);
+    });
+
+    let commentForm = makeElement("form", "add-comment-form");
+    commentForm.setAttribute('name', post.id)
+    let inputForm = makeElement("input", "input-form");
+    inputForm.setAttribute("type","text");
+    inputForm.setAttribute("name","comment");
+
+    let commentBtn = makeElement("input", 'comment-btn');
+    commentBtn.setAttribute("type", "submit");
+    commentBtn.setAttribute("value", "Add Comment");
+    commentForm.append(inputForm, commentBtn);
+    commentForm.addEventListener('submit', e => makeComment(e));
+    divComment.append(commentSection, commentForm);
+    return divComment;
 }
 
 // function appendPost(data){
@@ -370,6 +365,44 @@ function createBody(post) {
 //     }
 // }
 
+let url =  "https://hakema-server.herokuapp.com";
+async function sendLike(e) {
+    e.preventDefault();
+    let button = e.target;
+    let id = button.closest('article');
+    const reaction = button.getAttribute('class');
+    console.log(id.id);
+    console.log(button.getAttribute('class'));
+    let options = {
+        method: "PUT",
+        headers: { 'Content-Type':'application/json'}
+    }
+    await fetch(`${url}/posts/${id.id}/${reaction}`, options)
+}
+
+
+async function makeComment(e){
+    e.preventDefault();
+    const comment = e.target[1].value;
+    let id = e.target.name;
+    let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
+    // console.log(id);
+    // console.log(comment);
+    // // let postId = commentInput.closest("article").id
+    // console.log(postId);
+    const options = {
+        method: "PUT",
+        headers: { 'Content-Type':'application/json'},
+        body: JSON.stringify({"comment": comment})
+    }
+    // console.log(`${url}/posts/${id}/comment`);
+
+    try {
+        await fetch(`${url}/posts/${id}/comment`, options);
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 module.exports = { appendPost }
 
