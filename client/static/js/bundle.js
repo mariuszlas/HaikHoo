@@ -38,7 +38,7 @@ function showGifForm(e) {
     else{
         document.querySelector('#gifForm').remove()
     }
-    
+
 }
 
 async function displayGif(e) {
@@ -218,7 +218,7 @@ function appendPost(data, page, index){
     data.reverse()
 
     for (let i = index; i < page*5; i++){
-        
+
         let post = data[i]
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
@@ -2104,6 +2104,5 @@ async function fetchGif(userInput) {
 module.exports = { postPoem, makeComment, fetchGif }
 
 },{"./formHandlers":1,"./helpers.js":2,"./mainHandlers":4}]},{},[3]);
-=======
-console.error("Error: Parsing file /home/mariusz/Documents/Programming/Web/Assignments/lap_1_project/client/static/js/formHandlers.js: Unexpected token (66:2)");
 
+console.error("Error: Parsing file /home/mariusz/Documents/Programming/Web/Assignments/lap_1_project/client/static/js/formHandlers.js: Unexpected token (66:2)");
