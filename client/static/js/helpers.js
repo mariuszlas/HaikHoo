@@ -43,6 +43,10 @@ function counter(e) {
     span.innerText = `${textLen}/500`;
 }
 
+function scrollToTop() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
 
 ///////////// TO BE REMOVED //////////////////////////
 let randomName = () => {
@@ -53,4 +57,4 @@ let randomName = () => {
 //////////////////////////////////////////////////////
 
 
-module.exports = { Data, makeElement, formatDate, postValidity, counter }
+module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }
