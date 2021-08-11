@@ -119,8 +119,9 @@ function createComSection(post) {
 
     let commentForm = makeElement("form", "add-comment-form");
     commentForm.setAttribute('name', post.id)
-    let inputForm = makeElement("input", "input-form");
-    inputForm.setAttribute("type","text");
+    let inputForm = makeElement("textarea", "input-form");
+    inputForm.setAttribute('rows', '2')
+    inputForm.setAttribute('cols', '25')
     inputForm.setAttribute("name","comment");
 
     let commentBtn = makeElement("input", 'comment-btn');
