@@ -7,23 +7,14 @@ function appendPost(data){
 
     for (let i = 0; i < 5; i++){
         let post = data[i]
+
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
 
-        let divBody = document.createElement("div");
+        let divBody = createBody(post);
         divBody.setAttribute("class", "post");
 
-        let title = document.createElement('p');
-        title.textContent = post.title;
-        let textCont = document.createElement('p');
-        textCont.innerText = post.text;
-        let author = document.createElement('p');
-        author.innerText = post.author;
-        let date = document.createElement('p');
-        date.innerText = `Date added: ${post.date}`;
-        let gif = document.createElement('img');
-        gif.setAttribute('src', post.gifUrl);
-        divBody.append(title, author, date, textCont, gif);
+
 
         let divReact = document.createElement('div');
         let spanEmoji = document.createElement('span');
@@ -48,6 +39,7 @@ function appendPost(data){
 
         let divComment = document.createElement('div');
         divComment.setAttribute('class', 'comments-div');
+        divComment.style.display = 'none';
 
         let commentForm = document.createElement("form");
         commentForm.setAttribute('name', post.id)
@@ -97,15 +89,29 @@ async function sendLike(e) {
 
 function showComSection(e) {
     e.preventDefault();
-    
+    let comtDiv = document.querySelector('.comments-div');
+    comtDiv.style.display = "block"
 }
 
-// function makeElement(element, className, textCont=null) {
-//     newElement = document.createElement(element)
-//     newElement.setAttribute('class', className);
-//     textCont ? newElement.textContent = textCont: null;
-//     return newElement;
-// }
+function makeElement(element, className, textCont=null) {
+    newElement = document.createElement(element)
+    newElement.setAttribute('class', className);
+    textCont ? newElement.textContent = textCont: null;
+    return newElement;
+}
+
+function createBody(post) {
+
+    let divBody = makeElement("div", 'post');
+    let title = makeElement('p', 'p-title', post.title);
+    let author = makeElement('p', 'p-author', post.author);
+    let textCont = makeElement('p', 'p-text', post.text);
+    let date = makeElement('p', 'p-date', `Date added: ${post.date}`);
+    let gif = document.createElement('img');
+    gif.setAttribute('src', post.gifUrl);
+    divBody.append(title, author, date, textCont, gif);
+    return divBody;
+}
 
 // function appendPost(data){
 //     let container = document.querySelector("main");
