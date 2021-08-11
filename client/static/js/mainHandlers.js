@@ -32,7 +32,6 @@ function appendPost(data, page, index){
     for (let i = index; i < page*5; i++){
         
         let post = data[i]
-        console.log(typeof post)
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
 
