@@ -2,12 +2,19 @@ const { appendPost } = require('./mainHandlers.js');
 const { Data } = require('./helpers.js')
 
 let url =  "https://hakema-server.herokuapp.com";
+let pageCounter = 0;
+let startIndex = 0;
+
 
 function displayPost(){
+    pageCounter++;;
     fetch(`${url}/posts`)
     .then(res => res.json())
-    .then(data => appendPost(data))
+    .then(data => {
+        console.log(data)
+        appendPost(data, 1, 0)})
     .catch(err => console.log(err));
+    startIndex += 5
 }
 
 function postPoem(title, poem, giphyURL) {
