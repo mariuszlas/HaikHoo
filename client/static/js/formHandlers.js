@@ -80,7 +80,7 @@ function selectGif(e) {
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     document.querySelector('#selectedGif').append(previewGif)
-    e.path[2].remove()
+    document.querySelector('#gifForm').remove();
 }
 
 function checkPoem(e) {

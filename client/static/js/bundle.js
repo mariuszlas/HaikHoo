@@ -81,7 +81,7 @@ function selectGif(e) {
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     document.querySelector('#selectedGif').append(previewGif)
-    e.path[2].remove()
+    document.querySelector('#gifForm').remove();
 }
 
 function checkPoem(e) {
@@ -264,9 +264,12 @@ function createBody(post) {
     let author = makeElement('p', 'p-author', post.author);
     let textCont = makeElement('p', 'p-text', post.text);
     let date = makeElement('p', 'p-date', `Date added: ${post.date}`);
-    let gif = document.createElement('img');
-    gif.setAttribute('src', post.gifUrl);
-    divBody.append(title, author, date, textCont, gif);
+    divBody.append(title, author, date, textCont);
+    if (post.gifUrl !== "") {
+        let gif = document.createElement('img');
+        gif.setAttribute('src', post.gifUrl);
+        divBody.appendChild(gif)
+    }
     return divBody;
 }
 
@@ -415,8 +418,6 @@ async function makeComment(e){
         headers: { 'Content-Type':'application/json'},
         body: JSON.stringify({"comment": comment})
     }
-    // console.log(`${url}/posts/${id}/comment`);
-
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
     } catch (err) {
