@@ -1,6 +1,6 @@
 const fs = require('fs');
 const database = './data/posts.json';
-const { randomName } = require('./username_generator/nameGenerator.js');
+const { animals, adjectives } = require('../data/nameData.js')
 
 class Post {
     constructor(data) {
@@ -63,4 +63,10 @@ class Post {
     }
 }
 
-module.exports = Post;
+function randomName() {
+    let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    let randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+    return `${randomAdjective} ${randomAnimal}`
+}
+
+module.exports = { Post, randomName };
