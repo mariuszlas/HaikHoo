@@ -214,8 +214,15 @@ function appendPost(data){
 
 function showComSection(e) {
     e.preventDefault();
-    let comtDiv = document.querySelector('.comments-div');
-    comtDiv.style.display = "block"
+    let divCom = e.target.parentElement.nextElementSibling;
+    if (divCom.style.display === "none") {
+        divCom.style.display = "block"
+    } else {
+        divCom.style.display = "none"
+    }
+    // console.log(e.target.parentElement.nextElementSibling);
+    // let comtDiv = document.querySelector('.comments-div');
+    // comtDiv.style.display = "block"
 }
 
 function makeElement(element, className, textCont=null) {
