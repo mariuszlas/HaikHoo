@@ -2,40 +2,40 @@
 const { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
 const { postPoem, fetchGif } = require('./requestHandlers.js')
 
-function showForm(e) {
-    e.preventDefault();
-    scrollToTop();
-    document.querySelector('#new-post-form').style.display = "block";
-    let form = document.createElement('form')
-    form.setAttribute("id", "new-post-form");
-    let titleField = makeElement('input', 'text', 'poemTitle')
-    titleField.setAttribute('name', 'poemTitle')
-    let labelTitle = makeElement('label');
-    labelTitle.setAttribute("name", "poemTitle");
-    labelTitle.innerText = "Title  ";
-    let poemField = makeElement('input', 'text', 'userPoem');
-    poemField.setAttribute("name", "userPoem")
-    let labelPoem = makeElement('label');
-    labelPoem.setAttribute("name", "poemTitle");
-    labelPoem.innerText = "Your Poem:  ";
-    let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
-    let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
-    let counterArea = document.createElement("span");
-    let selectedGif = document.createElement('span');
-    selectedGif.setAttribute('id', 'selectedGif');
-    counterArea.setAttribute("id", "counter");
-    document.querySelector('body').appendChild(form)
-    form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
-    formBtnsListeners();
-}
-
-//
 // function showForm(e) {
 //     e.preventDefault();
-//        scrollToTop()
+//     scrollToTop();
 //     document.querySelector('#new-post-form').style.display = "block";
+//     let form = document.createElement('form')
+//     form.setAttribute("id", "new-post-form");
+//     let titleField = makeElement('input', 'text', 'poemTitle')
+//     titleField.setAttribute('name', 'poemTitle')
+//     let labelTitle = makeElement('label');
+//     labelTitle.setAttribute("name", "poemTitle");
+//     labelTitle.innerText = "Title  ";
+//     let poemField = makeElement('input', 'text', 'userPoem');
+//     poemField.setAttribute("name", "userPoem")
+//     let labelPoem = makeElement('label');
+//     labelPoem.setAttribute("name", "poemTitle");
+//     labelPoem.innerText = "Your Poem:  ";
+//     let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
+//     let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
+//     let counterArea = document.createElement("span");
+//     let selectedGif = document.createElement('span');
+//     selectedGif.setAttribute('id', 'selectedGif');
+//     counterArea.setAttribute("id", "counter");
+//     document.querySelector('body').appendChild(form)
+//     form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
 //     formBtnsListeners();
 // }
+
+
+function showForm(e) {
+    e.preventDefault();
+       scrollToTop()
+    document.querySelector('#new-post-form').style.display = "block";
+    formBtnsListeners();
+}
 
 function formBtnsListeners() {
     document.querySelector('#new-post-form').addEventListener('submit', e => checkPoem(e))
@@ -156,6 +156,8 @@ function counter(e) {
     span.innerText = `${textLen}/500`;
 }
 
+
+
 function scrollToTop() {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
@@ -173,24 +175,33 @@ module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollT
 },{"./nameData":5}],3:[function(require,module,exports){
 const { displayPost } = require('./requestHandlers.js');
 const { showForm } = require('./formHandlers.js')
+const { extendPage } = require('./mainHandlers.js')
 
 function initBindings() {
     document.querySelector('#makePost').addEventListener('click', e => showForm(e));
+    document.querySelector('#showMorePosts').addEventListener('click', e => extendPage(e));
 
 }
 
 displayPost();
 initBindings();
 
-},{"./formHandlers.js":1,"./requestHandlers.js":6}],4:[function(require,module,exports){
+},{"./formHandlers.js":1,"./mainHandlers.js":4,"./requestHandlers.js":6}],4:[function(require,module,exports){
 // const handlers = require('./requestHandlers.js')
 
+const reqHandlers = require("./requestHandlers");
 
-function appendPost(data){
+function extendPage(e){
+    e.preventDefault();
+   reqHandlers.displayPost()
+}
+
+
+
+function appendPost(data, pageCounter, startIndex){
     data.reverse()
-    let container = document.querySelector("main");
 
-    for (let i = 0; i < 5; i++){
+    for (let i = startIndex; i < pageCounter*5; i++){
         let post = data[i]
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
@@ -365,9 +376,10 @@ function showComSection(e) {
 // }
 
 
-module.exports = { appendPost }
 
-},{}],5:[function(require,module,exports){
+module.exports = { appendPost, extendPage }
+
+},{"./requestHandlers":6}],5:[function(require,module,exports){
 let animals =
     [
         "Aardvark",
@@ -1950,12 +1962,19 @@ const { appendPost } = require('./mainHandlers.js');
 const { Data } = require('./helpers.js')
 
 let url =  "https://hakema-server.herokuapp.com";
+let pageCounter = 0;
+let startIndex = 0;
+
 
 function displayPost(){
+    pageCounter++;;
     fetch(`${url}/posts`)
     .then(res => res.json())
-    .then(data => appendPost(data))
+    .then(data => {
+        console.log(data)
+        appendPost(data, 1, 0)})
     .catch(err => console.log(err));
+    startIndex += 5
 }
 
 function postPoem(title, poem, giphyURL) {

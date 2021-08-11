@@ -1,11 +1,18 @@
 // const handlers = require('./requestHandlers.js')
 
+const reqHandlers = require("./requestHandlers");
 
-function appendPost(data){
+function extendPage(e){
+    e.preventDefault();
+   reqHandlers.displayPost()
+}
+
+
+
+function appendPost(data, pageCounter, startIndex){
     data.reverse()
-    let container = document.querySelector("main");
 
-    for (let i = 0; i < 5; i++){
+    for (let i = startIndex; i < pageCounter*5; i++){
         let post = data[i]
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
@@ -180,4 +187,5 @@ function showComSection(e) {
 // }
 
 
-module.exports = { appendPost }
+
+module.exports = { appendPost, extendPage }
