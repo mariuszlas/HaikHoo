@@ -102,4 +102,4 @@ function checkPoem(e) {
     }
 }
 
-module.exports = { showForm };
+module.exports = { showForm, checkPoem };
