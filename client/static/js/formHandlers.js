@@ -1,40 +1,40 @@
 const { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
 const { postPoem, fetchGif } = require('./requestHandlers.js')
 
-function showForm(e) {
-    e.preventDefault();
-    scrollToTop();
-    document.querySelector('#new-post-form').style.display = "block";
-    let form = document.createElement('form')
-    form.setAttribute("id", "new-post-form");
-    let titleField = makeElement('input', 'text', 'poemTitle')
-    titleField.setAttribute('name', 'poemTitle')
-    let labelTitle = makeElement('label');
-    labelTitle.setAttribute("name", "poemTitle");
-    labelTitle.innerText = "Title  ";
-    let poemField = makeElement('input', 'text', 'userPoem');
-    poemField.setAttribute("name", "userPoem")
-    let labelPoem = makeElement('label');
-    labelPoem.setAttribute("name", "poemTitle");
-    labelPoem.innerText = "Your Poem:  ";
-    let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
-    let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
-    let counterArea = document.createElement("span");
-    let selectedGif = document.createElement('span');
-    selectedGif.setAttribute('id', 'selectedGif');
-    counterArea.setAttribute("id", "counter");
-    document.querySelector('body').appendChild(form)
-    form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
-    formBtnsListeners();
-}
-
-//
 // function showForm(e) {
 //     e.preventDefault();
-//        scrollToTop()
+//     scrollToTop();
 //     document.querySelector('#new-post-form').style.display = "block";
+//     let form = document.createElement('form')
+//     form.setAttribute("id", "new-post-form");
+//     let titleField = makeElement('input', 'text', 'poemTitle')
+//     titleField.setAttribute('name', 'poemTitle')
+//     let labelTitle = makeElement('label');
+//     labelTitle.setAttribute("name", "poemTitle");
+//     labelTitle.innerText = "Title  ";
+//     let poemField = makeElement('input', 'text', 'userPoem');
+//     poemField.setAttribute("name", "userPoem")
+//     let labelPoem = makeElement('label');
+//     labelPoem.setAttribute("name", "poemTitle");
+//     labelPoem.innerText = "Your Poem:  ";
+//     let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
+//     let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
+//     let counterArea = document.createElement("span");
+//     let selectedGif = document.createElement('span');
+//     selectedGif.setAttribute('id', 'selectedGif');
+//     counterArea.setAttribute("id", "counter");
+//     document.querySelector('body').appendChild(form)
+//     form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
 //     formBtnsListeners();
 // }
+
+
+function showForm(e) {
+    e.preventDefault();
+       scrollToTop()
+    document.querySelector('#new-post-form').style.display = "block";
+    formBtnsListeners();
+}
 
 function formBtnsListeners() {
     document.querySelector('#new-post-form').addEventListener('submit', e => checkPoem(e))
@@ -80,7 +80,7 @@ function selectGif(e) {
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     document.querySelector('#selectedGif').append(previewGif)
-    e.path[2].remove()
+    document.querySelector('#gifForm').remove();
 }
 
 function checkPoem(e) {

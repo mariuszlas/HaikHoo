@@ -2,40 +2,40 @@
 const { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
 const { postPoem, fetchGif } = require('./requestHandlers.js')
 
-function showForm(e) {
-    e.preventDefault();
-    scrollToTop();
-    document.querySelector('#new-post-form').style.display = "block";
-    let form = document.createElement('form')
-    form.setAttribute("id", "new-post-form");
-    let titleField = makeElement('input', 'text', 'poemTitle')
-    titleField.setAttribute('name', 'poemTitle')
-    let labelTitle = makeElement('label');
-    labelTitle.setAttribute("name", "poemTitle");
-    labelTitle.innerText = "Title  ";
-    let poemField = makeElement('input', 'text', 'userPoem');
-    poemField.setAttribute("name", "userPoem")
-    let labelPoem = makeElement('label');
-    labelPoem.setAttribute("name", "poemTitle");
-    labelPoem.innerText = "Your Poem:  ";
-    let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
-    let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
-    let counterArea = document.createElement("span");
-    let selectedGif = document.createElement('span');
-    selectedGif.setAttribute('id', 'selectedGif');
-    counterArea.setAttribute("id", "counter");
-    document.querySelector('body').appendChild(form)
-    form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
-    formBtnsListeners();
-}
-
-//
 // function showForm(e) {
 //     e.preventDefault();
-//        scrollToTop()
+//     scrollToTop();
 //     document.querySelector('#new-post-form').style.display = "block";
+//     let form = document.createElement('form')
+//     form.setAttribute("id", "new-post-form");
+//     let titleField = makeElement('input', 'text', 'poemTitle')
+//     titleField.setAttribute('name', 'poemTitle')
+//     let labelTitle = makeElement('label');
+//     labelTitle.setAttribute("name", "poemTitle");
+//     labelTitle.innerText = "Title  ";
+//     let poemField = makeElement('input', 'text', 'userPoem');
+//     poemField.setAttribute("name", "userPoem")
+//     let labelPoem = makeElement('label');
+//     labelPoem.setAttribute("name", "poemTitle");
+//     labelPoem.innerText = "Your Poem:  ";
+//     let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
+//     let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
+//     let counterArea = document.createElement("span");
+//     let selectedGif = document.createElement('span');
+//     selectedGif.setAttribute('id', 'selectedGif');
+//     counterArea.setAttribute("id", "counter");
+//     document.querySelector('body').appendChild(form)
+//     form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
 //     formBtnsListeners();
 // }
+
+
+function showForm(e) {
+    e.preventDefault();
+       scrollToTop()
+    document.querySelector('#new-post-form').style.display = "block";
+    formBtnsListeners();
+}
 
 function formBtnsListeners() {
     document.querySelector('#new-post-form').addEventListener('submit', e => checkPoem(e))
@@ -81,7 +81,7 @@ function selectGif(e) {
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     document.querySelector('#selectedGif').append(previewGif)
-    e.path[2].remove()
+    document.querySelector('#gifForm').remove();
 }
 
 function checkPoem(e) {
@@ -156,6 +156,8 @@ function counter(e) {
     span.innerText = `${textLen}/500`;
 }
 
+
+
 function scrollToTop() {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
@@ -171,26 +173,52 @@ let randomName = () => {
 module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }
 
 },{"./nameData":5}],3:[function(require,module,exports){
-const { displayPost } = require('./requestHandlers.js');
+//const { displayPost } = require('./requestHandlers.js');
 const { showForm } = require('./formHandlers.js')
+const { extendPage, displayPost } = require('./mainHandlers.js')
 
 function initBindings() {
     document.querySelector('#makePost').addEventListener('click', e => showForm(e));
+    document.querySelector('#showMorePosts').addEventListener('click', e => extendPage(e));
 
 }
 
 displayPost();
 initBindings();
 
-},{"./formHandlers.js":1,"./requestHandlers.js":6}],4:[function(require,module,exports){
-// const handlers = require('./requestHandlers.js')
-// const { makeComment } = require('./requestHandlers.js')
+},{"./formHandlers.js":1,"./mainHandlers.js":4}],4:[function(require,module,exports){
+//const { displayPost }= require('./requestHandlers.js')
+//const { makeComment } = require('./requestHandlers.js')
 
-function appendPost(data){
+let url =  "https://hakema-server.herokuapp.com";
+let pageCounter = 1;
+let startIndex = 0;
+
+
+
+function extendPage(e){
+    e.preventDefault();
+    pageCounter++;
+    startIndex = startIndex +5;
+    displayPost()
+}
+
+
+function displayPost(){
+    fetch(`${url}/posts`)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        appendPost(data, pageCounter, startIndex)})
+    .catch(err => console.log(err));
+}
+
+
+
+function appendPost(data, page, index){
     data.reverse()
-    let container = document.querySelector("main");
 
-    for (let i = 0; i < 5; i++){
+    for (let i = index; i < page*5; i++){
         let post = data[i]
 
         let article = document.createElement('article');
@@ -220,9 +248,6 @@ function showComSection(e) {
     } else {
         divCom.style.display = "none"
     }
-    // console.log(e.target.parentElement.nextElementSibling);
-    // let comtDiv = document.querySelector('.comments-div');
-    // comtDiv.style.display = "block"
 }
 
 function makeElement(element, className, textCont=null) {
@@ -239,9 +264,12 @@ function createBody(post) {
     let author = makeElement('p', 'p-author', post.author);
     let textCont = makeElement('p', 'p-text', post.text);
     let date = makeElement('p', 'p-date', `Date added: ${post.date}`);
-    let gif = document.createElement('img');
-    gif.setAttribute('src', post.gifUrl);
-    divBody.append(title, author, date, textCont, gif);
+    divBody.append(title, author, date, textCont);
+    if (post.gifUrl !== "") {
+        let gif = document.createElement('img');
+        gif.setAttribute('src', post.gifUrl);
+        divBody.appendChild(gif)
+    }
     return divBody;
 }
 
@@ -280,8 +308,9 @@ function createComSection(post) {
 
     let commentForm = makeElement("form", "add-comment-form");
     commentForm.setAttribute('name', post.id)
-    let inputForm = makeElement("input", "input-form");
-    inputForm.setAttribute("type","text");
+    let inputForm = makeElement("textarea", "input-form");
+    inputForm.setAttribute('rows', '2')
+    inputForm.setAttribute('cols', '25')
     inputForm.setAttribute("name","comment");
 
     let commentBtn = makeElement("input", 'comment-btn');
@@ -365,7 +394,6 @@ function createComSection(post) {
 //     }
 // }
 
-let url =  "https://hakema-server.herokuapp.com";
 async function sendLike(e) {
     e.preventDefault();
     let button = e.target;
@@ -383,20 +411,14 @@ async function sendLike(e) {
 
 async function makeComment(e){
     e.preventDefault();
-    const comment = e.target[1].value;
+    const comment = e.target[0].value;
     let id = e.target.name;
     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    // console.log(id);
-    // console.log(comment);
-    // // let postId = commentInput.closest("article").id
-    // console.log(postId);
     const options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'},
         body: JSON.stringify({"comment": comment})
     }
-    // console.log(`${url}/posts/${id}/comment`);
-
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
     } catch (err) {
@@ -404,7 +426,8 @@ async function makeComment(e){
     }
 };
 
-module.exports = { appendPost }
+
+module.exports = { appendPost, extendPage, displayPost, extendPage }
 
 },{}],5:[function(require,module,exports){
 let animals =
@@ -1989,12 +2012,19 @@ const { appendPost } = require('./mainHandlers.js');
 const { Data } = require('./helpers.js')
 
 let url =  "https://hakema-server.herokuapp.com";
+let pageCounter = 0;
+let startIndex = 0;
+
 
 function displayPost(){
+    pageCounter++;;
     fetch(`${url}/posts`)
     .then(res => res.json())
-    .then(data => appendPost(data))
+    .then(data => {
+        console.log(data)
+        appendPost(data, 1, 0)})
     .catch(err => console.log(err));
+    startIndex += 5
 }
 
 function postPoem(title, poem, giphyURL) {
@@ -2016,17 +2046,11 @@ async function makeComment(e){
     const comment = e.target[1].value;
     let id = e.target.name;
     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    // console.log(id);
-    // console.log(comment);
-    // // let postId = commentInput.closest("article").id
-    // console.log(postId);
     const options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'},
         body: JSON.stringify({"comment": comment})
     }
-    // console.log(`${url}/posts/${id}/comment`);
-
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
     } catch (err) {

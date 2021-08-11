@@ -1,11 +1,35 @@
-// const handlers = require('./requestHandlers.js')
-// const { makeComment } = require('./requestHandlers.js')
+//const { displayPost }= require('./requestHandlers.js')
+//const { makeComment } = require('./requestHandlers.js')
 
-function appendPost(data){
+let url =  "https://hakema-server.herokuapp.com";
+let pageCounter = 1;
+let startIndex = 0;
+
+
+
+function extendPage(e){
+    e.preventDefault();
+    pageCounter++;
+    startIndex = startIndex +5;
+    displayPost()
+}
+
+
+function displayPost(){
+    fetch(`${url}/posts`)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        appendPost(data, pageCounter, startIndex)})
+    .catch(err => console.log(err));
+}
+
+
+
+function appendPost(data, page, index){
     data.reverse()
-    let container = document.querySelector("main");
 
-    for (let i = 0; i < 5; i++){
+    for (let i = index; i < page*5; i++){
         let post = data[i]
 
         let article = document.createElement('article');
@@ -35,9 +59,6 @@ function showComSection(e) {
     } else {
         divCom.style.display = "none"
     }
-    // console.log(e.target.parentElement.nextElementSibling);
-    // let comtDiv = document.querySelector('.comments-div');
-    // comtDiv.style.display = "block"
 }
 
 function makeElement(element, className, textCont=null) {
@@ -54,9 +75,12 @@ function createBody(post) {
     let author = makeElement('p', 'p-author', post.author);
     let textCont = makeElement('p', 'p-text', post.text);
     let date = makeElement('p', 'p-date', `Date added: ${post.date}`);
-    let gif = document.createElement('img');
-    gif.setAttribute('src', post.gifUrl);
-    divBody.append(title, author, date, textCont, gif);
+    divBody.append(title, author, date, textCont);
+    if (post.gifUrl !== "") {
+        let gif = document.createElement('img');
+        gif.setAttribute('src', post.gifUrl);
+        divBody.appendChild(gif)
+    }
     return divBody;
 }
 
@@ -95,8 +119,9 @@ function createComSection(post) {
 
     let commentForm = makeElement("form", "add-comment-form");
     commentForm.setAttribute('name', post.id)
-    let inputForm = makeElement("input", "input-form");
-    inputForm.setAttribute("type","text");
+    let inputForm = makeElement("textarea", "input-form");
+    inputForm.setAttribute('rows', '2')
+    inputForm.setAttribute('cols', '25')
     inputForm.setAttribute("name","comment");
 
     let commentBtn = makeElement("input", 'comment-btn');
@@ -180,7 +205,6 @@ function createComSection(post) {
 //     }
 // }
 
-let url =  "https://hakema-server.herokuapp.com";
 async function sendLike(e) {
     e.preventDefault();
     let button = e.target;
@@ -198,20 +222,14 @@ async function sendLike(e) {
 
 async function makeComment(e){
     e.preventDefault();
-    const comment = e.target[1].value;
+    const comment = e.target[0].value;
     let id = e.target.name;
     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    // console.log(id);
-    // console.log(comment);
-    // // let postId = commentInput.closest("article").id
-    // console.log(postId);
     const options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'},
         body: JSON.stringify({"comment": comment})
     }
-    // console.log(`${url}/posts/${id}/comment`);
-
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
     } catch (err) {
@@ -219,4 +237,5 @@ async function makeComment(e){
     }
 };
 
-module.exports = { appendPost }
+
+module.exports = { appendPost, extendPage, displayPost, extendPage }
