@@ -190,7 +190,7 @@ initBindings();
 //const { displayPost }= require('./requestHandlers.js')
 //const { makeComment } = require('./requestHandlers.js')
 
-let url =  "https://hakema-server.herokuapp.com";
+let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 1;
 let startIndex = 0;
 
@@ -418,7 +418,7 @@ function liveReactionCounter(btnElement) {
 }
 
 
-async function makeComment(e){
+async function makeComment(e){https://haikhoo-server.herokuapp.com
     e.preventDefault();
     const comment = e.target[0].value;
     let id = e.target.name;
@@ -2020,7 +2020,7 @@ module.exports = { adjectives, animals }
 const { appendPost } = require('./mainHandlers.js');
 const { Data } = require('./helpers.js')
 
-let url =  "https://hakema-server.herokuapp.com";
+let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 0;
 let startIndex = 0;
 
@@ -2044,7 +2044,7 @@ function postPoem(title, poem, giphyURL) {
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
-    fetch('https://hakema-server.herokuapp.com/posts', options)
+    fetch('https://haikhoo-server.herokuapp.com/posts', options)
         .then(data => console.log(data))
         .catch(err => console.log(err))
 }

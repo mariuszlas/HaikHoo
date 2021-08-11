@@ -1,7 +1,7 @@
 //const { displayPost }= require('./requestHandlers.js')
 //const { makeComment } = require('./requestHandlers.js')
 
-let url =  "https://hakema-server.herokuapp.com";
+let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 1;
 let startIndex = 0;
 
@@ -229,7 +229,7 @@ function liveReactionCounter(btnElement) {
 }
 
 
-async function makeComment(e){
+async function makeComment(e){https://haikhoo-server.herokuapp.com
     e.preventDefault();
     const comment = e.target[0].value;
     let id = e.target.name;
