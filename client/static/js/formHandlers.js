@@ -86,11 +86,10 @@ function checkPoem(e) {
 }
 
 function updateDisplay(){
-    console.log('hi')
     document.querySelectorAll('article').forEach(article => {
         article.remove()
     })
-    setTimeout(displayPost(1, 0), 5000);
+    setTimeout(displayPost, 500);
 }
 
 function clearForm(){

@@ -15,7 +15,7 @@ function extendPage(e){
 }
 
 
-function displayPost(page, index){
+function displayPost(page=1, index=0){
     fetch(`${url}/posts`)
     .then(res => res.json())
     .then(data => {

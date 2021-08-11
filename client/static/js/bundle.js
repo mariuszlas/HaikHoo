@@ -87,11 +87,10 @@ function checkPoem(e) {
 }
 
 function updateDisplay(){
-    console.log('hi')
     document.querySelectorAll('article').forEach(article => {
         article.remove()
     })
-    setTimeout(displayPost(1, 0), 5000);
+    setTimeout(displayPost, 500);
 }
 
 function clearForm(){
@@ -203,7 +202,7 @@ function extendPage(e){
 }
 
 
-function displayPost(page, index){
+function displayPost(page=1, index=0){
     fetch(`${url}/posts`)
     .then(res => res.json())
     .then(data => {
