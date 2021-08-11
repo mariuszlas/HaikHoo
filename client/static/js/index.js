@@ -3,6 +3,7 @@ const { showForm } = require('./formHandlers.js')
 
 function initBindings() {
     document.querySelector('#makePost').addEventListener('click', e => showForm(e));
+
 }
 
 displayPost();

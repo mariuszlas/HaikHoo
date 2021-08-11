@@ -19,7 +19,7 @@
             <h1>HaikHoo</h1>
             <h2>..where all your poetries come to a daylight!</h2>
         </div>
-        <button id="makePost">make a post</button>
+        <!-- <button id="makePost">make a post</button> -->
     </header>
 
     <main>
@@ -28,12 +28,13 @@
             <label type="undefined" id="undefined" value="" name="poemTitle">Title  </label>
             <input type="text" id="poemTitle" value="" name="poemTitle">
             <label type="undefined" id="undefined" value="" name="poemTitle">Your Poem:  </label>
-            <input type="text" id="userPoem" value="" name="userPoem"><span id="counter"></span>
-            <span id="selectedGif"></span>
-            <input type="submit" id="submitPoem" value="post">
+            <textarea id="userPoem" rows="8" cols="40" name="userPoem"></textarea><span id="counter"></span>
+            <input type="submit" id="submitPoem" value="post"><span id="selectedGif"></span>
             <input type="submit" id="addGif" value="gif?">
         </form>
-
+        
+        <button id="makePost" class="float-btn" type="button">Add post</button>
+        <button id='showMorePosts' type="button">show more</button>
     </main>
 
     <footer>
