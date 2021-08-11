@@ -20,11 +20,16 @@ function checkPoem(e) {
 
 
 function postValidity(title, poem) {
-    if (title.length == 0) {
+    console.log(poem)
+    let poemNoSpace = poem.replace(/\s/g, '')
+    if (!title) {
         throw new Error('please enter a title')
     }
-    if (poem.length == 0) {
+    if (!poemNoSpace) {
         throw new Error(`you haven't written your poem yet!`)
+    }
+    if (poem.length > 500){
+        throw new Error(`your poem is over the character limit`)
     }
 }
 
@@ -43,4 +48,4 @@ async function fetchGif(userInput) {
     return response
 }
 
-module.exports = { fetchGif, postPoem, checkPoem }
+module.exports = { fetchGif, postPoem, checkPoem, postValidity }
