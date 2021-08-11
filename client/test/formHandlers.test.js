@@ -3,7 +3,7 @@ const path = require('path');
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
 let formHandlers = require('../static/js/formHandlers.js');
 
-jest.mock('../static/js/formHandlers.js');
+// jest.mock('../static/js/formHandlers.js');
 
 describe('form handlers functions', () => {
 
@@ -20,11 +20,12 @@ describe('form handlers functions', () => {
         });
         
 
-        test('run showForm(e) when the postBtn is clicked', () => {
-            formHandlers.showForm({type: 'click', target: postBtn});
-            expect(formHandlers.showForm).toHaveBeenCalled();
+        test('new-post-form is showed when the postBtn is clicked', () => {
+            const stubEvent = { preventDefault: jest.fn(), target: postBtn };
+            formHandlers.showForm(stubEvent);
+            expect(document.querySelector('#new-post-form').style.display).toBe("block");
         });
 
-
+        
     })
 })
