@@ -1,39 +1,16 @@
 const { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
 const { postPoem, fetchGif } = require('./requestHandlers.js')
-
-// function showForm(e) {
-//     e.preventDefault();
-//     scrollToTop();
-//     document.querySelector('#new-post-form').style.display = "block";
-//     let form = document.createElement('form')
-//     form.setAttribute("id", "new-post-form");
-//     let titleField = makeElement('input', 'text', 'poemTitle')
-//     titleField.setAttribute('name', 'poemTitle')
-//     let labelTitle = makeElement('label');
-//     labelTitle.setAttribute("name", "poemTitle");
-//     labelTitle.innerText = "Title  ";
-//     let poemField = makeElement('input', 'text', 'userPoem');
-//     poemField.setAttribute("name", "userPoem")
-//     let labelPoem = makeElement('label');
-//     labelPoem.setAttribute("name", "poemTitle");
-//     labelPoem.innerText = "Your Poem:  ";
-//     let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
-//     let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
-//     let counterArea = document.createElement("span");
-//     let selectedGif = document.createElement('span');
-//     selectedGif.setAttribute('id', 'selectedGif');
-//     counterArea.setAttribute("id", "counter");
-//     document.querySelector('body').appendChild(form)
-//     form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
-//     formBtnsListeners();
-// }
-
+const { displayPost } = require('./mainHandlers')
 
 function showForm(e) {
     e.preventDefault();
        scrollToTop()
     document.querySelector('#new-post-form').style.display = "block";
     formBtnsListeners();
+}
+
+function collapseForm(){
+    document.querySelector('#new-post-form').style.display = "none";
 }
 
 function formBtnsListeners() {
@@ -45,16 +22,22 @@ function formBtnsListeners() {
 
 function showGifForm(e) {
     e.preventDefault();
-    let gifForm = document.createElement('form')
-    gifForm.setAttribute('id', 'gifForm')
-    let searchWord = makeElement('input', 'text', 'gifWord');
-    searchWord.setAttribute('placeholder', 'search for a gif');
-    let searchGif = makeElement('input', 'submit', 'gifSearch','search');
-    let gifContainer = document.createElement('section');
-    gifContainer.setAttribute('id', 'gifContainer');
-    gifForm.append(searchWord, searchGif, gifContainer);
-    document.querySelector('form').append(gifForm);
-    document.querySelector('#gifSearch').addEventListener('click', displayGif)
+    if(!document.querySelector('#gifForm')){
+        let gifForm = document.createElement('form')
+        gifForm.setAttribute('id', 'gifForm')
+        let searchWord = makeElement('input', 'text', 'gifWord');
+        searchWord.setAttribute('placeholder', 'search for a gif');
+        let searchGif = makeElement('input', 'submit', 'gifSearch','search');
+        let gifContainer = document.createElement('section');
+        gifContainer.setAttribute('id', 'gifContainer');
+        gifForm.append(searchWord, searchGif, gifContainer);
+        document.querySelector('form').append(gifForm);
+        document.querySelector('#gifSearch').addEventListener('click', displayGif)
+    }
+    else{
+        document.querySelector('#gifForm').remove()
+    }
+    
 }
 
 async function displayGif(e) {
@@ -80,7 +63,7 @@ function selectGif(e) {
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     document.querySelector('#selectedGif').append(previewGif)
-    e.path[2].remove()
+    document.querySelector('#gifForm').remove()
 }
 
 function checkPoem(e) {
@@ -92,14 +75,29 @@ function checkPoem(e) {
     gif ? giphyURL = gif.getAttribute('src') : giphyURL = ''
     try {
         postValidity(title, poem)
-        postPoem(title, poem, giphyURL)
     } catch (err) {
-        let errorMessage = document.createElement('p')
-        errorMessage.textContent = err
-        document.querySelector('form').appendChild(errorMessage)
+        document.querySelector('#formErrors').textContent = err
         console.log('whoops', err)
         return;
     }
+    postPoem(title, poem, giphyURL)
+    clearForm()
+    updateDisplay()
 }
 
-module.exports = { showForm };
+function updateDisplay(){
+    document.querySelectorAll('article').forEach(article => {
+        article.remove()
+    })
+    displayPost(1, 0);
+}
+
+function clearForm(){
+    document.querySelector('#poemTitle').value = ''
+    document.querySelector('#userPoem').value = ''
+    document.querySelector('#selectedGif').textContent = ''
+    document.querySelector('#formErrors').textContent = ''
+    document.querySelector('#new-post-form').style.display = "none"
+}
+
+module.exports = { showForm, collapseForm };

@@ -1,40 +1,17 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
 const { postPoem, fetchGif } = require('./requestHandlers.js')
-
-// function showForm(e) {
-//     e.preventDefault();
-//     scrollToTop();
-//     document.querySelector('#new-post-form').style.display = "block";
-//     let form = document.createElement('form')
-//     form.setAttribute("id", "new-post-form");
-//     let titleField = makeElement('input', 'text', 'poemTitle')
-//     titleField.setAttribute('name', 'poemTitle')
-//     let labelTitle = makeElement('label');
-//     labelTitle.setAttribute("name", "poemTitle");
-//     labelTitle.innerText = "Title  ";
-//     let poemField = makeElement('input', 'text', 'userPoem');
-//     poemField.setAttribute("name", "userPoem")
-//     let labelPoem = makeElement('label');
-//     labelPoem.setAttribute("name", "poemTitle");
-//     labelPoem.innerText = "Your Poem:  ";
-//     let makePost = makeElement('input', 'submit', 'submitPoem', 'post')
-//     let searchGif = makeElement('input', 'submit', 'addGif', 'gif?')
-//     let counterArea = document.createElement("span");
-//     let selectedGif = document.createElement('span');
-//     selectedGif.setAttribute('id', 'selectedGif');
-//     counterArea.setAttribute("id", "counter");
-//     document.querySelector('body').appendChild(form)
-//     form.append(labelTitle, titleField, labelPoem, poemField, counterArea, makePost, selectedGif, searchGif);
-//     formBtnsListeners();
-// }
-
+const { displayPost } = require('./mainHandlers')
 
 function showForm(e) {
     e.preventDefault();
        scrollToTop()
     document.querySelector('#new-post-form').style.display = "block";
     formBtnsListeners();
+}
+
+function collapseForm(){
+    document.querySelector('#new-post-form').style.display = "none";
 }
 
 function formBtnsListeners() {
@@ -46,16 +23,22 @@ function formBtnsListeners() {
 
 function showGifForm(e) {
     e.preventDefault();
-    let gifForm = document.createElement('form')
-    gifForm.setAttribute('id', 'gifForm')
-    let searchWord = makeElement('input', 'text', 'gifWord');
-    searchWord.setAttribute('placeholder', 'search for a gif');
-    let searchGif = makeElement('input', 'submit', 'gifSearch','search');
-    let gifContainer = document.createElement('section');
-    gifContainer.setAttribute('id', 'gifContainer');
-    gifForm.append(searchWord, searchGif, gifContainer);
-    document.querySelector('form').append(gifForm);
-    document.querySelector('#gifSearch').addEventListener('click', displayGif)
+    if(!document.querySelector('#gifForm')){
+        let gifForm = document.createElement('form')
+        gifForm.setAttribute('id', 'gifForm')
+        let searchWord = makeElement('input', 'text', 'gifWord');
+        searchWord.setAttribute('placeholder', 'search for a gif');
+        let searchGif = makeElement('input', 'submit', 'gifSearch','search');
+        let gifContainer = document.createElement('section');
+        gifContainer.setAttribute('id', 'gifContainer');
+        gifForm.append(searchWord, searchGif, gifContainer);
+        document.querySelector('form').append(gifForm);
+        document.querySelector('#gifSearch').addEventListener('click', displayGif)
+    }
+    else{
+        document.querySelector('#gifForm').remove()
+    }
+    
 }
 
 async function displayGif(e) {
@@ -81,7 +64,7 @@ function selectGif(e) {
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     document.querySelector('#selectedGif').append(previewGif)
-    e.path[2].remove()
+    document.querySelector('#gifForm').remove()
 }
 
 function checkPoem(e) {
@@ -93,19 +76,34 @@ function checkPoem(e) {
     gif ? giphyURL = gif.getAttribute('src') : giphyURL = ''
     try {
         postValidity(title, poem)
-        postPoem(title, poem, giphyURL)
     } catch (err) {
-        let errorMessage = document.createElement('p')
-        errorMessage.textContent = err
-        document.querySelector('form').appendChild(errorMessage)
+        document.querySelector('#formErrors').textContent = err
         console.log('whoops', err)
         return;
     }
+    postPoem(title, poem, giphyURL)
+    clearForm()
+    updateDisplay()
 }
 
-module.exports = { showForm };
+function updateDisplay(){
+    document.querySelectorAll('article').forEach(article => {
+        article.remove()
+    })
+    displayPost(1, 0);
+}
 
-},{"./helpers.js":2,"./requestHandlers.js":6}],2:[function(require,module,exports){
+function clearForm(){
+    document.querySelector('#poemTitle').value = ''
+    document.querySelector('#userPoem').value = ''
+    document.querySelector('#selectedGif').textContent = ''
+    document.querySelector('#formErrors').textContent = ''
+    document.querySelector('#new-post-form').style.display = "none"
+}
+
+module.exports = { showForm, collapseForm };
+
+},{"./helpers.js":2,"./mainHandlers":4,"./requestHandlers.js":6}],2:[function(require,module,exports){
 const {adjectives, animals} = require('./nameData')
 
 let formatDate = () => {
@@ -173,9 +171,9 @@ let randomName = () => {
 module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }
 
 },{"./nameData":5}],3:[function(require,module,exports){
-//const { displayPost } = require('./requestHandlers.js');
+
 const { showForm } = require('./formHandlers.js')
-const { extendPage, displayPost } = require('./mainHandlers.js')
+const { extendPage, displayPost} = require('./mainHandlers.js')
 
 function initBindings() {
     document.querySelector('#makePost').addEventListener('click', e => showForm(e));
@@ -183,14 +181,14 @@ function initBindings() {
 
 }
 
-displayPost();
+displayPost(1, 0);
 initBindings();
 
 },{"./formHandlers.js":1,"./mainHandlers.js":4}],4:[function(require,module,exports){
-//const { displayPost }= require('./requestHandlers.js')
-//const { makeComment } = require('./requestHandlers.js')
+//const { displayPost } = require('./requestHandlers.js');
+//const { makeComment } = require('./requestHandlers.js');
 
-let url =  "https://hakema-server.herokuapp.com";
+let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 1;
 let startIndex = 0;
 
@@ -200,16 +198,16 @@ function extendPage(e){
     e.preventDefault();
     pageCounter++;
     startIndex = startIndex +5;
-    displayPost()
+    displayPost(pageCounter, startIndex);
 }
 
 
-function displayPost(){
+function displayPost(page, index){
     fetch(`${url}/posts`)
     .then(res => res.json())
     .then(data => {
         console.log(data)
-        appendPost(data, pageCounter, startIndex)})
+        appendPost(data, page, index)})
     .catch(err => console.log(err));
 }
 
@@ -219,8 +217,9 @@ function appendPost(data, page, index){
     data.reverse()
 
     for (let i = index; i < page*5; i++){
+        
         let post = data[i]
-
+        console.log(typeof post)
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
 
@@ -2013,40 +2012,40 @@ let adjectives =
 
 module.exports = { adjectives, animals }
 },{}],6:[function(require,module,exports){
-const { appendPost } = require('./mainHandlers.js');
-const { Data } = require('./helpers.js')
+const { appendPost } = require('./mainHandlers')
+const { collapseForm } = require('./formHandlers');
+const { Data } = require('./helpers.js');
 
-let url =  "https://hakema-server.herokuapp.com";
-let pageCounter = 0;
-let startIndex = 0;
+let url =  "https://haikhoo-server.herokuapp.com";
+// let pageCounter = 0;
+// let startIndex = 0;
 
 
-function displayPost(){
-    pageCounter++;;
-    fetch(`${url}/posts`)
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
-        appendPost(data, 1, 0)})
-    .catch(err => console.log(err));
-    startIndex += 5
-}
+
+// function displayPost(){
+//     fetch(`${url}/posts`)
+//     .then(res => res.json())
+//     .then(data => {
+//         console.log(data)
+//         appendPost(data, 1, 0)
+//     })
+//     .catch(err => console.log(err));
+// }
 
 function postPoem(title, poem, giphyURL) {
     let data = new Data(title, poem, giphyURL)
-    console.log(data)
     let options = {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
-    fetch('https://hakema-server.herokuapp.com/posts', options)
+    fetch(`${url}/posts`, options)
         .then(data => console.log(data))
         .catch(err => console.log(err))
 }
 
 
-async function makeComment(e){
+async function makeComment(e) {
     e.preventDefault();
     const comment = e.target[1].value;
     let id = e.target.name;
@@ -2057,8 +2056,8 @@ async function makeComment(e){
     // console.log(postId);
     const options = {
         method: "PUT",
-        headers: { 'Content-Type':'application/json'},
-        body: JSON.stringify({"comment": comment})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ "comment": comment })
     }
     // console.log(`${url}/posts/${id}/comment`);
 
@@ -2099,9 +2098,9 @@ async function fetchGif(userInput) {
             console.log(err)
         })
     return response
-}
+};
 
 
-module.exports = { displayPost, postPoem, makeComment, fetchGif }
+module.exports = { postPoem, makeComment, fetchGif }
 
-},{"./helpers.js":2,"./mainHandlers.js":4}]},{},[3]);
+},{"./formHandlers":1,"./helpers.js":2,"./mainHandlers":4}]},{},[3]);

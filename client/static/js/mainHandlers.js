@@ -1,7 +1,7 @@
-//const { displayPost }= require('./requestHandlers.js')
-//const { makeComment } = require('./requestHandlers.js')
+//const { displayPost } = require('./requestHandlers.js');
+//const { makeComment } = require('./requestHandlers.js');
 
-let url =  "https://hakema-server.herokuapp.com";
+let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 1;
 let startIndex = 0;
 
@@ -11,16 +11,16 @@ function extendPage(e){
     e.preventDefault();
     pageCounter++;
     startIndex = startIndex +5;
-    displayPost()
+    displayPost(pageCounter, startIndex);
 }
 
 
-function displayPost(){
+function displayPost(page, index){
     fetch(`${url}/posts`)
     .then(res => res.json())
     .then(data => {
         console.log(data)
-        appendPost(data, pageCounter, startIndex)})
+        appendPost(data, page, index)})
     .catch(err => console.log(err));
 }
 
@@ -30,8 +30,9 @@ function appendPost(data, page, index){
     data.reverse()
 
     for (let i = index; i < page*5; i++){
+        
         let post = data[i]
-
+        console.log(typeof post)
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
 

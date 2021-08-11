@@ -1,37 +1,37 @@
-const { appendPost } = require('./mainHandlers.js');
-const { Data } = require('./helpers.js')
+const { appendPost } = require('./mainHandlers')
+const { collapseForm } = require('./formHandlers');
+const { Data } = require('./helpers.js');
 
-let url =  "https://hakema-server.herokuapp.com";
-let pageCounter = 0;
-let startIndex = 0;
+let url =  "https://haikhoo-server.herokuapp.com";
+// let pageCounter = 0;
+// let startIndex = 0;
 
 
-function displayPost(){
-    pageCounter++;;
-    fetch(`${url}/posts`)
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
-        appendPost(data, 1, 0)})
-    .catch(err => console.log(err));
-    startIndex += 5
-}
+
+// function displayPost(){
+//     fetch(`${url}/posts`)
+//     .then(res => res.json())
+//     .then(data => {
+//         console.log(data)
+//         appendPost(data, 1, 0)
+//     })
+//     .catch(err => console.log(err));
+// }
 
 function postPoem(title, poem, giphyURL) {
     let data = new Data(title, poem, giphyURL)
-    console.log(data)
     let options = {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
-    fetch('https://hakema-server.herokuapp.com/posts', options)
+    fetch(`${url}/posts`, options)
         .then(data => console.log(data))
         .catch(err => console.log(err))
 }
 
 
-async function makeComment(e){
+async function makeComment(e) {
     e.preventDefault();
     const comment = e.target[1].value;
     let id = e.target.name;
@@ -42,8 +42,8 @@ async function makeComment(e){
     // console.log(postId);
     const options = {
         method: "PUT",
-        headers: { 'Content-Type':'application/json'},
-        body: JSON.stringify({"comment": comment})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ "comment": comment })
     }
     // console.log(`${url}/posts/${id}/comment`);
 
@@ -84,7 +84,7 @@ async function fetchGif(userInput) {
             console.log(err)
         })
     return response
-}
+};
 
 
-module.exports = { displayPost, postPoem, makeComment, fetchGif }
+module.exports = { postPoem, makeComment, fetchGif }
