@@ -26,6 +26,5 @@ describe('form handlers functions', () => {
             expect(document.querySelector('#new-post-form').style.display).toBe("block");
         });
 
-        
     })
 })
