@@ -35,9 +35,6 @@ function showComSection(e) {
     } else {
         divCom.style.display = "none"
     }
-    // console.log(e.target.parentElement.nextElementSibling);
-    // let comtDiv = document.querySelector('.comments-div');
-    // comtDiv.style.display = "block"
 }
 
 function makeElement(element, className, textCont=null) {
@@ -198,13 +195,9 @@ async function sendLike(e) {
 
 async function makeComment(e){
     e.preventDefault();
-    const comment = e.target[1].value;
+    const comment = e.target[0].value;
     let id = e.target.name;
     let commentInput = document.querySelector(`form[name="${e.target.name}"]`);
-    // console.log(id);
-    // console.log(comment);
-    // // let postId = commentInput.closest("article").id
-    // console.log(postId);
     const options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'},
