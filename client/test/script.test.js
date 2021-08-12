@@ -1,5 +1,4 @@
 const { checkPoem, postPoem, fetchGif, postValidity } = require("../static/js/formHandlers")
-//const script = require('../static/js/script');
 const helpers = require('../static/js/helpers');
 global.fetch = require('jest-fetch-mock').enableMocks()
 
@@ -27,34 +26,5 @@ describe('post poem', () => {
     //     let uploadPost = jest.fn();
     //     expect(uploadPost()).toBeTruthy()
     // })
-
-
-
-    describe('post validity', () => {
-
-        let invalidInput = ['   ', ''];
-        invalidInput.forEach(testInput => {
-
-            test('is error thrown if there is no poem', () => {
-                expect(() => helpers.postValidity('title', testInput))
-                    .toThrowError("you haven't written your poem yet!");
-            })
-        })
-
-        test('will submit happen if poem is more than 500 characters', () => {
-
-            let poem = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            aaaaaa`
-
-            expect(() => helpers.postValidity('title', poem))
-                .toThrowError("your poem is over the character limit")
-        })
-    })
 
 })

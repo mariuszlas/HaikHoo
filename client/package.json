@@ -4,16 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --coverage",
     "bundle": "browserify ./static/js/index.js > ./static/js/bundle.js",
     "dev": "concurrently \"watchify ./static/js/index.js -o ./static/js/bundle.js\" \"python3 -m http.server\""
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "automock": false,
-    "setupFiles": [
-      "./setupJest.js"
-    ]
+    "automock": false
   },
   "author": "",
   "license": "ISC",

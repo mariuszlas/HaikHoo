@@ -21,7 +21,7 @@ class Data {
 function postValidity(title, poem) {
     console.log(poem)
     let poemNoSpace = poem.replace(/\s/g, '')
-    if (!title) {
+    if (!title.replace(/\s/g, '')) {
         throw new Error('please enter a title')
     }
     if (!poemNoSpace) {
@@ -62,4 +62,4 @@ let randomName = () => {
 }
 
 
-module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }
+module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop, randomName }
