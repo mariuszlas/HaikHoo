@@ -34,6 +34,7 @@ h1{
 }
 img {
     max-width: 100%;
+    align-self: center;
 }
 
 main{
@@ -89,6 +90,11 @@ textarea {
 .author-date-div {
     display: flex;
     justify-content: space-between;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
 }
 
 article {
