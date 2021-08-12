@@ -5,8 +5,6 @@ let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 1;
 let startIndex = 0;
 
-
-
 function extendPage(e){
     e.preventDefault();
     pageCounter++;
@@ -14,17 +12,12 @@ function extendPage(e){
     displayPost(pageCounter, startIndex);
 }
 
-
 function displayPost(page=1, index=0){
     fetch(`${url}/posts`)
     .then(res => res.json())
-    .then(data => {
-        console.log(data)
-        appendPost(data, page, index)})
+    .then(data => { appendPost(data, page, index) })
     .catch(err => console.log(err));
 }
-
-
 
 function appendPost(data, page, index){
     data.reverse()
@@ -110,7 +103,6 @@ function createComSection(post) {
 
     let divComment = makeElement('div', 'comments-div');
     divComment.style.display = 'none';
-
     let commentSection = makeElement("div", 'comment');
     post.comments.forEach((comment) => {
         let commentP = makeElement('p', 'p-comment', comment);
@@ -133,9 +125,10 @@ function createComSection(post) {
     return divComment;
 }
 
-function appendOneComm(comment, id) {
-    let comDiv = document.querySelector(`div[class="comment]`)
-    //console.log(comment.previousElementSibling);
+function appendOneComm(formElement, comment) {
+    const comDiv = formElement.previousElementSibling;
+    const p = makeElement('p', 'p-comment', comment)
+    comDiv.appendChild(p)
 }
 
 async function sendLike(e) {
@@ -143,8 +136,6 @@ async function sendLike(e) {
     let button = e.target;
     let id = button.closest('article');
     const reaction = button.getAttribute('class');
-    console.log(id.id);
-    console.log(button.getAttribute('class'));
     let options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'}
@@ -172,12 +163,10 @@ async function makeComment(e) {
     }
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
+        appendOneComm(e.target, comment);
     } catch (err) {
         console.log(err);
     }
-    console.log(e.target);
-    appendOneComm(e.target, commentInput);
 };
-
 
 module.exports = { appendPost, extendPage, displayPost, extendPage }

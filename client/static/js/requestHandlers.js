@@ -35,7 +35,6 @@ function postPoem(title, poem, giphyURL) {
         .catch(err => console.log(err))
 }
 
-
 async function makeComment(e) {
     e.preventDefault();
     const comment = e.target[1].value;
@@ -52,7 +51,6 @@ async function makeComment(e) {
         console.log(err);
     }
 };
-
 
 /////////////////  TEMPORAIRLY MOVED TO mainHandlers.js ////////////////////////////
 // async function sendLike(e) {
@@ -84,6 +82,5 @@ async function fetchGif(userInput) {
         })
     return response
 };
-
 
 module.exports = { postPoem, makeComment, fetchGif }
