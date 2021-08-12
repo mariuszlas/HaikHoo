@@ -149,6 +149,7 @@ button {
 
 .comments-div {
     margin-top: 2em;
+    text-align: start;
 }
 
 .author-date-div {
@@ -167,6 +168,7 @@ article {
     margin: 1em 2em;
     padding: 2em;
     background-color: white;
+    text-align: center;
 }
 
 #showMorePosts{
@@ -249,11 +251,14 @@ footer {
 
  .p-title{
     font-size: 2em;
+    margin:0.5em 0em;
  }
 
  .p-author, .p-date{
      color: grey;
  }
+
+ 
 
  button , input {
      font-family: Montserrat;
