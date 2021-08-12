@@ -19,8 +19,17 @@ h1, h2 {
     text-align: center;
 }
 
+img {
+    max-width: 100%;
+}
+
 main{
     grid-column-start: 2;
+}
+
+textarea {
+    float: left;
+    width: 100%;
 }
 
 #new-post-form {
