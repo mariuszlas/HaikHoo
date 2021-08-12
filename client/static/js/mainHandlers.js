@@ -169,4 +169,4 @@ async function makeComment(e) {
     }
 };
 
-module.exports = { appendPost, extendPage, displayPost, extendPage }
+module.exports = { createComSection, sendLike, makeComment, appendPost, extendPage, displayPost, extendPage, makeElement, createBody, createReactions }

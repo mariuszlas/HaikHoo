@@ -1,7 +1,7 @@
-
 const { test, beforeEach, expect } = require('@jest/globals')
 const helpers = require('../static/js/helpers')
 
+let todaysDate = '12/8/2021'
 
 describe('nameGenerator', () => {
     // beforeEach(() => randomName = helpers.randomName )
@@ -58,9 +58,16 @@ describe('post validity', () => {
     })
 })
 
-// describe('formateDate works properly', () => {
-//     let todaysDate = '12/08/2021'
-//     let testDate = helpers.formatDate;
-//     testDate
-//     expect(testDate).toHaveReturnedWith(todaysDate);
-// })
+describe('formateDate works properly', () => {
+    expect(helpers.formatDate()).toBe(todaysDate);
+})
+
+describe('data class should have all the elements', () => {
+    let testData = new helpers.Data('title','poem','gif')
+    expect(testData.author).toBeTruthy();
+    expect(testData.title).toBe('title');
+    expect(testData.text).toBe('poem');
+    expect(testData.gifUrl).toBe('gif');
+    expect(testData.date).toBe(todaysDate);
+})
+
