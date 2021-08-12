@@ -67,12 +67,16 @@ footer {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  background: blue;
   color: white;
   position: fixed;
   bottom: 40px;
   right: 40px;
   cursor: pointer;
+}
+.icon{
+    position: absolute;
+    left: -1px;
+    top:-1px;
 }
 
 .loader {

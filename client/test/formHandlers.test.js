@@ -24,9 +24,8 @@ describe('form handlers functions', () => {
             expect(postBtn).toBeDefined();
         });
 
-
         test('new-post-form is showed when the postBtn is clicked', () => {
-            const stubEvent = { preventDefault: jest.fn(), target: postBtn };
+            const stubEvent = { preventDefault: jest.fn() };
             formHandlers.showForm(stubEvent);
             expect(document.querySelector('#new-post-form').style.display).toBe("block");
         });
