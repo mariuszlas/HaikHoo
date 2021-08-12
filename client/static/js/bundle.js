@@ -6,17 +6,16 @@ const { displayPost } = require('./mainHandlers')
 function showForm(e) {
     e.preventDefault();
     scrollToTop()
-    document.querySelector('#new-post-form').style.display = "block";
-    formBtnsListeners();
+    let postForm = document.querySelector('#new-post-form');
+    postForm.style.display = "block";
+    formBtnsListeners(postForm);
 }
 
-function collapseForm() {
-    document.querySelector('#new-post-form').style.display = "none";
-}
 
-function formBtnsListeners() {
-    document.querySelector('#new-post-form').addEventListener('submit', e => checkPoem(e))
+function formBtnsListeners(form) {
+    form.addEventListener('submit', e => checkPoem(e, form))
     document.querySelector('#addGif').addEventListener('click', e => showGifForm(e));
+    document.querySelector('#closeForm').addEventListener('click', () => clearForm(form))
     let textArea = document.querySelector('#userPoem');
     textArea.addEventListener("keyup", e => counter(e));
 }
@@ -68,7 +67,7 @@ function selectGif(e) {
 
 }
 
-function checkPoem(e) {
+function checkPoem(e, poemForm) {
     e.preventDefault();
     console.log(e);
     let title = e.target.poemTitle.value;
@@ -83,30 +82,30 @@ function checkPoem(e) {
         return;
     }
     postPoem(title, poem, giphyURL)
-    clearForm()
+    clearForm(poemForm)
     updateDisplay()
 }
 
 function updateDisplay() {
-    document.querySelectorAll('article').forEach(article => {
-        article.remove()
-    })
     let loader = document.createElement('div');
     loader.setAttribute('class', 'loader');
-    document.querySelector('main').append(loader);
+    document.querySelector('main').prepend(loader);
     setTimeout(() => {
         document.querySelector('.loader').remove()
-        displayPost()}, 500);
+        document.querySelectorAll('article').forEach(article => article.remove())
+        displayPost()}, 1500);
 
 }
 
 
-function clearForm() {
-    document.querySelector('#poemTitle').value = ''
-    document.querySelector('#userPoem').value = ''
-    document.querySelector('#selectedGif').textContent = ''
-    document.querySelector('#formErrors').textContent = ''
-    document.querySelector('#new-post-form').style.display = "none"
+
+
+
+function clearForm(form) {
+    form.reset();
+    form.querySelector('#selectedGif').textContent = "";
+    form.querySelector('#counter').textContent = "";
+    form.style.display = "none";
 }
 
 
@@ -201,8 +200,6 @@ let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 1;
 let startIndex = 0;
 
-
-
 function extendPage(e){
     e.preventDefault();
     pageCounter++;
@@ -210,23 +207,18 @@ function extendPage(e){
     displayPost(pageCounter, startIndex);
 }
 
-
 function displayPost(page=1, index=0){
     fetch(`${url}/posts`)
     .then(res => res.json())
-    .then(data => {
-        console.log(data)
-        appendPost(data, page, index)})
+    .then(data => { appendPost(data, page, index) })
     .catch(err => console.log(err));
 }
-
-
 
 function appendPost(data, page, index){
     data.reverse()
 
     for (let i = index; i < page*5; i++){
-        
+
         let post = data[i]
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
@@ -306,7 +298,6 @@ function createComSection(post) {
 
     let divComment = makeElement('div', 'comments-div');
     divComment.style.display = 'none';
-
     let commentSection = makeElement("div", 'comment');
     post.comments.forEach((comment) => {
         let commentP = makeElement('p', 'p-comment', comment);
@@ -329,103 +320,33 @@ function createComSection(post) {
     return divComment;
 }
 
-// function appendPost(data){
-//     let container = document.querySelector("main");
-//
-//     for (let i = 0; i < data.length; i++){
-//         let post = data[i]
-//
-//         let article = document.createElement('article');
-//         article.setAttribute('id', post.id)
-//
-//         let divBody = document.createElement("div");
-//         divBody.setAttribute("class", "post");
-//
-//         divBody.append(title, author, date, textCont)
-//
-//         let title = document.createElement('p');
-//         title.textContent = post.title;
-//         let textCont = document.createElement('p');
-//         textCont.innerText = post.text;
-//         let author = document.createElement('p');
-//         author.innerText = post.author;
-//         let date = document.createElement('p');
-//         date.innerText = `Date added: ${post.date}`;
-//
-//         let divReact = document.createElement('div');
-//
-//         let likeBtn = document.createElement('button');
-//         let cryBtn = document.createElement('button');
-//         let smileBtn = document.createElement('button');
-//
-//         likeBtn.addEventListener('click', e => sendLike(e));
-//         likeBtn.textContent = String.fromCodePoint(0x1F44D);
-//         likeBtn.setAttribute('class', 'likes');
-//         cryBtn.addEventListener('click', e => sendCry(e));
-//         cryBtn.textContent = String.fromCodePoint(0x1F62D);
-//         smileBtn.addEventListener('click', e => sendSmile(e));
-//         smileBtn.textContent = String.fromCodePoint(0x1F603);
-//
-//
-//
-//         let divComment = document.createElement('div');
-//         divReact.append(likeBtn, cryBtn, smileBtn);
-//         let commentForm = document.createElement("form");
-//         commentForm.setAttribute('name', post.id)
-//         let inputForm = document.createElement("input");
-//         inputForm.setAttribute("type","text");
-//         inputForm.setAttribute("class","input-form");
-//         inputForm.setAttribute("name","comment");
-//
-//         let commentBtn = document.createElement("input");
-//         // commentBtn.textContent = "Comment";
-//         commentBtn.setAttribute("type", "submit");
-//         commentBtn.setAttribute("class", "comment-btn");
-//
-//         commentForm.appendChild( commentBtn);
-//         commentForm.appendChild(inputForm);
-//
-//         commentForm.addEventListener('submit', e => makeComment(e));
-//         let commentSection = document.createElement("div");
-//         commentSection.setAttribute("class", "comment");
-//
-//         for (let x = 0; x < post.comments.length; x++ ){
-//             let comments = document.createElement("p");
-//             comments.textContent = post.comments[x];
-//             commentSection.appendChild(comments);
-//         }
-//
-//         divComment.append(commentSection, commentForm);
-//         article.append(divBody, divReact, divComment)
-//         container.appendChild(article);
-//     }
-// }
+function appendOneComm(formElement, comment) {
+    const comDiv = formElement.previousElementSibling;
+    const p = makeElement('p', 'p-comment', comment)
+    comDiv.appendChild(p)
+}
 
 async function sendLike(e) {
     e.preventDefault();
     let button = e.target;
     let id = button.closest('article');
     const reaction = button.getAttribute('class');
-    console.log(id.id);
-    console.log(button.getAttribute('class'));
-    liveReactionCounter(button);
     let options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'}
     }
     await fetch(`${url}/posts/${id.id}/${reaction}`, options)
+    liveReactionCounter(button);
 }
-
 
 function liveReactionCounter(btnElement) {
-    // console.log(btnElement);
-    // let span = btnElement.nextElementSibling
-    // span.innerText = parseInt(span.innerText) + 1;
-    // console.log(span);
+    let span = btnElement.nextElementSibling;
+    if (span.innerText !== "") {
+        span.innerText = `${parseInt(span.innerText) + 1}`
+    } else { span.innerText = 1}
 }
 
-
-async function makeComment(e){https://haikhoo-server.herokuapp.com
+async function makeComment(e) {
     e.preventDefault();
     const comment = e.target[0].value;
     let id = e.target.name;
@@ -437,11 +358,11 @@ async function makeComment(e){https://haikhoo-server.herokuapp.com
     }
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
+        appendOneComm(e.target, comment);
     } catch (err) {
         console.log(err);
     }
 };
-
 
 module.exports = { appendPost, extendPage, displayPost, extendPage }
 
@@ -2055,12 +1976,10 @@ function postPoem(title, poem, giphyURL) {
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
-    fetch('https://haikhoo-server.herokuapp.com/posts', options)
     fetch(`${url}/posts`, options)
         .then(data => console.log(data))
         .catch(err => console.log(err))
 }
-
 
 async function makeComment(e) {
     e.preventDefault();
@@ -2078,7 +1997,6 @@ async function makeComment(e) {
         console.log(err);
     }
 };
-
 
 /////////////////  TEMPORAIRLY MOVED TO mainHandlers.js ////////////////////////////
 // async function sendLike(e) {
@@ -2110,7 +2028,6 @@ async function fetchGif(userInput) {
         })
     return response
 };
-
 
 module.exports = { postPoem, makeComment, fetchGif }
 
