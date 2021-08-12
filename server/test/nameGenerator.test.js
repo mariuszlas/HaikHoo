@@ -1,7 +1,6 @@
 
 const { test, beforeEach, expect } = require('@jest/globals')
-const nameGenerator = require('../../username_generator/nameGenerator')
-
+const nameGenerator = require('../models/post.js')
 
 describe('nameGenerator', () => {
     beforeEach(() => randomName = nameGenerator.randomName )
