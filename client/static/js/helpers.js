@@ -42,7 +42,6 @@ function makeElement(element, type, id, value='') {
 
 function counter(e) {
     e.preventDefault();
-    const max = 500;
     let textLen = e.target.value.length;
     let span = document.querySelector('#counter');
     span.innerText = `${textLen}/500`;
