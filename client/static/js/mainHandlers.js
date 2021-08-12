@@ -8,8 +8,9 @@ let startIndex = 0;
 function extendPage(e){
     e.preventDefault();
     pageCounter++;
-    startIndex = startIndex +5;
+    startIndex += 5;
     displayPost(pageCounter, startIndex);
+
 }
 
 function displayPost(page=1, index=0){
@@ -169,4 +170,4 @@ async function makeComment(e) {
     }
 };
 
-module.exports = { appendPost, extendPage, displayPost, extendPage }
+module.exports = { appendPost, extendPage, displayPost, extendPage, pageCounter, startIndex }
