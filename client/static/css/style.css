@@ -12,6 +12,7 @@ body{
     display: grid;
     grid-template-columns:  auto 550px auto;
     background-color: #395D5E;
+    margin: 0;
 }
 
 #showMorePosts{
@@ -195,10 +196,6 @@ footer {
  @media only screen and (max-width: 550px) {
      body{
          display: block;
-     }
-     body{
-         display: block;
-         margin: 0;
      }
      article {
          margin: 0.37em 0.75em 0.37em 0.75em;
