@@ -20,7 +20,7 @@ border: none;
     font-size: 3em;
     align-self: center;
     content: "\1F807";
-background: none;    
+background: none;
 cursor: pointer;
 }
 
@@ -54,7 +54,7 @@ img {
 
 main{
     grid-column-start: 2;
-     background-color: #FFF2E9; 
+     background-color: #FFF2E9;
      border-radius: 10px;
      font-family: Montserrat;
      display: flex;
@@ -196,6 +196,14 @@ footer {
      body{
          display: block;
      }
+     body{
+         display: block;
+         margin: 0;
+     }
+     article {
+         margin: 0.75em;
+         padding: 1.25em;
+     }
  }
 
  .p-title{
@@ -209,5 +217,3 @@ footer {
  button {
      font-family: Montserrat;
  }
-
- 
