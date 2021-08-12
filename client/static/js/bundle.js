@@ -1977,7 +1977,6 @@ function postPoem(title, poem, giphyURL) {
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" }
     }
-    fetch('https://haikhoo-server.herokuapp.com/posts', options)
     fetch(`${url}/posts`, options)
         .then(data => console.log(data))
         .catch(err => console.log(err))
