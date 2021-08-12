@@ -7,7 +7,7 @@ function showForm(e) {
     e.preventDefault();
     scrollToTop()
     let postForm = document.querySelector('#new-post-form');
-    postForm.style.display = "block";
+    postForm.style.display = "flex";
     formBtnsListeners(postForm);
 }
 
@@ -202,8 +202,9 @@ let startIndex = 0;
 function extendPage(e){
     e.preventDefault();
     pageCounter++;
-    startIndex = startIndex +5;
+    startIndex += 5;
     displayPost(pageCounter, startIndex);
+
 }
 
 function displayPost(page=1, index=0){
@@ -259,10 +260,12 @@ function createBody(post) {
 
     let divBody = makeElement("div", 'post');
     let title = makeElement('p', 'p-title', post.title);
+    let topDiv = makeElement('div', 'author-date-div')
     let author = makeElement('p', 'p-author', `Posted by ${post.author} `);
     let textCont = makeElement('p', 'p-text', post.text);
-    let date = makeElement('p', 'p-date', `Date added: ${post.date}`);
-    divBody.append(title, author, date, textCont);
+    let date = makeElement('p', 'p-date', `${post.date}`);
+    topDiv.append(author, date);
+    divBody.append(topDiv, title, textCont);
     if (post.gifUrl !== "") {
         let gif = document.createElement('img');
         gif.setAttribute('src', post.gifUrl);
@@ -360,6 +363,7 @@ async function makeComment(e) {
         console.log(err);
     }
 };
+
 
 module.exports = { createComSection, sendLike, makeComment, appendPost, extendPage, displayPost, extendPage, makeElement, createBody, createReactions }
 

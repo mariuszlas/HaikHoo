@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-/* 
+/*
 
 C93429
 F4CFB4
@@ -13,7 +13,6 @@ body{
     grid-template-columns:  auto 550px auto;
     background-color: #395D5E;
 }
-
 
 #showMorePosts{
     width: 1.5em;
@@ -50,6 +49,7 @@ font-size: 30px;
 
 img {
     max-width: 100%;
+    align-self: center;
 }
 
 main{
@@ -67,16 +67,22 @@ textarea {
     width: 100%;
 }
 
+button {
+    cursor: pointer;
+}
+
 .div-react {
     margin-top: 2em;
-    margin-bottom: 2em;
+    /* margin-bottom: 2em; */
     display: flex;
     justify-content: space-between;
 }
 
-.likes-count, .smiles-count, .cries-count {
-    margin-left: 0.25em;
-    margin-right: 1;;
+.likes, .smiles, .cries {
+    margin-right: 0.25em;
+    margin-left: 1em;
+    border-radius: 5px;
+    font-size: 1.15em;
 }
 
 #new-post-form {
@@ -85,6 +91,45 @@ textarea {
     border-radius: 5px;
     margin: 2em 2em 1em;
     padding: 2em;
+    flex-direction: column;
+}
+
+#post-form-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+#counter {
+    align-self: flex-end;
+    margin-top: 0.75em;
+}
+
+.add-comment-form {
+    display: flex;
+    flex-direction:column;
+}
+
+.comment-btn {
+    align-self: flex-end;
+}
+
+.input-form {
+    margin-top: 1em;
+    margin-bottom: 0.75em;
+}
+
+.comments-div {
+    margin-top: 2em;
+}
+
+.author-date-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
 }
 
 article {
