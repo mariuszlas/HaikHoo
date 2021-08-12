@@ -202,8 +202,9 @@ let startIndex = 0;
 function extendPage(e){
     e.preventDefault();
     pageCounter++;
-    startIndex = startIndex +5;
+    startIndex += 5;
     displayPost(pageCounter, startIndex);
+
 }
 
 function displayPost(page=1, index=0){
@@ -360,6 +361,7 @@ async function makeComment(e) {
         console.log(err);
     }
 };
+
 
 module.exports = { createComSection, sendLike, makeComment, appendPost, extendPage, displayPost, extendPage, makeElement, createBody, createReactions }
 

@@ -34,14 +34,16 @@ textarea {
 
 .div-react {
     margin-top: 2em;
-    margin-bottom: 2em;
+    /* margin-bottom: 2em; */
     display: flex;
     justify-content: space-between;
 }
 
-.likes-count, .smiles-count, .cries-count {
-    margin-left: 0.25em;
-    margin-right: 1;;
+.likes, .smiles, .cries {
+    margin-right: 0.25em;
+    margin-left: 1em;
+    border-radius: 5px;
+    font-size: 1.15em;
 }
 
 #new-post-form {
@@ -50,6 +52,24 @@ textarea {
     border-radius: 5px;
     margin: 2em;
     padding: 2em;
+}
+
+.add-comment-form {
+    display: flex;
+    flex-direction:column;
+}
+
+.comment-btn {
+    align-self: flex-end;
+}
+
+.input-form {
+    margin-top: 1em;
+    margin-bottom: 0.75em;
+}
+
+.comments-div {
+    margin-top: 2em;
 }
 
 article {
