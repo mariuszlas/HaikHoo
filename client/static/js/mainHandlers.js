@@ -30,7 +30,7 @@ function appendPost(data, page, index){
 
         let divBody = createBody(post);
         divBody.setAttribute("class", "post");
-        let divReact = document.createElement('div');
+        let divReact = makeElement('div', 'div-react');
 
         let spanEmoji = createReactions(post);
         let showComBtn = makeElement('button', 'show-com-btn', 'Show Comments')
@@ -78,8 +78,6 @@ function createBody(post) {
 }
 
 function createReactions(post) {
-
-    let divReact = makeElement('div', 'div-react');
     let spanEmoji = makeElement('span', 'span-emoji');
     let arr = [['likes', 0x1F44D], ['cries', 0x1F62D], ['smiles', 0x1F603]]
 
