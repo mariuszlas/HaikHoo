@@ -5,8 +5,6 @@ let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 1;
 let startIndex = 0;
 
-
-
 function extendPage(e){
     e.preventDefault();
     pageCounter++;
@@ -14,23 +12,18 @@ function extendPage(e){
     displayPost(pageCounter, startIndex);
 }
 
-
 function displayPost(page=1, index=0){
     fetch(`${url}/posts`)
     .then(res => res.json())
-    .then(data => {
-        console.log(data)
-        appendPost(data, page, index)})
+    .then(data => { appendPost(data, page, index) })
     .catch(err => console.log(err));
 }
-
-
 
 function appendPost(data, page, index){
     data.reverse()
 
     for (let i = index; i < page*5; i++){
-        
+
         let post = data[i]
         let article = document.createElement('article');
         article.setAttribute('id', post.id)
@@ -110,7 +103,6 @@ function createComSection(post) {
 
     let divComment = makeElement('div', 'comments-div');
     divComment.style.display = 'none';
-
     let commentSection = makeElement("div", 'comment');
     post.comments.forEach((comment) => {
         let commentP = makeElement('p', 'p-comment', comment);
@@ -133,103 +125,33 @@ function createComSection(post) {
     return divComment;
 }
 
-// function appendPost(data){
-//     let container = document.querySelector("main");
-//
-//     for (let i = 0; i < data.length; i++){
-//         let post = data[i]
-//
-//         let article = document.createElement('article');
-//         article.setAttribute('id', post.id)
-//
-//         let divBody = document.createElement("div");
-//         divBody.setAttribute("class", "post");
-//
-//         divBody.append(title, author, date, textCont)
-//
-//         let title = document.createElement('p');
-//         title.textContent = post.title;
-//         let textCont = document.createElement('p');
-//         textCont.innerText = post.text;
-//         let author = document.createElement('p');
-//         author.innerText = post.author;
-//         let date = document.createElement('p');
-//         date.innerText = `Date added: ${post.date}`;
-//
-//         let divReact = document.createElement('div');
-//
-//         let likeBtn = document.createElement('button');
-//         let cryBtn = document.createElement('button');
-//         let smileBtn = document.createElement('button');
-//
-//         likeBtn.addEventListener('click', e => sendLike(e));
-//         likeBtn.textContent = String.fromCodePoint(0x1F44D);
-//         likeBtn.setAttribute('class', 'likes');
-//         cryBtn.addEventListener('click', e => sendCry(e));
-//         cryBtn.textContent = String.fromCodePoint(0x1F62D);
-//         smileBtn.addEventListener('click', e => sendSmile(e));
-//         smileBtn.textContent = String.fromCodePoint(0x1F603);
-//
-//
-//
-//         let divComment = document.createElement('div');
-//         divReact.append(likeBtn, cryBtn, smileBtn);
-//         let commentForm = document.createElement("form");
-//         commentForm.setAttribute('name', post.id)
-//         let inputForm = document.createElement("input");
-//         inputForm.setAttribute("type","text");
-//         inputForm.setAttribute("class","input-form");
-//         inputForm.setAttribute("name","comment");
-//
-//         let commentBtn = document.createElement("input");
-//         // commentBtn.textContent = "Comment";
-//         commentBtn.setAttribute("type", "submit");
-//         commentBtn.setAttribute("class", "comment-btn");
-//
-//         commentForm.appendChild( commentBtn);
-//         commentForm.appendChild(inputForm);
-//
-//         commentForm.addEventListener('submit', e => makeComment(e));
-//         let commentSection = document.createElement("div");
-//         commentSection.setAttribute("class", "comment");
-//
-//         for (let x = 0; x < post.comments.length; x++ ){
-//             let comments = document.createElement("p");
-//             comments.textContent = post.comments[x];
-//             commentSection.appendChild(comments);
-//         }
-//
-//         divComment.append(commentSection, commentForm);
-//         article.append(divBody, divReact, divComment)
-//         container.appendChild(article);
-//     }
-// }
+function appendOneComm(formElement, comment) {
+    const comDiv = formElement.previousElementSibling;
+    const p = makeElement('p', 'p-comment', comment)
+    comDiv.appendChild(p)
+}
 
 async function sendLike(e) {
     e.preventDefault();
     let button = e.target;
     let id = button.closest('article');
     const reaction = button.getAttribute('class');
-    console.log(id.id);
-    console.log(button.getAttribute('class'));
-    liveReactionCounter(button);
     let options = {
         method: "PUT",
         headers: { 'Content-Type':'application/json'}
     }
     await fetch(`${url}/posts/${id.id}/${reaction}`, options)
+    liveReactionCounter(button);
 }
-
 
 function liveReactionCounter(btnElement) {
-    // console.log(btnElement);
-    // let span = btnElement.nextElementSibling
-    // span.innerText = parseInt(span.innerText) + 1;
-    // console.log(span);
+    let span = btnElement.nextElementSibling;
+    if (span.innerText !== "") {
+        span.innerText = `${parseInt(span.innerText) + 1}`
+    } else { span.innerText = 1}
 }
 
-
-async function makeComment(e){https://haikhoo-server.herokuapp.com
+async function makeComment(e) {
     e.preventDefault();
     const comment = e.target[0].value;
     let id = e.target.name;
@@ -241,10 +163,10 @@ async function makeComment(e){https://haikhoo-server.herokuapp.com
     }
     try {
         await fetch(`${url}/posts/${id}/comment`, options);
+        appendOneComm(e.target, comment);
     } catch (err) {
         console.log(err);
     }
 };
-
 
 module.exports = { appendPost, extendPage, displayPost, extendPage }
