@@ -2,10 +2,19 @@
   box-sizing: border-box;
 }
 
+/* 
+
+C93429
+F4CFB4
+FFF2E9
+C5A48D */
 body{
     display: grid;
     grid-template-columns:  auto 550px auto;
+    background-color: #C5A48D;
 }
+
+
 
 
 header {
@@ -17,14 +26,19 @@ header {
 
 h1, h2 {
     text-align: center;
+    font-family: 'Reenie Beanie';
 }
 
+h1{
+    font-size: 100px;
+}
 img {
     max-width: 100%;
 }
 
 main{
     grid-column-start: 2;
+     background-color: #FFF2E9; 
 }
 
 textarea {
@@ -73,10 +87,11 @@ textarea {
 }
 
 article {
-    border: solid 1px blue;
+    border: solid 3px #C93429;
     border-radius: 5px;
     margin: 2em;
     padding: 2em;
+    background-color: white;
 }
 
 footer {
@@ -100,6 +115,8 @@ footer {
   height: 70px;
   border-radius: 50%;
   color: white;
+  border: solid 5px #C5A48D;
+  box-sizing: border-box;
   position: fixed;
   bottom: 40px;
   right: 40px;
