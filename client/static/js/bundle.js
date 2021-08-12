@@ -10,13 +10,11 @@ function showForm(e) {
     formBtnsListeners();
 }
 
-function collapseForm() {
-    document.querySelector('#new-post-form').style.display = "none";
-}
 
 function formBtnsListeners() {
     document.querySelector('#new-post-form').addEventListener('submit', e => checkPoem(e))
     document.querySelector('#addGif').addEventListener('click', e => showGifForm(e));
+    document.querySelector('#closeForm').addEventListener('click', e => clearForm(e))
     let textArea = document.querySelector('#userPoem');
     textArea.addEventListener("keyup", e => counter(e));
 }
