@@ -19,6 +19,12 @@ body{
     background: none;    
     cursor: pointer;
     align-self: center;
+<<<<<<< HEAD
+=======
+    content: "\1F807";
+    background: none;
+    cursor: pointer;
+>>>>>>> upstream/dev
 }
 
 header {
@@ -51,7 +57,7 @@ img {
 
 main{
     grid-column-start: 2;
-     background-color: #FFF2E9; 
+     background-color: #FFF2E9;
      border-radius: 10px;
      font-family: Montserrat;
      display: flex;
@@ -196,6 +202,15 @@ footer {
      body{
          display: block;
      }
+     article {
+         margin: 0.37em 0.75em 0.37em 0.75em;
+         padding: 1.25em;
+     }
+     .likes, .smiles, .cries {
+        margin-right: 0.15em;
+        margin-left: 0.75em;
+        border-radius: 5px;
+     }
  }
 
  .p-title{
@@ -209,5 +224,3 @@ footer {
  button {
      font-family: Montserrat;
  }
-
- 

@@ -46,7 +46,6 @@ async function displayGif(e) {
     let gifData = await fetchGif(userInput)
     console.log(gifData)
     for (let i = 0; i < gifData.data.length; i++) {
-
         let gifPath = gifData.data[i].images.fixed_height.url
         let gif = document.createElement('img')
         gif.setAttribute('src', gifPath)
@@ -96,10 +95,6 @@ function updateDisplay() {
         displayPost()}, 1500);
 
 }
-
-
-
-
 
 function clearForm(form) {
     form.reset();
