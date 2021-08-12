@@ -179,12 +179,13 @@ footer {
 }
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid black; /* Blue */
+    border: 10px solid #f3f3f3; /* Light grey */
+    border-top: 10px solid black; /* Blue */
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 1s linear infinite;
+    width: 3em;
+    height: 3em;
+    animation: spin 0.7s linear infinite;
+    margin:1em;
   }
 
   @keyframes spin {
