@@ -6,17 +6,16 @@ const { displayPost } = require('./mainHandlers')
 function showForm(e) {
     e.preventDefault();
     scrollToTop()
-    document.querySelector('#new-post-form').style.display = "block";
-    formBtnsListeners();
+    let postForm = document.querySelector('#new-post-form');
+    postForm.style.display = "block";
+    formBtnsListeners(postForm);
 }
 
-function collapseForm() {
-    document.querySelector('#new-post-form').style.display = "none";
-}
 
-function formBtnsListeners() {
-    document.querySelector('#new-post-form').addEventListener('submit', e => checkPoem(e))
+function formBtnsListeners(form) {
+    form.addEventListener('submit', e => checkPoem(e, form))
     document.querySelector('#addGif').addEventListener('click', e => showGifForm(e));
+    document.querySelector('#closeForm').addEventListener('click', () => clearForm(form))
     let textArea = document.querySelector('#userPoem');
     textArea.addEventListener("keyup", e => counter(e));
 }
@@ -68,7 +67,7 @@ function selectGif(e) {
 
 }
 
-function checkPoem(e) {
+function checkPoem(e, poemForm) {
     e.preventDefault();
     console.log(e);
     let title = e.target.poemTitle.value;
@@ -83,30 +82,30 @@ function checkPoem(e) {
         return;
     }
     postPoem(title, poem, giphyURL)
-    clearForm()
+    clearForm(poemForm)
     updateDisplay()
 }
 
 function updateDisplay() {
-    document.querySelectorAll('article').forEach(article => {
-        article.remove()
-    })
     let loader = document.createElement('div');
     loader.setAttribute('class', 'loader');
-    document.querySelector('main').append(loader);
+    document.querySelector('main').prepend(loader);
     setTimeout(() => {
         document.querySelector('.loader').remove()
-        displayPost()}, 500);
+        document.querySelectorAll('article').forEach(article => article.remove())
+        displayPost()}, 1500);
 
 }
 
 
-function clearForm() {
-    document.querySelector('#poemTitle').value = ''
-    document.querySelector('#userPoem').value = ''
-    document.querySelector('#selectedGif').textContent = ''
-    document.querySelector('#formErrors').textContent = ''
-    document.querySelector('#new-post-form').style.display = "none"
+
+
+
+function clearForm(form) {
+    form.reset();
+    form.querySelector('#selectedGif').textContent = "";
+    form.querySelector('#counter').textContent = "";
+    form.style.display = "none";
 }
 
 
