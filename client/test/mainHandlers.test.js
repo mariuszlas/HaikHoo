@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
+
 const mainHandlers = require('../static/js/mainHandlers.js');
 global.fetch = require('jest-fetch-mock');   // create mock of the 'fetch' function as a global variable
 
@@ -60,3 +61,4 @@ describe('functionality of fuctions making fetch requests', () => {
 
 
 })
+

@@ -115,7 +115,7 @@ module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm, displayG
 },{"./helpers.js":2,"./mainHandlers":4,"./requestHandlers.js":6}],2:[function(require,module,exports){
 const {adjectives, animals} = require('./nameData')
 
-let formatDate = () => {
+function formatDate() {
     let today = new Date()
     let yyyy = today.getFullYear()
     let mm = today.getMonth() + 1;
@@ -148,7 +148,7 @@ function postValidity(title, poem) {
 }
 
 function makeElement(element, type, id, value='') {
-    newElement = document.createElement(element)
+    let newElement = document.createElement(element)
     newElement.setAttribute('type', type);
     newElement.setAttribute('id', id);
     newElement.setAttribute('value', value);
@@ -162,8 +162,6 @@ function counter(e) {
     let span = document.querySelector('#counter');
     span.innerText = `${textLen}/500`;
 }
-
-
 
 function scrollToTop() {
   document.body.scrollTop = 0; // For Safari
@@ -226,7 +224,7 @@ function appendPost(data, page, index){
 
         let divBody = createBody(post);
         divBody.setAttribute("class", "post");
-        let divReact = document.createElement('div');
+        let divReact = makeElement('div', 'div-react');
 
         let spanEmoji = createReactions(post);
         let showComBtn = makeElement('button', 'show-com-btn', 'Show Comments')
@@ -274,8 +272,6 @@ function createBody(post) {
 }
 
 function createReactions(post) {
-
-    let divReact = makeElement('div', 'div-react');
     let spanEmoji = makeElement('span', 'span-emoji');
     let arr = [['likes', 0x1F44D], ['cries', 0x1F62D], ['smiles', 0x1F603]]
 
