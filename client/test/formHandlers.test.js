@@ -58,6 +58,7 @@ describe('form handlers functions', () => {
         })
     })
 
+
     // describe('displayGif', () => {
 
     //     beforeEach(() => {
@@ -156,5 +157,4 @@ describe('form handlers functions', () => {
 
         // })
     // })
-
 })
