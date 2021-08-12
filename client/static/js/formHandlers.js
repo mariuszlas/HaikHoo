@@ -56,12 +56,17 @@ async function displayGif(e) {
 
 function selectGif(e) {
     console.log(e)
-    let gifPath = e.target.src
-    console.log(gifPath)
-    document.querySelector("#selectedGif").textContent = "";
+    let gifPath = e.target.src;
+    let selectedGif = document.querySelector("#selectedGif");
+    selectedGif.textContent = "";
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
-    document.querySelector('#selectedGif').append(previewGif)
+    let removeGif = makeElement('input', 'button', 'removeGif', 'X')
+    removeGif.addEventListener('click', (e) => {
+        console.log(e)
+        selectedGif.textContent = ""})
+    selectedGif.append(previewGif);
+    selectedGif.append(removeGif);
     document.querySelector('#gifForm').remove();
 
 }
@@ -76,6 +81,7 @@ function checkPoem(e, poemForm) {
     try {
         postValidity(title, poem)
     } catch (err) {
+        document.querySelector('#formErrors').removeAttribute('hidden')
         document.querySelector('#formErrors').textContent = err
         console.log('whoops', err)
         return;
@@ -98,6 +104,7 @@ function updateDisplay() {
 
 function clearForm(form) {
     form.reset();
+    form.querySelector('#formErrors').textContent = "";
     form.querySelector('#selectedGif').textContent = "";
     form.querySelector('#counter').textContent = "";
     form.style.display = "none";

@@ -47,7 +47,6 @@ async function displayGif(e) {
     let gifData = await fetchGif(userInput)
     console.log(gifData)
     for (let i = 0; i < gifData.data.length; i++) {
-
         let gifPath = gifData.data[i].images.fixed_height.url
         let gif = document.createElement('img')
         gif.setAttribute('src', gifPath)
@@ -58,12 +57,17 @@ async function displayGif(e) {
 
 function selectGif(e) {
     console.log(e)
-    let gifPath = e.target.src
-    console.log(gifPath)
-    document.querySelector("#selectedGif").textContent = "";
+    let gifPath = e.target.src;
+    let selectedGif = document.querySelector("#selectedGif");
+    selectedGif.textContent = "";
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
-    document.querySelector('#selectedGif').append(previewGif)
+    let removeGif = makeElement('input', 'button', 'removeGif', 'X')
+    removeGif.addEventListener('click', (e) => {
+        console.log(e)
+        selectedGif.textContent = ""})
+    selectedGif.append(previewGif);
+    selectedGif.append(removeGif);
     document.querySelector('#gifForm').remove();
 
 }
@@ -78,6 +82,7 @@ function checkPoem(e, poemForm) {
     try {
         postValidity(title, poem)
     } catch (err) {
+        document.querySelector('#formErrors').removeAttribute('hidden')
         document.querySelector('#formErrors').textContent = err
         console.log('whoops', err)
         return;
@@ -98,12 +103,9 @@ function updateDisplay() {
 
 }
 
-
-
-
-
 function clearForm(form) {
     form.reset();
+    form.querySelector('#formErrors').textContent = "";
     form.querySelector('#selectedGif').textContent = "";
     form.querySelector('#counter').textContent = "";
     form.style.display = "none";
@@ -157,7 +159,6 @@ function makeElement(element, type, id, value='') {
 
 function counter(e) {
     e.preventDefault();
-    const max = 500;
     let textLen = e.target.value.length;
     let span = document.querySelector('#counter');
     span.innerText = `${textLen}/500`;
@@ -2017,7 +2018,7 @@ async function makeComment(e) {
 
 async function fetchGif(userInput) {
     const APIKEY = '1GZ3I3ZbWKLBCfC7UFrN1yWVhQkONQ32'
-    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${userInput}&rating=pg-13&limit=5`
+    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${userInput}&rating=pg-13&limit=4`
     let response = await fetch(url)
         .then(resp => resp.json())
         .then(content => {
