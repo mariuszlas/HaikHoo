@@ -1,5 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-const { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
+let { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
 const { postPoem, fetchGif } = require('./requestHandlers.js')
 const { displayPost } = require('./mainHandlers')
 
@@ -110,7 +110,7 @@ function clearForm(form) {
 }
 
 
-module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm, displayGif};
+module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm, displayGif, selectGif, clearForm, updateDisplay};
 
 },{"./helpers.js":2,"./mainHandlers":4,"./requestHandlers.js":6}],2:[function(require,module,exports){
 const {adjectives, animals} = require('./nameData')
@@ -261,7 +261,7 @@ function createBody(post) {
 
     let divBody = makeElement("div", 'post');
     let title = makeElement('p', 'p-title', post.title);
-    let author = makeElement('p', 'p-author', post.author);
+    let author = makeElement('p', 'p-author', `Posted by ${post.author} `);
     let textCont = makeElement('p', 'p-text', post.text);
     let date = makeElement('p', 'p-date', `Date added: ${post.date}`);
     divBody.append(title, author, date, textCont);
