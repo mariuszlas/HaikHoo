@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-/* 
+/*
 
 C93429
 F4CFB4
@@ -38,7 +38,7 @@ img {
 
 main{
     grid-column-start: 2;
-     background-color: #FFF2E9; 
+     background-color: #FFF2E9;
 }
 
 textarea {
@@ -84,6 +84,11 @@ textarea {
 
 .comments-div {
     margin-top: 2em;
+}
+
+.author-date-div {
+    display: flex;
+    justify-content: space-between;
 }
 
 article {

@@ -66,10 +66,12 @@ function createBody(post) {
 
     let divBody = makeElement("div", 'post');
     let title = makeElement('p', 'p-title', post.title);
+    let topDiv = makeElement('div', 'author-date-div')
     let author = makeElement('p', 'p-author', `Posted by ${post.author} `);
     let textCont = makeElement('p', 'p-text', post.text);
-    let date = makeElement('p', 'p-date', `Date added: ${post.date}`);
-    divBody.append(title, author, date, textCont);
+    let date = makeElement('p', 'p-date', `${post.date}`);
+    topDiv.append(author, date);
+    divBody.append(topDiv, title, textCont);
     if (post.gifUrl !== "") {
         let gif = document.createElement('img');
         gif.setAttribute('src', post.gifUrl);
