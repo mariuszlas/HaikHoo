@@ -114,7 +114,7 @@ module.exports = { showForm, checkPoem, formBtnsListeners };
 },{"./helpers.js":2,"./mainHandlers":4,"./requestHandlers.js":6}],2:[function(require,module,exports){
 const {adjectives, animals} = require('./nameData')
 
-let formatDate = () => {
+function formatDate() {
     let today = new Date()
     let yyyy = today.getFullYear()
     let mm = today.getMonth() + 1;
@@ -147,7 +147,7 @@ function postValidity(title, poem) {
 }
 
 function makeElement(element, type, id, value='') {
-    newElement = document.createElement(element)
+    let newElement = document.createElement(element)
     newElement.setAttribute('type', type);
     newElement.setAttribute('id', id);
     newElement.setAttribute('value', value);
@@ -161,8 +161,6 @@ function counter(e) {
     let span = document.querySelector('#counter');
     span.innerText = `${textLen}/500`;
 }
-
-
 
 function scrollToTop() {
   document.body.scrollTop = 0; // For Safari
