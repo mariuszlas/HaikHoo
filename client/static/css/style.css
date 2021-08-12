@@ -39,6 +39,11 @@ textarea {
     justify-content: space-between;
 }
 
+.likes-count, .smiles-count, .cries-count {
+    margin-left: 0.25em;
+    margin-right: 1;;
+}
+
 #new-post-form {
     display: none;
     border: solid 1px blue;
