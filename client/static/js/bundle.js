@@ -364,7 +364,7 @@ async function makeComment(e) {
     }
 };
 
-module.exports = { appendPost, extendPage, displayPost, extendPage }
+module.exports = { appendPost, extendPage, displayPost, extendPage, makeElement, createBody }
 
 },{}],5:[function(require,module,exports){
 let animals =
