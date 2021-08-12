@@ -65,13 +65,13 @@ describe('form handlers functions', () => {
         })
 
 
-        test('is fetchGif called', () => {
+        test('is fetchGif called', async () => {
 
-            formHandlers.displayGif(stubEvent);
+            await formHandlers.displayGif(stubEvent);
             expect(fetchGif).toHaveBeenCalled();
         })
 
-        test('are gifs displayed when search is made', () => {
+        test('are gifs displayed when search is made', async () => {
             let gifData =
             {
                 data: [
@@ -85,13 +85,14 @@ describe('form handlers functions', () => {
             const fetchGif = jest.fn(() => {
                 return gifData
             });
-            formHandlers.displayGif(stubEvent)
+            await formHandlers.displayGif(stubEvent)
             expect(document.querySelector('#gifContainer').childElementCount).toEqual(5)
         })
     })
 
 
     describe('selectGif', () => {
+
         beforeEach(() => {
             // let doc = "<form id='gifForm'><span id='selectedGif'></span></form>"
             // document.documentElement.innerHTML = doc
@@ -124,33 +125,35 @@ describe('form handlers functions', () => {
         beforeEach( () => {
             jest.restoreAllMocks()
         })
-        test('is postValidity called', () => {
+        test('is postValidity called', async () => {
             document.documentElement.innerHTML = "<form><span id='formErrors'></span></form>"
             let poemForm = document.querySelector('form')
             let stubEvent = {preventDefault: jest.fn(), target: { poemTitle: { value: 'title'}, userPoem: {value:'poem'}}}
             helpers.postValidity = jest.fn().mockImplementation( () => {});
             requestHandlers.postPoem = jest.fn().mockImplementation(() => {})
             formHandlers.updateDisplay = jest.fn().mockImplementation(() => {})
-            formHandlers.checkPoem(stubEvent, poemForm)
+           await formHandlers.checkPoem(stubEvent, poemForm)
             expect(postValidity).toHaveBeenCalled()
         })
     })
 
     describe('updateDisplay', () => {
-        test('is displayPost called', () => {
+        test('is displayPost called', async () => {
             mainHandlers.displayPost = jest.fn()
-            formHandlers.updateDisplay()
+           await  formHandlers.updateDisplay()
             expect(mainHandlers.displayPost).toBeCalled()
         })
 
-        test('is the first post displayed now different', () => {
-            document.documentElement.innerHTML =
+
+        test('is the first post displayed now different', async () => {
+            document.documentElement.innerHTML = 
+
             "<main><article>5</article><article>4</article><article>3</article><article>2</article><article>1</article></main>"
             mainHandlers.displayPost = jest.fn( () => {
                 document.documentElement.innerHTML =
                 "<main><article>6</article><article>5</article><article>4</article><article>3</article><article>2</article></main>"
             })
-            formHandlers.updateDisplay()
+            await formHandlers.updateDisplay()
             expect(mainHandlers.displayPost).toBeCalled();
             expect(document.querySelector('main').firstChild.textContent).toEqual('6');
 
