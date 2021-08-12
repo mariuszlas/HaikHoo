@@ -12,8 +12,9 @@ function showForm(e) {
 
 
 function formBtnsListeners(form) {
-    form.addEventListener('submit', e => checkPoem(e, form))
-    document.querySelector('#addGif').addEventListener('click', e => showGifForm(e));
+    let checking = (e) => checkPoem(e, form)
+    form.addEventListener('submit', checking)
+    document.querySelector('#addGif').addEventListener('click', showGifForm);
     document.querySelector('#closeForm').addEventListener('click', () => clearForm(form))
     let textArea = document.querySelector('#userPoem');
     textArea.addEventListener("keyup", e => counter(e));
@@ -21,6 +22,7 @@ function formBtnsListeners(form) {
 
 function showGifForm(e) {
     e.preventDefault();
+    console.log(e)
     if (!document.querySelector('#gifForm')) {
         let gifForm = document.createElement('form')
         gifForm.setAttribute('id', 'gifForm')
@@ -107,6 +109,7 @@ function clearForm(form) {
     form.querySelector('#formErrors').textContent = "";
     form.querySelector('#selectedGif').textContent = "";
     form.querySelector('#counter').textContent = "";
+    form.querySelector('#gifForm') ? form.querySelector('#gifForm').remove() : console.log('no giphyform');
     form.style.display = "none";
 }
 
