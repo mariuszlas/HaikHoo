@@ -31,7 +31,7 @@ function showGifForm(e) {
         let gifContainer = document.createElement('section');
         gifContainer.setAttribute('id', 'gifContainer');
         gifForm.append(searchWord, searchGif, gifContainer);
-        document.querySelector('form').append(gifForm);
+        document.querySelector('#new-post-form').append(gifForm);
         document.querySelector('#gifSearch').addEventListener('click', displayGif)
     }
     else {
@@ -45,6 +45,7 @@ async function displayGif(e) {
     document.querySelector("#gifContainer").textContent = "";
     let userInput = document.querySelector('#gifWord').value;
     let gifData = await fetchGif(userInput)
+    console.log(gifData)
     for (let i = 0; i < gifData.data.length; i++) {
 
         let gifPath = gifData.data[i].images.fixed_height.url
@@ -109,7 +110,7 @@ function clearForm(form) {
 }
 
 
-module.exports = { showForm, checkPoem, formBtnsListeners };
+module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm, displayGif};
 
 },{"./helpers.js":2,"./mainHandlers":4,"./requestHandlers.js":6}],2:[function(require,module,exports){
 const {adjectives, animals} = require('./nameData')
@@ -135,7 +136,7 @@ class Data {
 function postValidity(title, poem) {
     console.log(poem)
     let poemNoSpace = poem.replace(/\s/g, '')
-    if (!title) {
+    if (!title.replace(/\s/g, '')) {
         throw new Error('please enter a title')
     }
     if (!poemNoSpace) {
@@ -176,7 +177,7 @@ let randomName = () => {
 }
 
 
-module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }
+module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop, randomName }
 
 },{"./nameData":5}],3:[function(require,module,exports){
 

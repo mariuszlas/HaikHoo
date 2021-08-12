@@ -1,4 +1,4 @@
-const { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
+let { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
 const { postPoem, fetchGif } = require('./requestHandlers.js')
 const { displayPost } = require('./mainHandlers')
 
@@ -30,7 +30,7 @@ function showGifForm(e) {
         let gifContainer = document.createElement('section');
         gifContainer.setAttribute('id', 'gifContainer');
         gifForm.append(searchWord, searchGif, gifContainer);
-        document.querySelector('form').append(gifForm);
+        document.querySelector('#new-post-form').append(gifForm);
         document.querySelector('#gifSearch').addEventListener('click', displayGif)
     }
     else {
@@ -44,6 +44,7 @@ async function displayGif(e) {
     document.querySelector("#gifContainer").textContent = "";
     let userInput = document.querySelector('#gifWord').value;
     let gifData = await fetchGif(userInput)
+    console.log(gifData)
     for (let i = 0; i < gifData.data.length; i++) {
 
         let gifPath = gifData.data[i].images.fixed_height.url
@@ -108,4 +109,4 @@ function clearForm(form) {
 }
 
 
-module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm };
+module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm, displayGif, selectGif, clearForm, updateDisplay};
