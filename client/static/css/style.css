@@ -1,13 +1,10 @@
 * {
   box-sizing: border-box;
 }
+html {
+    scroll-behavior: smooth;
+  }
 
-/*
-
-C93429
-F4CFB4
-FFF2E9
-C5A48D */
 body{
     display: grid;
     grid-template-columns:  auto 550px auto;
@@ -21,6 +18,7 @@ body{
     font-size: 3em;
     background: none;    
     cursor: pointer;
+    align-self: center;
 }
 
 header {
@@ -58,8 +56,8 @@ main{
      font-family: Montserrat;
      display: flex;
      flex-direction: column;
-     align-items: center;
-     padding-bottom: 2em;
+     /* align-items: center; */
+     padding:3em 0em;
 }
 
 textarea {
@@ -89,7 +87,7 @@ button {
     display: none;
     border: solid 3px #C93429;
     border-radius: 5px;
-    margin: 2em 2em 1em;
+    margin: 1em 2em;
     padding: 2em;
     flex-direction: column;
 }
@@ -186,6 +184,7 @@ footer {
     height: 3em;
     animation: spin 0.7s linear infinite;
     margin:1em;
+    align-self: center;
   }
 
   @keyframes spin {
