@@ -32,6 +32,13 @@ textarea {
     width: 100%;
 }
 
+.div-react {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    display: flex;
+    justify-content: space-between;
+}
+
 #new-post-form {
     display: none;
     border: solid 1px blue;
