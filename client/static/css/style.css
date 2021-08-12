@@ -238,10 +238,65 @@ footer {
      body{
          display: block;
      }
-     article {
+     header{
+         padding: 0em 1.5em;
+     }
+
+     body main{
+         border-radius: 0;
+     }
+     article, #new-post-form{
          margin: 0.37em 0.75em 0.37em 0.75em;
          padding: 1.25em;
+         font-size: 1.5em;
      }
+
+     body #userPoem{
+         height: 39vh;
+     }
+
+     #post-form-author {
+         display: flex;
+         flex-direction: column;
+     }
+
+     #poemTitle{
+         width:100%;
+     }
+
+     #poemTitle, #userPoem{
+        font-size: 1em;
+        font-family: MontSerrat;
+        margin-top: .1em;
+     }
+
+     #form-btns{
+         display: flex;
+         justify-content: space-around;
+     }
+
+     #addGif, #submitPoem, #gifWord{
+         font-size: 1em;
+     }
+
+     #closeForm{
+         height: 35px;
+     }
+     #post-form-top{
+         align-items: flex-end;
+     }
+
+     .p-date, .p-author{
+         margin: 0.5em 0em;
+         font-size: .8em;
+     }
+
+     .author-date-div{
+         flex-direction: column;
+         align-items: flex-start;
+
+     }
+
      .likes, .smiles, .cries {
         margin-right: 0.15em;
         margin-left: 0.75em;
