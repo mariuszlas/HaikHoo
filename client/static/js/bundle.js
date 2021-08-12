@@ -1,5 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-const { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
+let { postValidity, makeElement, counter, scrollToTop } = require('./helpers.js')
 const { postPoem, fetchGif } = require('./requestHandlers.js')
 const { displayPost } = require('./mainHandlers')
 
@@ -31,7 +31,7 @@ function showGifForm(e) {
         let gifContainer = document.createElement('section');
         gifContainer.setAttribute('id', 'gifContainer');
         gifForm.append(searchWord, searchGif, gifContainer);
-        document.querySelector('form').append(gifForm);
+        document.querySelector('#new-post-form').append(gifForm);
         document.querySelector('#gifSearch').addEventListener('click', displayGif)
     }
     else {
@@ -45,6 +45,7 @@ async function displayGif(e) {
     document.querySelector("#gifContainer").textContent = "";
     let userInput = document.querySelector('#gifWord').value;
     let gifData = await fetchGif(userInput)
+    console.log(gifData)
     for (let i = 0; i < gifData.data.length; i++) {
 
         let gifPath = gifData.data[i].images.fixed_height.url
@@ -109,12 +110,12 @@ function clearForm(form) {
 }
 
 
-module.exports = { showForm, checkPoem, formBtnsListeners };
+module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm, displayGif, selectGif, clearForm, updateDisplay};
 
 },{"./helpers.js":2,"./mainHandlers":4,"./requestHandlers.js":6}],2:[function(require,module,exports){
 const {adjectives, animals} = require('./nameData')
 
-let formatDate = () => {
+function formatDate() {
     let today = new Date()
     let yyyy = today.getFullYear()
     let mm = today.getMonth() + 1;
@@ -147,7 +148,7 @@ function postValidity(title, poem) {
 }
 
 function makeElement(element, type, id, value='') {
-    newElement = document.createElement(element)
+    let newElement = document.createElement(element)
     newElement.setAttribute('type', type);
     newElement.setAttribute('id', id);
     newElement.setAttribute('value', value);
@@ -161,8 +162,6 @@ function counter(e) {
     let span = document.querySelector('#counter');
     span.innerText = `${textLen}/500`;
 }
-
-
 
 function scrollToTop() {
   document.body.scrollTop = 0; // For Safari
@@ -225,7 +224,7 @@ function appendPost(data, page, index){
 
         let divBody = createBody(post);
         divBody.setAttribute("class", "post");
-        let divReact = document.createElement('div');
+        let divReact = makeElement('div', 'div-react');
 
         let spanEmoji = createReactions(post);
         let showComBtn = makeElement('button', 'show-com-btn', 'Show Comments')
@@ -273,8 +272,6 @@ function createBody(post) {
 }
 
 function createReactions(post) {
-
-    let divReact = makeElement('div', 'div-react');
     let spanEmoji = makeElement('span', 'span-emoji');
     let arr = [['likes', 0x1F44D], ['cries', 0x1F62D], ['smiles', 0x1F603]]
 
@@ -364,7 +361,7 @@ async function makeComment(e) {
     }
 };
 
-module.exports = { appendPost, extendPage, displayPost, extendPage }
+module.exports = { createComSection, sendLike, makeComment, appendPost, extendPage, displayPost, extendPage, makeElement, createBody, createReactions }
 
 },{}],5:[function(require,module,exports){
 let animals =
