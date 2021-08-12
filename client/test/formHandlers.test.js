@@ -7,7 +7,7 @@ let formHandlers = require('../static/js/formHandlers.js');
 
 describe('form handlers functions', () => {
 
-    beforeEach(()=>{
+    beforeEach(() => {
         document.documentElement.innerHTML = html.toString();
     });
 
@@ -15,10 +15,10 @@ describe('form handlers functions', () => {
 
         let postBtn = document.getElementById('makePost');
 
-        test('there is a postBtn', ()=>{
+        test('there is a postBtn', () => {
             expect(postBtn).toBeDefined();
         });
-        
+
 
         test('new-post-form is showed when the postBtn is clicked', () => {
             const stubEvent = { preventDefault: jest.fn(), target: postBtn };
@@ -26,5 +26,21 @@ describe('form handlers functions', () => {
             expect(document.querySelector('#new-post-form').style.display).toBe("block");
         });
 
+    })
+
+    describe('showGifForm', () => {
+        test('show form when gif button clicked', () => {
+            const stubEvent = { preventDefault: jest.fn() }
+            formHandlers.showGifForm(stubEvent);
+            expect(document.querySelector('#gifForm').innerHTML).toBeTruthy()
+        })
+
+        test('does not create a form if it is already open', () => {
+
+        })
+
+        test('form is empty/ no values', () => {
+
+        })
     })
 })

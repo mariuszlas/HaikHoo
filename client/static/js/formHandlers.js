@@ -108,4 +108,4 @@ function clearForm(form) {
 }
 
 
-module.exports = { showForm, checkPoem, formBtnsListeners };
+module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm };
