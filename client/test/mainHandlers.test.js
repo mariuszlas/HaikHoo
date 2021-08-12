@@ -32,9 +32,31 @@ describe('functionality of fuctions making fetch requests', () => {
 
     })
 
-    it('creates reactions div', () => {
+    it('creates reactions span element', () => {
         let spanEmoji = mainHandlers.createReactions({reactions: {likes: 1, cries: 2, smiles: 3}});
-        expect(spanEmoji.tagName).toBe('SPAN')
+        let btns = spanEmoji.querySelectorAll('button');
+        let spans = spanEmoji.querySelectorAll('span');
+        expect(spanEmoji.tagName).toBe('SPAN');
+        expect(spanEmoji.getAttribute('class')).toBe('span-emoji');
+        expect(btns.length).toBe(3);
+        expect(spans.length).toBe(3);
     })
+
+    it('creates comments div', () => {
+        let divComment = mainHandlers.createComSection({comments: ['comment 1', 'comment 2']});
+        let pEls = divComment.querySelectorAll('p');
+        let form = divComment.querySelectorAll('form');
+        expect(divComment.tagName).toBe('DIV');
+        expect(divComment.getAttribute('class')).toBe('comments-div');
+        expect(pEls.length).toBe(2);
+        expect(form).toBeTruthy();
+    });
+
+    it('makes a fetch to haikhooo-server to send a new comment', async () => {
+        const event = { preventDefault: jest.fn(), target: [0, {value: 'comment'}] };
+        await mainHandlers.makeComment(event);
+        expect(fetch).toHaveBeenCalledTimes(1);
+    });
+
 
 })
