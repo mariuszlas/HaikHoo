@@ -92,26 +92,19 @@ function updateDisplay() {
     setTimeout(() => {
         document.querySelector('.loader').remove()
         document.querySelectorAll('article').forEach(article => article.remove())
-        displayPost()}, 2000);
+        displayPost()}, 1500);
 
 }
 
 
-// let postContainer = document.querySelector('main')
-// let loader = document.createElement('div');
-// loader.setAttribute('class', 'loader');
-// postContainer.insertBefore(loader, postContainer.firstElementChild)
 
-// setTimeout(() => {
-//     document.querySelectorAll('article').forEach(article => article.remove())
-//     document.querySelector('.loader').remove()
-//     displayPost()
-// }, 3000);
 
 
 function clearForm(form) {
-    form.reset()
-    form.style.display = "none"
+    form.reset();
+    form.querySelector('#selectedGif').textContent = "";
+    form.querySelector('#counter').textContent = "";
+    form.style.display = "none";
 }
 
 
