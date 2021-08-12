@@ -32,4 +32,9 @@ describe('functionality of fuctions making fetch requests', () => {
 
     })
 
+    it('creates reactions div', () => {
+        let spanEmoji = mainHandlers.createReactions({reactions: {likes: 1, cries: 2, smiles: 3}});
+        expect(spanEmoji.tagName).toBe('SPAN')
+    })
+
 })
