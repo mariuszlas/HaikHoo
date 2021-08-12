@@ -14,9 +14,6 @@ body{
     background-color: #C5A48D;
 }
 
-
-
-
 header {
     display: flex;
     justify-content: center;
@@ -47,6 +44,10 @@ textarea {
     width: 100%;
 }
 
+button {
+    cursor: pointer;
+}
+
 .div-react {
     margin-top: 2em;
     /* margin-bottom: 2em; */
@@ -67,6 +68,17 @@ textarea {
     border-radius: 5px;
     margin: 2em;
     padding: 2em;
+    flex-direction: column;
+}
+
+#post-form-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+#counter {
+    align-self: flex-end;
+    margin-top: 0.75em;
 }
 
 .add-comment-form {

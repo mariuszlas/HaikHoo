@@ -7,7 +7,7 @@ function showForm(e) {
     e.preventDefault();
     scrollToTop()
     let postForm = document.querySelector('#new-post-form');
-    postForm.style.display = "block";
+    postForm.style.display = "flex";
     formBtnsListeners(postForm);
 }
 
