@@ -16,12 +16,12 @@ body{
 
 #showMorePosts{
     width: 1.5em;
-border: none;
+    border: none;
     font-size: 3em;
     align-self: center;
     content: "\1F807";
-background: none;
-cursor: pointer;
+    background: none;
+    cursor: pointer;
 }
 
 header {
@@ -201,8 +201,13 @@ footer {
          margin: 0;
      }
      article {
-         margin: 0.75em;
+         margin: 0.37em 0.75em 0.37em 0.75em;
          padding: 1.25em;
+     }
+     .likes, .smiles, .cries {
+        margin-right: 0.15em;
+        margin-left: 0.75em;
+        border-radius: 5px;
      }
  }
 
