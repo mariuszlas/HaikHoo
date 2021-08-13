@@ -7,8 +7,6 @@ const mainHandlers = require('../static/js/mainHandlers.js');
 let requestHandlers = require('../static/js/requestHandlers.js');
 global.fetch = require('jest-fetch-mock');
 
-//jest.mock('../static/js/formHandlers.js');
-
 describe('form handlers functions', () => {
 
     describe('ShowForm', () => {
@@ -52,7 +50,6 @@ describe('form handlers functions', () => {
 
     })
 
-
     describe('displayGif', () => {
 
         beforeEach(() => {
@@ -77,7 +74,7 @@ describe('form handlers functions', () => {
                     { images: { fixedheight: { url: '5' } } }
                 ]
             }
-            
+
             const fetchGif = jest.fn(() => {
                 return gifData
             });

@@ -46,4 +46,3 @@ describe('data class should have all the elements', () => {
     expect(testData.gifUrl).toBe('gif');
     expect(testData.date).toBe(todaysDate);
 })
-

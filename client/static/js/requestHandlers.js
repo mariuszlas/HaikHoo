@@ -6,22 +6,6 @@ let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 0;
 let startIndex = 0;
 
-// let pageCounter = 0;
-// let startIndex = 0;
-
-
-
-
-// function displayPost(){
-//     fetch(`${url}/posts`)
-//     .then(res => res.json())
-//     .then(data => {
-//         console.log(data)
-//         appendPost(data, 1, 0)
-//     })
-//     .catch(err => console.log(err));
-// }
-
 function postPoem(title, poem, giphyURL) {
     let data = new Data(title, poem, giphyURL)
     let options = {
@@ -50,22 +34,6 @@ async function makeComment(e) {
         console.log(err);
     }
 };
-
-/////////////////  TEMPORAIRLY MOVED TO mainHandlers.js ////////////////////////////
-// async function sendLike(e) {
-//     e.preventDefault();
-//     let button = e.target.getAttribute('class');
-//     let id = button.closest('article');
-//     console.log(id.id);
-//     console.log(button);
-//     let options = {
-//         method: "PUT",
-//         headers: { 'Content-Type':'application/json'}
-//     }
-//     await fetch(`${url}/posts/${id.id}/likes`, options)
-// }
-//////////////////////////////////////////////////////////////////////////////////
-
 
 async function fetchGif(userInput) {
     const APIKEY = '1GZ3I3ZbWKLBCfC7UFrN1yWVhQkONQ32'

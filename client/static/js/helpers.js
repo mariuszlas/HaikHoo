@@ -1,5 +1,3 @@
-// const {adjectives, animals} = require('./nameData')
-
 function formatDate() {
     let today = new Date()
     let yyyy = today.getFullYear()
@@ -18,7 +16,6 @@ class Data {
 }
 
 function postValidity(title, poem) {
-    console.log(poem)
     let poemNoSpace = poem.replace(/\s/g, '')
     if (!title.replace(/\s/g, '')) {
         throw new Error('please enter a title')
