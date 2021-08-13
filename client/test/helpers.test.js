@@ -1,7 +1,7 @@
 const { test, beforeEach, expect } = require('@jest/globals')
 const helpers = require('../static/js/helpers')
 
-let todaysDate = '12/8/2021'
+let todaysDate = '13/8/2021'
 
 describe('nameGenerator', () => {
     // beforeEach(() => randomName = helpers.randomName )
@@ -64,10 +64,8 @@ describe('formateDate works properly', () => {
 
 describe('data class should have all the elements', () => {
     let testData = new helpers.Data('title','poem','gif')
-    expect(testData.author).toBeTruthy();
     expect(testData.title).toBe('title');
     expect(testData.text).toBe('poem');
     expect(testData.gifUrl).toBe('gif');
     expect(testData.date).toBe(todaysDate);
 })
-
