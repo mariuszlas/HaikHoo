@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/style.css">
+    <script defer src="./static/js/bundle.js"></script>
+    <title>HaikHoo</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="source/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="source/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="source/favicon-16x16.png">
+    <link rel="manifest" href="../source/site.webmanifest">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Reenie+Beanie&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <div id="nav-logo">
+            <h1>HaikHoo</h1>
+            <h2>...where all your poetry is brought to daylight!</h2>
+        </div>
+    </header>
+
+    <main>
+
+        <form id="new-post-form">
+            <div id="post-form-top">
+                <div id="post-form-author">
+                    <label type="undefined" id="undefined" value="" name="poemTitle">Title: </label>
+                    <input type="text" id="poemTitle" value="" name="poemTitle">
+                </div>
+                <input type="button" id="closeForm" value="X">
+            </div>
+            <label type="undefined" id="title-label" value="" name="poemTitle">Your Poem: </label>
+            <textarea id="userPoem" rows="8" cols="40" name="userPoem"></textarea>
+            <span id="counter"></span>
+            <span id="selectedGif"></span>
+            <p id="formErrors" hidden></p>
+            <div id="form-btns">
+                <input type="submit" id="addGif" value="gif?">
+                <input type="submit" id="submitPoem" value="post">
+            </div>
+        </form>
+
+        <button id="makePost" class="float-btn" type="button"><img src="source/button-icon.png" class="icon"></button>
+        <button id='showMorePosts' type="button"> &#129031;</button>
+    </main>
+
+    <footer>
+        <div id="footer-container">
+            <p class="footer-p">Designed and Created by HAKEMA</p>
+            <p class="footer-p">Harris Mawardi, Kenneth Young & Mariusz Las
+            <p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

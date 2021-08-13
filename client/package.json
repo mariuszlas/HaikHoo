@@ -1,0 +1,33 @@
+{
+  "name": "lap1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll --coverage",
+    "bundle": "browserify ./static/js/index.js > ./static/js/bundle.js",
+    "dev": "concurrently \"watchify ./static/js/index.js -o ./static/js/bundle.js\" \"python3 -m http.server\""
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "automock": false
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@giphy/js-components": "^5.1.4",
+    "@giphy/js-fetch-api": "^4.1.0",
+    "@types/jest": "^26.0.24",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "throttle-debounce": "^3.0.1"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "concurrently": "^6.2.1",
+    "jest": "^27.0.6",
+    "jest-fetch-mock": "^3.0.3",
+    "nodemon": "^2.0.12",
+    "watchify": "^4.0.0"
+  }
+}
