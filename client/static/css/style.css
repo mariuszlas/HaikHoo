@@ -264,7 +264,7 @@ footer {
          width:100%;
      }
 
-     #poemTitle, #userPoem{
+     #poemTitle, #userPoem, #gifSearch{
         font-size: 1em;
         font-family: MontSerrat;
         margin-top: .1em;
@@ -277,6 +277,9 @@ footer {
 
      #addGif, #submitPoem, #gifWord{
          font-size: 1em;
+     }
+     #gifWord{
+         width: 100%;
      }
 
      #closeForm{
