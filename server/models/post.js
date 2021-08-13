@@ -27,8 +27,6 @@ class Post {
             const newPost = new Post(body);
             newPost.id = `${posts.length + 1}`;
             let auth = randomName();
-            console.log(auth);
-            // newPost.author = randomName();
             posts.push(newPost);
             fs.writeFile(database, JSON.stringify(posts), (err) => {
                 if (err) {
