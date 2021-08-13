@@ -1,4 +1,4 @@
-const Post = require('../models/post.js');
+const { Post } = require('../models/post.js');
 
 describe('Post model', () => {
     const testPost = {

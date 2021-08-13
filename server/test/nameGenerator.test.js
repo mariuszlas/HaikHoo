@@ -1,4 +1,3 @@
-
 const { test, beforeEach, expect } = require('@jest/globals')
 const nameGenerator = require('../models/post.js')
 
@@ -7,7 +6,6 @@ describe('nameGenerator', () => {
 
     test('are two words being returned', () => {
        let wordsArr = randomName().split(" ")
-       console.log(wordsArr)
        expect(wordsArr.length).toEqual(2)
     })
 
@@ -24,8 +22,6 @@ describe('nameGenerator', () => {
                 }
             }
         }
-        console.log(namesArr)
-        console.log(matches)
         expect(matches).toBeLessThan(5)
     })
 })

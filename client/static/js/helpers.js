@@ -1,4 +1,4 @@
-const {adjectives, animals} = require('./nameData')
+// const {adjectives, animals} = require('./nameData')
 
 function formatDate() {
     let today = new Date()
@@ -10,7 +10,7 @@ function formatDate() {
 
 class Data {
     constructor(title, poem, giphyURL){
-        this.author = randomName();
+        // this.author = randomName();
         this.title = title;
         this.text = poem;
         this.gifUrl = giphyURL;
@@ -52,11 +52,11 @@ function scrollToTop() {
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-let randomName = () => {
-    let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-    let randomAnimal = animals[Math.floor(Math.random() * animals.length)];
-    return `${randomAdjective} ${randomAnimal}`
-}
+// let randomName = () => {
+//     let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+//     let randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+//     return `${randomAdjective} ${randomAnimal}`
+// }
 
 
-module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop, randomName }
+module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }//, randomName }
