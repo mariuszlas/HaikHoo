@@ -289,6 +289,7 @@ footer {
      .p-date, .p-author{
          margin: 0.5em 0em;
          font-size: .8em;
+         text-align: start;
      }
 
      .author-date-div{
@@ -298,7 +299,7 @@ footer {
      }
 
      .likes, .smiles, .cries {
-        margin-right: 0.15em;
+        margin-right: 0.10em;
         margin-left: 0.75em;
         border-radius: 5px;
      }
