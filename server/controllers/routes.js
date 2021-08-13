@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const router = express.Router();
 const database = './data/posts.json';
-const Post = require('../models/post.js');
+const { Post } = require('../models/post.js');
 
 //Get all posts
 router.get('/posts', (req, res) => {

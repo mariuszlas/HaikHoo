@@ -1,27 +1,15 @@
 * {
   box-sizing: border-box;
 }
+html {
+    scroll-behavior: smooth;
+  }
 
-/*
-
-C93429
-F4CFB4
-FFF2E9
-C5A48D */
 body{
     display: grid;
     grid-template-columns:  auto 550px auto;
     background-color: #395D5E;
-}
-
-#showMorePosts{
-    width: 1.5em;
-    border: none;
-    font-size: 3em;
-    align-self: center;
-    content: "\1F807";
-    background: none;
-    cursor: pointer;
+    margin:0;
 }
 
 header {
@@ -30,6 +18,7 @@ header {
     grid-column: span 3;
     margin-bottom: 1em;
     background-color: #F4CFB4;
+    
 }
 
 h1, h2 {
@@ -59,7 +48,7 @@ main{
      font-family: Montserrat;
      display: flex;
      flex-direction: column;
-     padding-bottom: 2em;
+     padding:1em 0em;
 }
 
 textarea {
@@ -89,7 +78,7 @@ button {
     display: none;
     border: solid 3px #C93429;
     border-radius: 5px;
-    margin: 2em 2em 1em;
+    margin: 1em 2em;
     padding: 2em;
     flex-direction: column;
 }
@@ -97,11 +86,51 @@ button {
 #post-form-top {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+#formErrors{
+    height: 1em;
 }
 
 #counter {
     align-self: flex-end;
     margin-top: 0.75em;
+}
+
+#selectedGif {
+    display: flex;
+    align-items: flex-start;
+    margin: 1em 0em;
+} 
+
+#selectedGif input{
+ height: 2em;
+ width: 2em;
+ border-radius: 50%;
+ border:none;
+ background-color: #C93429;
+ color: white;
+ font-weight: 1000;
+}
+
+#selectedGif img {
+    margin-right: -15px;
+}
+
+#gifForm{
+    margin-top: 1em;
+}
+
+#gifContainer{
+    margin-top: 1em;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#gifContainer img {
+    height:100%;
+    object-fit: cover;
 }
 
 .add-comment-form {
@@ -120,6 +149,7 @@ button {
 
 .comments-div {
     margin-top: 2em;
+    text-align: start;
 }
 
 .author-date-div {
@@ -138,6 +168,16 @@ article {
     margin: 1em 2em;
     padding: 2em;
     background-color: white;
+    text-align: center;
+}
+
+#showMorePosts{
+    width: 1.5em;
+    border: none;
+    font-size: 3em;
+    background: none;    
+    cursor: pointer;
+    align-self: center;
 }
 
 footer {
@@ -179,12 +219,14 @@ footer {
 }
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border: 10px solid #f3f3f3; /* Light grey */
+    border-top: 10px solid black; /* Blue */
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
+    width: 3em;
+    height: 3em;
+    animation: spin 0.7s linear infinite;
+    margin:1em;
+    align-self: center;
   }
 
   @keyframes spin {
@@ -196,16 +238,68 @@ footer {
      body{
          display: block;
      }
-     body{
-         display: block;
-         margin: 0;
+     header{
+         padding: 0em 1.5em;
      }
-     article {
+
+     body main{
+         border-radius: 0;
+     }
+     article, #new-post-form{
          margin: 0.37em 0.75em 0.37em 0.75em;
          padding: 1.25em;
+         font-size: 1.5em;
      }
+
+     body #userPoem{
+         height: 39vh;
+     }
+
+     #post-form-author {
+         display: flex;
+         flex-direction: column;
+     }
+
+     #poemTitle{
+         width:100%;
+     }
+
+     #poemTitle, #userPoem{
+        font-size: 1em;
+        font-family: MontSerrat;
+        margin-top: .1em;
+     }
+
+     #form-btns{
+         display: flex;
+         justify-content: space-around;
+     }
+
+     #addGif, #submitPoem, #gifWord{
+         font-size: 1em;
+     }
+
+     #closeForm{
+         height: 35px;
+     }
+     #post-form-top{
+         align-items: flex-end;
+     }
+
+     .p-date, .p-author{
+         margin: 0.5em 0em;
+         font-size: .8em;
+         text-align: start;
+     }
+
+     .author-date-div{
+         flex-direction: column;
+         align-items: flex-start;
+
+     }
+
      .likes, .smiles, .cries {
-        margin-right: 0.15em;
+        margin-right: 0.10em;
         margin-left: 0.75em;
         border-radius: 5px;
      }
@@ -213,12 +307,15 @@ footer {
 
  .p-title{
     font-size: 2em;
+    margin:0.5em 0em;
  }
 
  .p-author, .p-date{
      color: grey;
  }
 
- button {
+ 
+
+ button , input {
      font-family: Montserrat;
  }

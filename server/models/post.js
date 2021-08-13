@@ -5,11 +5,11 @@ const { animals, adjectives } = require('../data/nameData.js')
 class Post {
     constructor(data) {
         this.id = data.id;
-        this.author = data.author;
+        this.author = data.author || randomName();
         this.title = data.title;
         this.date = data.date;
         this.text = data.text;
-        this.gifUrl = data.gifUrl;
+        this.gifUrl = data.gifUrl || "";
         this.comments = data.comments || [];
         this.reactions = data.reactions || {};
     }
@@ -18,12 +18,7 @@ class Post {
         let data = fs.readFileSync(database);
         let json = JSON.parse(data);
         let posts = json.map(postEntry => new Post(postEntry));
-        return posts;
-        // fs.readFile(database, (err, data) => {
-        //      let parse = JSON.parse(data);
-        //      let posts = parse.map(postEntry => new Post(postEntry));
-        //      return parse;
-        //  });
+        return json;
     }
 
     static createPost(body) {
@@ -31,7 +26,9 @@ class Post {
             let posts = JSON.parse(data);
             const newPost = new Post(body);
             newPost.id = `${posts.length + 1}`;
-            newPost.author = randomName();
+            let auth = randomName();
+            console.log(auth);
+            // newPost.author = randomName();
             posts.push(newPost);
             fs.writeFile(database, JSON.stringify(posts), (err) => {
                 if (err) {

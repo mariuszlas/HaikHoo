@@ -41,11 +41,9 @@ describe('layout of the static index.html webpage', () => {
             expect(footer).toBeTruthy();
         });
 
-        it('has a new post form with input fileds0', () => {
+        it('has a new post form', () => {
             const form = document.querySelector('#new-post-form');
-            const inputs = document.querySelectorAll('form > input')
             expect(form).toBeTruthy();
-            expect(inputs.length).toBe(4);
         });
     });
 })

@@ -14,11 +14,11 @@
     <link rel="manifest" href="../source/site.webmanifest">
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Reenie+Beanie&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -26,7 +26,7 @@
     <header>
         <div id="nav-logo">
             <h1>HaikHoo</h1>
-            <h2>..where all your poetries come to a daylight!</h2>
+            <h2>...where all your poetry is brought to daylight!</h2>
         </div>
     </header>
 
@@ -35,29 +35,30 @@
         <form id="new-post-form">
             <div id="post-form-top">
                 <div id="post-form-author">
-                    <label type="undefined" id="undefined" value="" name="poemTitle">Title </label>
+                    <label type="undefined" id="undefined" value="" name="poemTitle">Title: </label>
                     <input type="text" id="poemTitle" value="" name="poemTitle">
                 </div>
                 <input type="button" id="closeForm" value="X">
             </div>
-            <label type="undefined" id="undefined" value="" name="poemTitle">Your Poem: </label>
+            <label type="undefined" id="title-label" value="" name="poemTitle">Your Poem: </label>
             <textarea id="userPoem" rows="8" cols="40" name="userPoem"></textarea>
             <span id="counter"></span>
-            <p id="formErrors"></p>
+            <span id="selectedGif"></span>
+            <p id="formErrors" hidden></p>
             <div id="form-btns">
-                <input type="submit" id="submitPoem" value="post"><span id="selectedGif"></span>
                 <input type="submit" id="addGif" value="gif?">
+                <input type="submit" id="submitPoem" value="post">
             </div>
         </form>
 
-        <button id="makePost" class="float-btn" type="button"><img src="source/button-icon.png" class="icon" ></button>
-        <button id='showMorePosts' type="button">	&#129031;</button>
+        <button id="makePost" class="float-btn" type="button"><img src="source/button-icon.png" class="icon"></button>
+        <button id='showMorePosts' type="button"> &#129031;</button>
     </main>
 
     <footer>
         <div id="footer-container">
             <p class="footer-p">Designed and Created by HAKEMA</p>
-            <p class="footer-p">Harris Mwardi, Kenneth Young & Mariusz Las
+            <p class="footer-p">Harris Mawardi, Kenneth Young & Mariusz Las
             <p>
         </div>
     </footer>
