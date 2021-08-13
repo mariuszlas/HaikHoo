@@ -1,5 +1,3 @@
-// const {adjectives, animals} = require('./nameData')
-
 function formatDate() {
     let today = new Date()
     let yyyy = today.getFullYear()
@@ -10,7 +8,6 @@ function formatDate() {
 
 class Data {
     constructor(title, poem, giphyURL){
-        // this.author = randomName();
         this.title = title;
         this.text = poem;
         this.gifUrl = giphyURL;
@@ -19,7 +16,6 @@ class Data {
 }
 
 function postValidity(title, poem) {
-    console.log(poem)
     let poemNoSpace = poem.replace(/\s/g, '')
     if (!title.replace(/\s/g, '')) {
         throw new Error('please enter a title')
@@ -52,11 +48,4 @@ function scrollToTop() {
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-// let randomName = () => {
-//     let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-//     let randomAnimal = animals[Math.floor(Math.random() * animals.length)];
-//     return `${randomAdjective} ${randomAnimal}`
-// }
-
-
-module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }//, randomName }
+module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }

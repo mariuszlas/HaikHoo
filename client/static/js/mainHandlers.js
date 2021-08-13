@@ -1,6 +1,3 @@
-//const { displayPost } = require('./requestHandlers.js');
-//const { makeComment } = require('./requestHandlers.js');
-
 let url =  "https://haikhoo-server.herokuapp.com";
 let pageCounter = 1;
 let startIndex = 0;
@@ -43,7 +40,6 @@ function appendPost(data, page, index){
     document.querySelector('#showMorePosts').before(article);
     }
 }
-
 
 function showComSection(e) {
     e.preventDefault();
@@ -171,6 +167,5 @@ async function makeComment(e) {
         console.log(err);
     }
 };
-
 
 module.exports = { createComSection, sendLike, makeComment, appendPost, extendPage, displayPost, extendPage, makeElement, createBody, createReactions }

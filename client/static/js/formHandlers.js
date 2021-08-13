@@ -22,7 +22,6 @@ function formBtnsListeners(form) {
 
 function showGifForm(e) {
     e.preventDefault();
-    console.log(e)
     if (!document.querySelector('#gifForm')) {
         let gifForm = document.createElement('form')
         gifForm.setAttribute('id', 'gifForm')
@@ -65,7 +64,6 @@ function selectGif(e) {
     previewGif.setAttribute('src', gifPath)
     let removeGif = makeElement('input', 'button', 'removeGif', 'X')
     removeGif.addEventListener('click', (e) => {
-        console.log(e)
         selectedGif.textContent = ""})
     selectedGif.append(previewGif);
     selectedGif.append(removeGif);
@@ -75,7 +73,6 @@ function selectGif(e) {
 
 function checkPoem(e, poemForm) {
     e.preventDefault();
-    console.log(e);
     let title = e.target.poemTitle.value;
     let poem = e.target.userPoem.value;
     let gif = document.querySelector('#selectedGif img')
@@ -101,7 +98,6 @@ function updateDisplay() {
         document.querySelector('.loader').remove()
         document.querySelectorAll('article').forEach(article => article.remove())
         displayPost()}, 1500);
-
 }
 
 function clearForm(form) {
@@ -112,6 +108,5 @@ function clearForm(form) {
     form.querySelector('#gifForm') ? form.querySelector('#gifForm').remove() : console.log('no giphyform');
     form.style.display = "none";
 }
-
 
 module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm, displayGif, selectGif, clearForm, updateDisplay};
