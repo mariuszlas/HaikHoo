@@ -13,8 +13,9 @@ function showForm(e) {
 
 
 function formBtnsListeners(form) {
-    form.addEventListener('submit', e => checkPoem(e, form))
-    document.querySelector('#addGif').addEventListener('click', e => showGifForm(e));
+    let checking = (e) => checkPoem(e, form)
+    form.addEventListener('submit', checking)
+    document.querySelector('#addGif').addEventListener('click', showGifForm);
     document.querySelector('#closeForm').addEventListener('click', () => clearForm(form))
     let textArea = document.querySelector('#userPoem');
     textArea.addEventListener("keyup", e => counter(e));
@@ -22,6 +23,7 @@ function formBtnsListeners(form) {
 
 function showGifForm(e) {
     e.preventDefault();
+    console.log(e)
     if (!document.querySelector('#gifForm')) {
         let gifForm = document.createElement('form')
         gifForm.setAttribute('id', 'gifForm')
@@ -57,12 +59,17 @@ async function displayGif(e) {
 
 function selectGif(e) {
     console.log(e)
-    let gifPath = e.target.src
-    console.log(gifPath)
-    document.querySelector("#selectedGif").textContent = "";
+    let gifPath = e.target.src;
+    let selectedGif = document.querySelector("#selectedGif");
+    selectedGif.textContent = "";
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
-    document.querySelector('#selectedGif').append(previewGif)
+    let removeGif = makeElement('input', 'button', 'removeGif', 'X')
+    removeGif.addEventListener('click', (e) => {
+        console.log(e)
+        selectedGif.textContent = ""})
+    selectedGif.append(previewGif);
+    selectedGif.append(removeGif);
     document.querySelector('#gifForm').remove();
 
 }
@@ -77,6 +84,7 @@ function checkPoem(e, poemForm) {
     try {
         postValidity(title, poem)
     } catch (err) {
+        document.querySelector('#formErrors').removeAttribute('hidden')
         document.querySelector('#formErrors').textContent = err
         console.log('whoops', err)
         return;
@@ -99,8 +107,10 @@ function updateDisplay() {
 
 function clearForm(form) {
     form.reset();
+    form.querySelector('#formErrors').textContent = "";
     form.querySelector('#selectedGif').textContent = "";
     form.querySelector('#counter').textContent = "";
+    form.querySelector('#gifForm') ? form.querySelector('#gifForm').remove() : console.log('no giphyform');
     form.style.display = "none";
 }
 
@@ -257,6 +267,7 @@ function createBody(post) {
     let topDiv = makeElement('div', 'author-date-div')
     let author = makeElement('p', 'p-author', `Posted by ${post.author} `);
     let textCont = makeElement('p', 'p-text', post.text);
+    console.log(post.text)
     let date = makeElement('p', 'p-date', `${post.date}`);
     topDiv.append(author, date);
     divBody.append(topDiv, title, textCont);
@@ -433,7 +444,7 @@ async function makeComment(e) {
 
 async function fetchGif(userInput) {
     const APIKEY = '1GZ3I3ZbWKLBCfC7UFrN1yWVhQkONQ32'
-    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${userInput}&rating=pg-13&limit=5`
+    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${userInput}&rating=pg-13&limit=4`
     let response = await fetch(url)
         .then(resp => resp.json())
         .then(content => {

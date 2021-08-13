@@ -69,7 +69,7 @@ async function makeComment(e) {
 
 async function fetchGif(userInput) {
     const APIKEY = '1GZ3I3ZbWKLBCfC7UFrN1yWVhQkONQ32'
-    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${userInput}&rating=pg-13&limit=5`
+    let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${userInput}&rating=pg-13&limit=4`
     let response = await fetch(url)
         .then(resp => resp.json())
         .then(content => {
