@@ -23,7 +23,7 @@ describe('layout of the static index.html webpage', () => {
             const h2 = document.querySelector('h2');
             expect(header).toBeTruthy();
             expect(h1.textContent).toBe('HaikHoo');
-            expect(h2.textContent).toBe('..where all your poetries come to a daylight!');
+            expect(h2.textContent).toBe('...where all your poetry is brought to daylight!');
         });
 
         it('has a post button', () => {
