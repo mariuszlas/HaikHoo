@@ -267,6 +267,7 @@ function createBody(post) {
     let topDiv = makeElement('div', 'author-date-div')
     let author = makeElement('p', 'p-author', `Posted by ${post.author} `);
     let textCont = makeElement('p', 'p-text', post.text);
+    console.log(post.text)
     let date = makeElement('p', 'p-date', `${post.date}`);
     topDiv.append(author, date);
     divBody.append(topDiv, title, textCont);
