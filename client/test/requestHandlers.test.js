@@ -13,8 +13,7 @@ describe('functionality of fuctions making fetch requests', () => {
     });
 
     it('makes a fetch to giphy server with correct url', () => {
-        const userInput = 'tree';
-        requestHandlers.fetchGif(userInput);
+        requestHandlers.fetchGif('tree');
         expect(fetch).toHaveBeenCalledTimes(1);
     });
 
@@ -23,4 +22,5 @@ describe('functionality of fuctions making fetch requests', () => {
         await requestHandlers.makeComment(event);
         expect(fetch).toHaveBeenCalledTimes(1);
     });
+
 })

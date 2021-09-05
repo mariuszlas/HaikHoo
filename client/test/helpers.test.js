@@ -1,7 +1,7 @@
 const { test, beforeEach, expect } = require('@jest/globals')
 const helpers = require('../static/js/helpers')
 
-let todaysDate = '13/8/2021'
+let todaysDate = '15/8/2021'
 
 describe('post validity', () => {
 

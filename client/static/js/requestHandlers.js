@@ -2,7 +2,7 @@ const { appendPost } = require('./mainHandlers')
 const { collapseForm } = require('./formHandlers');
 const { Data } = require('./helpers.js');
 
-let url =  "https://haikhoo-server.herokuapp.com";
+let url =  "http://localhost:3000";
 let pageCounter = 0;
 let startIndex = 0;
 

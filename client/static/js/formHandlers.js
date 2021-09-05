@@ -16,8 +16,7 @@ function formBtnsListeners(form) {
     form.addEventListener('submit', checking)
     document.querySelector('#addGif').addEventListener('click', showGifForm);
     document.querySelector('#closeForm').addEventListener('click', () => clearForm(form))
-    let textArea = document.querySelector('#userPoem');
-    textArea.addEventListener("keyup", e => counter(e));
+    document.querySelector('#userPoem').addEventListener("keyup", e => counter(e));
 }
 
 function showGifForm(e) {
@@ -42,10 +41,9 @@ function showGifForm(e) {
 
 async function displayGif(e) {
     e.preventDefault()
-    document.querySelector("#gifContainer").textContent = "";
     let userInput = document.querySelector('#gifWord').value;
+    document.querySelector("#gifContainer").textContent = "";
     let gifData = await fetchGif(userInput)
-    console.log(gifData)
     for (let i = 0; i < gifData.data.length; i++) {
         let gifPath = gifData.data[i].images.fixed_height.url
         let gif = document.createElement('img')
@@ -56,19 +54,16 @@ async function displayGif(e) {
 }
 
 function selectGif(e) {
-    console.log(e)
     let gifPath = e.target.src;
     let selectedGif = document.querySelector("#selectedGif");
     selectedGif.textContent = "";
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     let removeGif = makeElement('input', 'button', 'removeGif', 'X')
-    removeGif.addEventListener('click', (e) => {
-        selectedGif.textContent = ""})
-    selectedGif.append(previewGif);
-    selectedGif.append(removeGif);
+    removeGif.addEventListener('click', (e) => { selectedGif.textContent = "" })
+    selectedGif.append(previewGif, removeGif);
+    // selectedGif.append(removeGif);
     document.querySelector('#gifForm').remove();
-
 }
 
 function checkPoem(e, poemForm) {
@@ -95,9 +90,10 @@ function updateDisplay() {
     loader.setAttribute('class', 'loader');
     document.querySelector('main').prepend(loader);
     setTimeout(() => {
-        document.querySelector('.loader').remove()
-        document.querySelectorAll('article').forEach(article => article.remove())
-        displayPost()}, 1500);
+        document.querySelector('.loader').remove();
+        document.querySelectorAll('article').forEach(article => article.remove());
+        displayPost();
+    }, 1500);
 }
 
 function clearForm(form) {

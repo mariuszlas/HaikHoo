@@ -1,4 +1,4 @@
-let url =  "https://haikhoo-server.herokuapp.com";
+let url =  "http://localhost:3000";
 let pageCounter = 1;
 let startIndex = 0;
 
@@ -147,7 +147,7 @@ function liveReactionCounter(btnElement) {
     let span = btnElement.nextElementSibling;
     if (span.innerText !== "") {
         span.innerText = `${parseInt(span.innerText) + 1}`
-    } else { span.innerText = 1}
+    } else { span.innerText = "1"}
 }
 
 async function makeComment(e) {
@@ -168,4 +168,4 @@ async function makeComment(e) {
     }
 };
 
-module.exports = { createComSection, sendLike, makeComment, appendPost, extendPage, displayPost, extendPage, makeElement, createBody, createReactions }
+module.exports = { createComSection, sendLike, makeComment, appendPost, extendPage, displayPost, extendPage, makeElement, createBody, createReactions, liveReactionCounter }

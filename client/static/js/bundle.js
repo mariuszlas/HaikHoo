@@ -17,13 +17,11 @@ function formBtnsListeners(form) {
     form.addEventListener('submit', checking)
     document.querySelector('#addGif').addEventListener('click', showGifForm);
     document.querySelector('#closeForm').addEventListener('click', () => clearForm(form))
-    let textArea = document.querySelector('#userPoem');
-    textArea.addEventListener("keyup", e => counter(e));
+    document.querySelector('#userPoem').addEventListener("keyup", e => counter(e));
 }
 
 function showGifForm(e) {
     e.preventDefault();
-    console.log(e)
     if (!document.querySelector('#gifForm')) {
         let gifForm = document.createElement('form')
         gifForm.setAttribute('id', 'gifForm')
@@ -44,10 +42,9 @@ function showGifForm(e) {
 
 async function displayGif(e) {
     e.preventDefault()
-    document.querySelector("#gifContainer").textContent = "";
     let userInput = document.querySelector('#gifWord').value;
+    document.querySelector("#gifContainer").textContent = "";
     let gifData = await fetchGif(userInput)
-    console.log(gifData)
     for (let i = 0; i < gifData.data.length; i++) {
         let gifPath = gifData.data[i].images.fixed_height.url
         let gif = document.createElement('img')
@@ -58,25 +55,20 @@ async function displayGif(e) {
 }
 
 function selectGif(e) {
-    console.log(e)
     let gifPath = e.target.src;
     let selectedGif = document.querySelector("#selectedGif");
     selectedGif.textContent = "";
     let previewGif = document.createElement('img')
     previewGif.setAttribute('src', gifPath)
     let removeGif = makeElement('input', 'button', 'removeGif', 'X')
-    removeGif.addEventListener('click', (e) => {
-        console.log(e)
-        selectedGif.textContent = ""})
-    selectedGif.append(previewGif);
-    selectedGif.append(removeGif);
+    removeGif.addEventListener('click', (e) => { selectedGif.textContent = "" })
+    selectedGif.append(previewGif, removeGif);
+    // selectedGif.append(removeGif);
     document.querySelector('#gifForm').remove();
-
 }
 
 function checkPoem(e, poemForm) {
     e.preventDefault();
-    console.log(e);
     let title = e.target.poemTitle.value;
     let poem = e.target.userPoem.value;
     let gif = document.querySelector('#selectedGif img')
@@ -99,10 +91,10 @@ function updateDisplay() {
     loader.setAttribute('class', 'loader');
     document.querySelector('main').prepend(loader);
     setTimeout(() => {
-        document.querySelector('.loader').remove()
-        document.querySelectorAll('article').forEach(article => article.remove())
-        displayPost()}, 1500);
-
+        document.querySelector('.loader').remove();
+        document.querySelectorAll('article').forEach(article => article.remove());
+        displayPost();
+    }, 1500);
 }
 
 function clearForm(form) {
@@ -114,12 +106,9 @@ function clearForm(form) {
     form.style.display = "none";
 }
 
-
 module.exports = { showForm, checkPoem, formBtnsListeners, showGifForm, displayGif, selectGif, clearForm, updateDisplay};
 
 },{"./helpers.js":2,"./mainHandlers":4,"./requestHandlers.js":5}],2:[function(require,module,exports){
-// const {adjectives, animals} = require('./nameData')
-
 function formatDate() {
     let today = new Date()
     let yyyy = today.getFullYear()
@@ -130,7 +119,6 @@ function formatDate() {
 
 class Data {
     constructor(title, poem, giphyURL){
-        // this.author = randomName();
         this.title = title;
         this.text = poem;
         this.gifUrl = giphyURL;
@@ -139,7 +127,6 @@ class Data {
 }
 
 function postValidity(title, poem) {
-    console.log(poem)
     let poemNoSpace = poem.replace(/\s/g, '')
     if (!title.replace(/\s/g, '')) {
         throw new Error('please enter a title')
@@ -172,14 +159,7 @@ function scrollToTop() {
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-// let randomName = () => {
-//     let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-//     let randomAnimal = animals[Math.floor(Math.random() * animals.length)];
-//     return `${randomAdjective} ${randomAnimal}`
-// }
-
-
-module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }//, randomName }
+module.exports = { Data, makeElement, formatDate, postValidity, counter, scrollToTop }
 
 },{}],3:[function(require,module,exports){
 
@@ -196,10 +176,7 @@ displayPost(1, 0);
 initBindings();
 
 },{"./formHandlers.js":1,"./mainHandlers.js":4}],4:[function(require,module,exports){
-//const { displayPost } = require('./requestHandlers.js');
-//const { makeComment } = require('./requestHandlers.js');
-
-let url =  "https://haikhoo-server.herokuapp.com";
+let url =  "http://localhost:3000";
 let pageCounter = 1;
 let startIndex = 0;
 
@@ -241,7 +218,6 @@ function appendPost(data, page, index){
     document.querySelector('#showMorePosts').before(article);
     }
 }
-
 
 function showComSection(e) {
     e.preventDefault();
@@ -349,7 +325,7 @@ function liveReactionCounter(btnElement) {
     let span = btnElement.nextElementSibling;
     if (span.innerText !== "") {
         span.innerText = `${parseInt(span.innerText) + 1}`
-    } else { span.innerText = 1}
+    } else { span.innerText = "1"}
 }
 
 async function makeComment(e) {
@@ -370,33 +346,16 @@ async function makeComment(e) {
     }
 };
 
-
-module.exports = { createComSection, sendLike, makeComment, appendPost, extendPage, displayPost, extendPage, makeElement, createBody, createReactions }
+module.exports = { createComSection, sendLike, makeComment, appendPost, extendPage, displayPost, extendPage, makeElement, createBody, createReactions, liveReactionCounter }
 
 },{}],5:[function(require,module,exports){
 const { appendPost } = require('./mainHandlers')
 const { collapseForm } = require('./formHandlers');
 const { Data } = require('./helpers.js');
 
-let url =  "https://haikhoo-server.herokuapp.com";
+let url =  "http://localhost:3000";
 let pageCounter = 0;
 let startIndex = 0;
-
-// let pageCounter = 0;
-// let startIndex = 0;
-
-
-
-
-// function displayPost(){
-//     fetch(`${url}/posts`)
-//     .then(res => res.json())
-//     .then(data => {
-//         console.log(data)
-//         appendPost(data, 1, 0)
-//     })
-//     .catch(err => console.log(err));
-// }
 
 function postPoem(title, poem, giphyURL) {
     let data = new Data(title, poem, giphyURL)
@@ -426,22 +385,6 @@ async function makeComment(e) {
         console.log(err);
     }
 };
-
-/////////////////  TEMPORAIRLY MOVED TO mainHandlers.js ////////////////////////////
-// async function sendLike(e) {
-//     e.preventDefault();
-//     let button = e.target.getAttribute('class');
-//     let id = button.closest('article');
-//     console.log(id.id);
-//     console.log(button);
-//     let options = {
-//         method: "PUT",
-//         headers: { 'Content-Type':'application/json'}
-//     }
-//     await fetch(`${url}/posts/${id.id}/likes`, options)
-// }
-//////////////////////////////////////////////////////////////////////////////////
-
 
 async function fetchGif(userInput) {
     const APIKEY = '1GZ3I3ZbWKLBCfC7UFrN1yWVhQkONQ32'
