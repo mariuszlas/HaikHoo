@@ -1,24 +1,26 @@
 # HaikHoo
 ## About The Project
 
-A website that allows shy poetries to share their poems anonymously. Users can post poems with a gif attached to it. Uses can also make comments and react (like, funny and feeling emotional) to the posts. 
+A website that allows shy poets to share their poems anonymously. Users can post poems with a gif attached to it, make comments and react (like, funny and feeling emotional) to the posts. 
 
+Visit the website [here](https://haikhoo.netlify.app/)!
 
-## Usage
-* [The website](https://haikhoo.netlify.app/)
+## Local Installation & Usage
 
-## Installation
+### Installation
 
-1. Fork the repo.
-2. Clone it from your repo.
-3. Change the url that the client is fetching data from to your localhost.
+1. Clone the repo.
+2. Navigate to the root directory.
+3. Run `npm install` to install dependancies.
+4. Change the url that the client is fetching data from to your localhost.
 
-### Hosting the server locally
-
-* Go to HaikHoo/server
-    ```sh
-    node index.js
-    ```
+### Usage
+1. Open the `index.html` in your web browser, the client is served from API hosted on Heroku. If you want to launch the API locally follow the steps below.
+2. Navigate to `server` directory.
+3. Run `node index.js` to launch the api.
+4. Navigate to `/client/static/js/requestHandlers.js` and change the url `http://localhost:3000` so that the client is fetching data from to your api.
+5. Navigate to `/client`.
+6. Run `npm run dev` to update the script.
 
 #### Now you can try exploring and modifying if locally!
 
@@ -33,10 +35,10 @@ A website that allows shy poetries to share their poems anonymously. Users can p
 
 1. Started by thinking about the idea of the website.
 2. Designed the basic layout and what features should be on the website.
-3. Built the back-end of the website, wrote tests as it is being developed.
+3. Built the back-end of the website and wrote tests for it.
 4. Deployed the back-end to [Heroku](https://www.heroku.com/).
-5. Built the front-end, wrote test as it is being developed.
-6. Styling, added icons, favicon, background.
+5. Built the front-end, wrote tests as it was developed.
+6. Added icons, favicon, background and overall styling.
 7. Wrote more tests to imrpove test coveage.
 8. Deployed the front-end to [Netlify](https://www.netlify.com/).
 9. Prepared presentation!
@@ -44,13 +46,10 @@ A website that allows shy poetries to share their poems anonymously. Users can p
 ## Wins & Challenges
 
 ### Wins
-* Managed to finish the product within the limited time frame.
+* Managed to complete the project within the limited time.
 * Successfully deployed both the front-end and the back-end to Netlify and Heroku.
 
 ### Challenges
 * Had difficulties on using the jest mock function.
 * Test coverage can be improved.
-* JSON database is very fragile. 
-
-## Licence 
-* [License](https://opensource.org/licenses/mit-license.php)
+* JSON file may not be an optimal form of database for this use case. 
